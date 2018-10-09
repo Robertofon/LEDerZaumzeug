@@ -1,0 +1,41 @@
+﻿{
+  "Meta": {
+    "ABC": "DEF"
+  },
+  "Seq": [
+    {
+      "$type": "JoinNode",
+      "JoinName": "Multi",
+      "Quelle": [
+        {
+          "$type": "FilterNode",
+          "FilterName": "Invert",
+          "Quelle": {
+            "$type": "GeneratorNode",
+            "GeneratorName": "Solid"
+          }
+        },
+        {
+          "$type": "FilterNode",
+          "FilterName": "Tiefpass",
+          "Quelle": {
+            "$type": "GeneratorNode",
+            "GeneratorName": "Solid"
+          }
+        },
+        {
+          "$type": "FilterNode",
+          "FilterName": "Tiefpass",
+          "Quelle": {
+            "$type": "FilterNode",
+            "FilterName": "Flt2",
+            "Quelle": {
+              "$type": "GeneratorNode",
+              "GeneratorName": "Solid"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,39 +1,48 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace LEDerZaumzeug
 {
     /// <summary>
-    /// Ein Baum mit Generatoren als Blätter
+    /// Ein Baum mit Generatoren als Blätter ab <see cref="Root"/>
+    /// Dies ist die Exekutor-Klasse.Oder nicht.
     /// </summary>
-    internal class MusterPipeline
+    public class MusterPipeline
     {
         public MusterNode Root { get; private set; }
     }
 
-    internal abstract class MusterNode
+    public abstract class MusterNode
     {
-
-    }
-
-    internal class GeneratorNode : MusterNode
-    {
-        public IGenerator Gen { get; set; }
     }
 
 
-    internal class FilterNode : MusterNode
+    [Serializable]
+    public class GeneratorNode : MusterNode
     {
-        public IFilter Filt { get; set; }
+        public string GeneratorName { get; set; }
+        //public IGenerator Gen { get; set; }
+    }
+
+
+    [Serializable]
+    public class FilterNode : MusterNode
+    {
+         public string FilterName { get; set; }
+       //[NonSerialized]
+        //public IFilter Filt { get; set; }
 
         public MusterNode Quelle { get; set; } 
     }
 
 
-    internal class JoinNode : MusterNode
+    [Serializable]
+    public class JoinNode : MusterNode
     {
-        public IJoins Join { get; set; }
+         public string JoinName { get; set; }
+        //public IJoins Join { get; set; }
 
-        public IList<MusterNode> Quelle { get; set; } 
+        public IList<MusterNode> Quelle { get; set; } = new List<MusterNode>();
     }
 
 

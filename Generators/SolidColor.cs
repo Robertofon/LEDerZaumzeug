@@ -1,11 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Drawing;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace LEDerZaumzeug.Generators
 {
+    /// <summary>
+    /// Generator für vollflächig eine Farbe. <see cref="Color"/> setzt die Farbe.
+    /// </summary>
+    [Description("Vollfarbe")]
     public class SolidColor : IGenerator
     {
         /// <summary>
