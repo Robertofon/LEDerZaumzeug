@@ -1,16 +1,18 @@
 ﻿using LEDerZaumzeug.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LEDerZaumzeug.Joins
+namespace LEDerZaumzeug.Mixer
 {
     /// <summary>
     /// Fade-Zusammenführung.
     /// Erlaubt linear zwischen Input0 und Input1 zu überblenden.
     /// </summary>
-    public class LinearFadeJoin : IJoin
+    [Description("Fade-Mixer")]
+    public class LinearFade : IMixer
     {
         /// <summary>
         /// Faktor zwischen eingabe 1 und eingabe 0.
@@ -23,7 +25,7 @@ namespace LEDerZaumzeug.Joins
             return Task.CompletedTask;
         }
 
-        public Task<RGBPixel[,]> Join(IList<RGBPixel[,]> sources)
+        public Task<RGBPixel[,]> Mix(IList<RGBPixel[,]> sources, long frame)
         {
             float f0 = this.Fade.LimitTo(0f, 1f);
             float f1 = 1f - f0;

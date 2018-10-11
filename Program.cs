@@ -2,86 +2,37 @@
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Serialization;
 
 namespace LEDerZaumzeug
 {
-    /// <summary>
-    /// Ausgabeobjekt. Wird bei Aktivierung im Zaumzeug instantiiert und
-    /// überlebt die ganze Zeit bis entweder das Programm beendet /
-    /// Zaumzeug disposed wird oder der Output entfernt wird aus der Output-Liste.
-    /// </summary>
-    public interface IOutput : IDisposable
-    {
-        Task Play(RGBPixel[,] pixels);
-
-        Task<OutputInfos> GetInfos();
-
-        Task Initialize(object paramset);
-    }
-
-    public interface IGenerator : IDisposable
-    {
-        Task Initialize(MatrixParams matrixParameters);
-
-        Task<GeneratorInfos> GetInfos();
-        
-        Task<RGBPixel[,]> GenPattern(Size size, long frame);
-    }
-
-    public interface IFilter
-    {
-        Task Initialize(MatrixParams matrixParameters);
-
-        Task<RGBPixel[,]> Filter(RGBPixel[,] pixels);
-
-        Task<FilterInfos> GetInfos();
-    }
-
-    /// <summary>
-    /// Vereinigung von Pixelströmen oder Operatoren in das Ganze.
-    /// Hier können Mehrere Generatoren oder Filter zusammengeführt werden-
-    /// </summary>
-    public interface IJoin
-    {
-        Task Initialize(MatrixParams matrixParameters);
-        Task<RGBPixel[,]> Join(IList<RGBPixel[,]> sources);
-    }
-
-    public enum SubSample
-    {
-        S1x1,
-        S2x2,
-        S4x4,
-        S8x8,
-    }
 
     class Program
     {
+        private const string StdPath = "Mini.ledp";
+        //private const string StdPath = "Sequenz.ledp";
+        private const string CfgPath = "config.json";
+
         static async Task Main(string[] args)
         {
-            test();
+            //test();
             LEDerConfig lederconfig = null;
             Console.WriteLine("LEDerZaumzeug!\nPixelgenerator meiner Wahl.");
-            string cfgf = "config.json";
-            Console.WriteLine("lese Konfig: " + cfgf);
-            using (var stream = File.OpenText(cfgf))
+            Console.WriteLine("lese Konfig: " + CfgPath);
+            using (var stream = File.OpenRead(CfgPath))
             {
-                string cstr = stream.ReadToEnd();
-                lederconfig = JsonConvert.DeserializeObject<LEDerConfig>(cstr, new JsonSerializerSettings
-                {
-                    TypeNameHandling = TypeNameHandling.Auto,
-                    //SerializationBinder = knownTypesBinder
-                });
-
-
+                lederconfig = await SerialisierungsFabrik.ReadConfigFromStreamAsync(stream);
             }
 
-            using (var pixelator = new LEDerZaumZeug(lederconfig, null))
+            PixelProgram programmsequenz = null;
+            using (Stream stream = File.OpenRead(StdPath))
+            {
+                programmsequenz = await SerialisierungsFabrik.ReadProgramFromStreamAsync(stream);
+            }
+
+            using (var pixelator = new LEDerZaumZeug(lederconfig, programmsequenz))
             {
                 await pixelator.StartAsync();
 
@@ -89,18 +40,20 @@ namespace LEDerZaumzeug
         }
 
         static void test()
-        { 
+        {
+
             var prg = new PixelProgram()
             {
-                Meta =
+                MetaInfo =
                 {
-                    ["ABC"] = "DEF"
+                    ["ABC"] = "DEF",
+                    ["Autor"] = "Hansi",
                 },
                 Seq =
                 {
-                    new JoinNode()
+                    new MixerNode()
                     {
-                        TypeName = "Multi",
+                        TypeName = "LEDerZaumzeug.LinearFade",
                         Quelle =
                         {
                             new FilterNode()
@@ -127,9 +80,9 @@ namespace LEDerZaumzeug
                 }
             };
 
-            KnownTypesBinder knownTypesBinder = new KnownTypesBinder
+            SerialisierungsFabrik.KnownTypesBinder knownTypesBinder = new SerialisierungsFabrik.KnownTypesBinder
             {
-                KnownTypes = new List<Type> { typeof(FilterNode), typeof(GeneratorNode), typeof(JoinNode), typeof(OutputNode) }
+                KnownTypes = new List<Type> { typeof(FilterNode), typeof(GeneratorNode), typeof(MixerNode), typeof(OutputNode) }
             };
 
             //XmlSerializer xserializer = new XmlSerializer(typeof(JoinNode));
@@ -184,21 +137,5 @@ namespace LEDerZaumzeug
 
         }
 
-        public class KnownTypesBinder : ISerializationBinder
-        {
-            public IList<Type> KnownTypes { get; set; }
-
-            public Type BindToType(string assemblyName, string typeName)
-            {
-                Type type = KnownTypes.SingleOrDefault(t => t.Name == typeName);
-                return type;
-            }
-
-            public void BindToName(Type serializedType, out string assemblyName, out string typeName)
-            {
-                assemblyName = null;
-                typeName = serializedType.Name;
-            }
-        }
     }
 }

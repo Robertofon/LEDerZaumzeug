@@ -29,6 +29,10 @@ namespace LEDerZaumzeug
 
         public static RGBPixel P1 => new RGBPixel(1f,1f,1f);
 
+        public override string ToString()
+        {
+            return $"RGB({R}/{G}/{B})";
+        }
         /// <summary>
         /// Beschneidet den Wertebereich des Pixels, um die Komponenten
         /// R, G und B auf 0.0 .. 1.0 zu bekommen.

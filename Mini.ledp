@@ -1,0 +1,18 @@
+﻿{
+  "MetaInfo": {
+    "Info": "Miniprogramm mit einfachem filter+gen",
+    "Autor": "Robertofon"
+  },
+  "Seq": [
+    
+        {
+          "$type": "FilterNode",
+          "TypeName": "LEDerZaumzeug.Filters.Invert",
+          "Quelle": {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.SolidColor"
+          }
+        }
+      
+  ]
+}

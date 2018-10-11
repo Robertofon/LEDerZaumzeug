@@ -1,41 +1,42 @@
 ﻿{
-  "Meta": {
-    "ABC": "DEF"
+  "MetaInfo": {
+    "ABC": "DEF",
+    "Autor": "Hansi"
   },
   "Seq": [
     {
-      "$type": "JoinNode",
-      "JoinName": "Multi",
+      "$type": "MixerNode",
       "Quelle": [
         {
           "$type": "FilterNode",
-          "FilterName": "Invert",
           "Quelle": {
             "$type": "GeneratorNode",
-            "GeneratorName": "Solid"
-          }
+            "TypeName": "Solid"
+          },
+          "TypeName": "Invert"
         },
         {
           "$type": "FilterNode",
-          "FilterName": "Tiefpass",
           "Quelle": {
             "$type": "GeneratorNode",
-            "GeneratorName": "Solid"
-          }
+            "TypeName": "Solid"
+          },
+          "TypeName": "Tiefpass"
         },
         {
           "$type": "FilterNode",
-          "FilterName": "Tiefpass",
           "Quelle": {
             "$type": "FilterNode",
-            "FilterName": "Flt2",
             "Quelle": {
               "$type": "GeneratorNode",
-              "GeneratorName": "Solid"
-            }
-          }
+              "TypeName": "Solid"
+            },
+            "TypeName": "Flt2"
+          },
+          "TypeName": "Tiefpass"
         }
-      ]
+      ],
+      "TypeName": "LEDerZaumzeug.Mixers.LinearFade"
     }
   ]
 }

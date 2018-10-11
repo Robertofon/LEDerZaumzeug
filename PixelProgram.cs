@@ -10,7 +10,7 @@ namespace LEDerZaumzeug
     [Serializable]
     public class PixelProgram
     {
-        public Dictionary<string, string> Meta { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> MetaInfo { get; private set; } = new Dictionary<string, string>();
 
         /// <summary>
         /// Liste von Generatorbäumen.

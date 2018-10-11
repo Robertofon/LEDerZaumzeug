@@ -27,11 +27,24 @@ namespace LEDerZaumzeug
             Stop();
         }
 
-        public Task StartAsync()
+        public async Task StartAsync()
         {
-            MusterNode prg = this.sequenz.Seq.First();
             Console.Write("Start");
-            return Task.Delay(800);
+
+            // Gette erstes Muster aus der Mustersequenz des LED-Programms.
+            MusterNode prg1 = this.sequenz.Seq.First();
+
+            var engine = new MusterPipeline(prg1);
+            try
+            {
+                engine.Initialisiere(new MatrixParams() { SizeX = 5, SizeY = 8 });
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+
+            RGBPixel[,] bild = await engine.ExecuteAsync(3);
             
         }
 

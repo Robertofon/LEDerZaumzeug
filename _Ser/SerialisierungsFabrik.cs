@@ -1,23 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
+using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace LEDerZaumzeug
 {
     public class SerialisierungsFabrik
     {
-        public MusterPipeline ErstellePipeline(MusterNode programm)
+        /// <summary>
+        /// Vorschlag von Newtonsoft für einen Type-binder.
+        /// </summary>
+        internal class KnownTypesBinder : ISerializationBinder
         {
-            if( programm is JoinNode )
-            {
-                var join = (JoinNode)programm;
-                Type t = Type.GetType(join.TypeName);
-                IJoin joinobj = (IJoin)Activator.CreateInstance(t);
-                joinobj.Initialize();
+            public IList<Type> KnownTypes { get; set; }
 
-                MusterPipeline
-                join.TypeName
+            public Type BindToType(string assemblyName, string typeName)
+            {
+                Type type = KnownTypes.SingleOrDefault(t => t.Name == typeName);
+                return type;
             }
+
+            public void BindToName(Type serializedType, out string assemblyName, out string typeName)
+            {
+                assemblyName = null;
+                typeName = serializedType.Name;
+            }
+        }
+
+        private static KnownTypesBinder knownTypesBinder = new KnownTypesBinder
+        {
+            KnownTypes = new List<Type> { typeof(FilterNode), typeof(GeneratorNode), typeof(MixerNode), typeof(OutputNode) }
+        };
+
+        public static async Task<PixelProgram> ReadProgramFromStreamAsync(Stream stream)
+        {
+            var reader = new StreamReader(stream);
+            {
+                string str = await reader.ReadToEndAsync();
+                return ReadProgramFromString(str);
+            }
+        }
+
+        public static PixelProgram ReadProgramFromString(string str)
+        {
+            return JsonConvert.DeserializeObject<PixelProgram>(str, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                SerializationBinder = knownTypesBinder
+            });
+        }
+
+
+        public static async Task<LEDerConfig> ReadConfigFromStreamAsync(Stream stream)
+        {
+            var reader = new StreamReader(stream);
+            {
+                string str = await reader.ReadToEndAsync();
+                return ReadConfigFromString(str);
+            }
+        }
+
+        public static LEDerConfig ReadConfigFromString(string str)
+        {
+            return JsonConvert.DeserializeObject<LEDerConfig>(str, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                SerializationBinder = knownTypesBinder
+            });
         }
 
 

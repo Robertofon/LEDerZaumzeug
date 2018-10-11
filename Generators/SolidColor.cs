@@ -10,9 +10,11 @@ namespace LEDerZaumzeug.Generators
     /// <summary>
     /// Generator für vollflächig eine Farbe. <see cref="Color"/> setzt die Farbe.
     /// </summary>
-    [Description("Vollfarbe")]
+    [Description("Vollfarbe in genau einer Variante")]
     public class SolidColor : IGenerator
     {
+        private uint sizex, sizey;
+
         /// <summary>
         /// Parameter to set color.
         /// </summary>
@@ -22,12 +24,12 @@ namespace LEDerZaumzeug.Generators
         {            
         }
 
-        public Task<RGBPixel[,]> GenPattern(Size size, long frame)
+        public Task<RGBPixel[,]> GenPattern(long frame)
         {
-            var p = new RGBPixel[size.Width, size.Height];
-            for( int x= 0; x < size.Width; x++)
+            var p = new RGBPixel[sizex, sizey];
+            for( int x= 0; x < sizex; x++)
             {
-                for( int y= 0; y < size.Height; y++)
+                for( int y= 0; y < sizey; y++)
                 p[x,y] = this.Color;
             }
 
@@ -39,8 +41,10 @@ namespace LEDerZaumzeug.Generators
             return Task.FromResult(new GeneratorInfos());
         }
 
-        public async Task Initialize(MatrixParams matrixParameters)
+        public async Task Initialize(MatrixParams mparams)
         {
+            this.sizex = mparams.SizeX;
+            this.sizey = mparams.SizeY;
             return;
         }
     }
