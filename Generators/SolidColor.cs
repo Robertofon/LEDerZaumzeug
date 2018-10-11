@@ -22,7 +22,7 @@ namespace LEDerZaumzeug.Generators
         {            
         }
 
-        public Task<RGBPixel[,]> GenPattern(Size size)
+        public Task<RGBPixel[,]> GenPattern(Size size, long frame)
         {
             var p = new RGBPixel[size.Width, size.Height];
             for( int x= 0; x < size.Width; x++)

@@ -1,0 +1,15 @@
+{
+  "SeqShowTime": "00:00:33",
+  "Outputs": [
+    {
+      "$type": "OutputNode",
+      "TypeName": "LEDerZaumzeug.Tpm2NetOutput",
+      "AutoSize": false,
+      "SizeX": 8,
+      "SizeY": 12,
+      "Cfg": {
+        "Order": "SNV_TL"
+      }
+    }
+  ]
+}

@@ -20,7 +20,7 @@ namespace LEDerZaumzeug
     [Serializable]
     public class GeneratorNode : MusterNode
     {
-        public string GeneratorName { get; set; }
+        public string TypeName { get; set; }
         //public IGenerator Gen { get; set; }
     }
 
@@ -28,7 +28,7 @@ namespace LEDerZaumzeug
     [Serializable]
     public class FilterNode : MusterNode
     {
-         public string FilterName { get; set; }
+         public string TypeName { get; set; }
        //[NonSerialized]
         //public IFilter Filt { get; set; }
 
@@ -39,8 +39,16 @@ namespace LEDerZaumzeug
     [Serializable]
     public class JoinNode : MusterNode
     {
-         public string JoinName { get; set; }
-        //public IJoins Join { get; set; }
+        public string TypeName { get; set; }
+
+        internal Lazy<IJoin> Join => new Lazy<IJoin>(CreateObjectInstance);
+
+        private IJoin CreateObjectInstance()
+        {
+            Type t = Type.GetType(this.TypeName);
+            IJoin obj = (IJoin)Activator.CreateInstance(t);
+            return obj;
+        }
 
         public IList<MusterNode> Quelle { get; set; } = new List<MusterNode>();
     }

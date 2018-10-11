@@ -3,6 +3,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -28,8 +29,8 @@ namespace LEDerZaumzeug
         Task Initialize(MatrixParams matrixParameters);
 
         Task<GeneratorInfos> GetInfos();
-
-        Task<RGBPixel[,]> GenPattern(Size size);
+        
+        Task<RGBPixel[,]> GenPattern(Size size, long frame);
     }
 
     public interface IFilter
@@ -45,7 +46,7 @@ namespace LEDerZaumzeug
     /// Vereinigung von Pixelströmen oder Operatoren in das Ganze.
     /// Hier können Mehrere Generatoren oder Filter zusammengeführt werden-
     /// </summary>
-    public interface IJoins
+    public interface IJoin
     {
         Task Initialize(MatrixParams matrixParameters);
         Task<RGBPixel[,]> Join(IList<RGBPixel[,]> sources);
@@ -59,42 +60,36 @@ namespace LEDerZaumzeug
         S8x8,
     }
 
-    /// <summary>
-    /// Hauptklasse, instanzieren um zu arbeiten.
-    /// </summary>
-    public class LEDerZaumZeug : IDisposable
-    {
-        private LEDerConfig config;
-        private PixelProgram sequenz;
-        private MusterPipeline activePipeline;
-        private IEnumerable<IOutput> outputs;
-
-        public void Dispose()
-        {
-            Stop();
-        }
-
-        public void StartAsync()
-        {
-
-        }
-
-        public void Stop()
-        {
-
-        }
-
-
-
-
-    }
-
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
+            test();
+            LEDerConfig lederconfig = null;
             Console.WriteLine("LEDerZaumzeug!\nPixelgenerator meiner Wahl.");
+            string cfgf = "config.json";
+            Console.WriteLine("lese Konfig: " + cfgf);
+            using (var stream = File.OpenText(cfgf))
+            {
+                string cstr = stream.ReadToEnd();
+                lederconfig = JsonConvert.DeserializeObject<LEDerConfig>(cstr, new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.Auto,
+                    //SerializationBinder = knownTypesBinder
+                });
 
+
+            }
+
+            using (var pixelator = new LEDerZaumZeug(lederconfig, null))
+            {
+                await pixelator.StartAsync();
+
+            }
+        }
+
+        static void test()
+        { 
             var prg = new PixelProgram()
             {
                 Meta =
@@ -105,26 +100,26 @@ namespace LEDerZaumzeug
                 {
                     new JoinNode()
                     {
-                        JoinName = "Multi",
+                        TypeName = "Multi",
                         Quelle =
                         {
                             new FilterNode()
                             {
-                                FilterName = "Invert",
-                                Quelle = new GeneratorNode() { GeneratorName="Solid" }
+                                TypeName = "Invert",
+                                Quelle = new GeneratorNode() { TypeName="Solid" }
                             },
                             new FilterNode()
                             {
-                                FilterName = "Tiefpass",
-                                Quelle = new GeneratorNode() { GeneratorName="Solid" }
+                                TypeName = "Tiefpass",
+                                Quelle = new GeneratorNode() { TypeName="Solid" }
                             },
                             new FilterNode()
                             {
-                                FilterName = "Tiefpass",
+                                TypeName = "Tiefpass",
                                 Quelle = new FilterNode()
                                 {
-                                    FilterName ="Flt2",
-                                    Quelle = new GeneratorNode() { GeneratorName="Solid" }
+                                    TypeName ="Flt2",
+                                    Quelle = new GeneratorNode() { TypeName="Solid" }
                                 }
                             }
                         }
@@ -134,7 +129,7 @@ namespace LEDerZaumzeug
 
             KnownTypesBinder knownTypesBinder = new KnownTypesBinder
             {
-                KnownTypes = new List<Type> { typeof(FilterNode), typeof(GeneratorNode), typeof(JoinNode) }
+                KnownTypes = new List<Type> { typeof(FilterNode), typeof(GeneratorNode), typeof(JoinNode), typeof(OutputNode) }
             };
 
             //XmlSerializer xserializer = new XmlSerializer(typeof(JoinNode));
@@ -148,8 +143,43 @@ namespace LEDerZaumzeug
             Console.WriteLine(g);
             var restor = Newtonsoft.Json.JsonConvert.DeserializeObject<PixelProgram>(g, new JsonSerializerSettings
             {
-                TypeNameHandling = TypeNameHandling.Objects,
+                TypeNameHandling = TypeNameHandling.Auto,
                 SerializationBinder = knownTypesBinder
+            });
+
+
+            var ldc = new LEDerConfig()
+            {
+                SeqShowTime = TimeSpan.FromSeconds(33),
+                Outputs =
+                {
+                    new OutputNode()
+                    {
+                        TypeName="LEDerZaumzeug.Tpm2NetOutput",
+                        AutoSize = false,
+                        SizeX = 8,
+                        SizeY = 12,
+                        Cfg =
+                        {
+                            ["Order"] = "SNV_TL"
+                        }
+                    }
+                }
+            };
+            string gq = Newtonsoft.Json.JsonConvert.SerializeObject(ldc, new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                Formatting = Formatting.Indented,
+                SerializationBinder = knownTypesBinder
+            });
+
+            ITraceWriter tw = new MemoryTraceWriter();
+            var restorcfg = Newtonsoft.Json.JsonConvert.DeserializeObject<LEDerConfig>(gq, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                SerializationBinder = knownTypesBinder,
+                DateParseHandling = DateParseHandling.DateTimeOffset,
+                TraceWriter = tw
             });
 
         }

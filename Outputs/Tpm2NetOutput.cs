@@ -21,7 +21,7 @@ namespace LEDerZaumzeug.Outputs
 
         public Task<OutputInfos> GetInfos()
         {
-            return Task.FromResult(new OutputInfos());
+            return Task.FromResult(new OutputInfos() { Dim = new System.Drawing.SizeF(12, 8), DesiredSubSamplemode = SubSample.S1x1 } );
         }
 
         public Task Initialize(object paramset)
@@ -36,8 +36,9 @@ namespace LEDerZaumzeug.Outputs
 
         }
 
-        private void GenerischeOrder(List<(int, int)> pxmap, PixelArrangement sNH_TR)
+        private void GenerischeOrder(List<(int, int)> pxmap, PixelArrangement pa)
         {
+            //if()
             throw new NotImplementedException();
         }
 
