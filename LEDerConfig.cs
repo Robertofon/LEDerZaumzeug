@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace LEDerZaumzeug
 {
@@ -20,10 +21,8 @@ namespace LEDerZaumzeug
     }
 
     [Serializable]
-    public class OutputNode
+    public class OutputNode : MusterNode
     {
-        public string TypeName { get; set; }
-
         /// <summary>
         /// Bei <c>true</c> sind die Werte in <see cref="SizeX"/> und <see cref="SizeY"/>
         /// nicht relevant bzw. können von der Engine gegeben werden. Bei <c>false</c>
@@ -35,7 +34,17 @@ namespace LEDerZaumzeug
 
         public int SizeY { get; set; }
 
-        public Dictionary<string, string> Cfg { get; set; } = new Dictionary<string, string>();
+        [NonSerialized]
+        private IFilter inst;
+
+        [DebuggerHidden]
+        internal IOutput Inst
+        {
+            get
+            {
+                return this.inst ?? (inst = this.CreateObjectInstance<IOutput>());
+            }
+        }
     }
 
 }

@@ -1,4 +1,9 @@
 ﻿using LEDerZaumzeug.Extensions;
+using Newtonsoft.Json;
+using System;
+using System.Globalization;
+using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace LEDerZaumzeug
 {
@@ -10,7 +15,23 @@ namespace LEDerZaumzeug
     /// </summary>
     public struct RGBPixel
     {
+        private static Regex htmlcolor = new Regex("^#[0-9A-Fa-f]?(?<h>[0-9A-Fa-f]{3})$|^#[0-9A-Fa-f]{0,2}(?<h>[0-9A-Fa-f]{6})$");
         public float R, G, B;
+
+        //public RGBPixel(string str)
+        //{
+        //    if(str.StartsWith("#"))
+        //    {
+        //        // HTML-color?
+        //        //TODO
+        //    }
+        //    else
+        //    {
+        //        TryParse(str)
+        //    }
+        //    R = G = B = 0;
+        //}
+
 
         /// <summary>
         /// Konstruktor zur initialisierung mit Werten.
@@ -25,14 +46,71 @@ namespace LEDerZaumzeug
             B = b;
         }
 
+        /// <summary>
+        /// Unterstützt das Lesen aus HTML-Color definitionen. Siehe regex.
+        /// Also Dinge wie #AABBCC für RGB oder #33FF55cc für ARGB definitionen 
+        /// oder die Kürzere Variante #444. Dabei werden die Hexwerte jeweils in 0..255 umgewandelt
+        /// und per Dreisatz auf 0f..1f abgebildet. Alpha wird nicht unterstützt.
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        public static RGBPixel? FromHtmlColor(string s)
+        {
+            var matches = htmlcolor.Match(s);
+            if (matches.Success)
+            {
+                var htmlc = matches.Groups["h"].ToString();
+                int dist = htmlc.Length == 3 ? 1 : 2;
+                IFormatProvider f = CultureInfo.InvariantCulture;
+                if ( uint.TryParse(htmlc.Substring(0*dist,dist), NumberStyles.HexNumber, f, out uint r)
+                    && uint.TryParse(htmlc.Substring(1 * dist, dist), NumberStyles.HexNumber, f, out uint g)
+                    && uint.TryParse(htmlc.Substring(2 * dist, dist), NumberStyles.HexNumber, f, out uint b))
+                {
+                    float norm = htmlc.Length == 3 ? 15f : 255f;
+                    return new RGBPixel(r / norm, g / norm, b / norm);
+                }
+            }
+
+            return null;
+        }
+
         public static RGBPixel P0 => new RGBPixel(0f,0f,0f);
 
         public static RGBPixel P1 => new RGBPixel(1f,1f,1f);
 
+        
+        public static bool TryParse(string str, IFormatProvider prov, out RGBPixel pixel)
+        {
+            if ((str.First() == '[' && str.Last() == ']') || (str.First() == '(' && str.Last() == ')'))
+            {
+                string[] komp = str.Substring(1, str.Length - 2).Split('/');
+                if (komp.Length != 3)
+                {
+                    pixel = default;
+                    return false;
+                }
+
+                NumberStyles style = NumberStyles.Float;
+                float r, g, b;
+                if (float.TryParse(komp[0], style, prov, out r) && float.TryParse(komp[1], style, prov, out g) && float.TryParse(komp[2], style, prov, out b))
+                {
+                    pixel = new RGBPixel(r, g, b);
+                    return true;
+                }
+            }
+
+            pixel = default;
+            return false;
+        }
+
+        /// <summary>
+        /// Macht daraus einen String - gut für Debugger-Zwecke.
+        /// </summary>
         public override string ToString()
         {
-            return $"RGB({R}/{G}/{B})";
+            return $"[{R}/{G}/{B}]";
         }
+
         /// <summary>
         /// Beschneidet den Wertebereich des Pixels, um die Komponenten
         /// R, G und B auf 0.0 .. 1.0 zu bekommen.
@@ -92,6 +170,22 @@ namespace LEDerZaumzeug
         public static RGBPixel operator *(RGBPixel p, float f)
         {
             return new RGBPixel(p.R * f, p.G * f, p.B * f);
+        }
+
+        /// <summary>
+        /// Überladener == operator.
+        /// </summary>
+        public static bool operator==(RGBPixel a, RGBPixel b)
+        {
+            return a.Equals(b);
+        }
+
+        /// <summary>
+        /// Überladener != operator.
+        /// </summary>
+        public static bool operator!=(RGBPixel a, RGBPixel b)
+        {
+            return !a.Equals(b);
         }
 
     }

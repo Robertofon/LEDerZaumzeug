@@ -19,6 +19,10 @@ namespace LEDerZaumzeug.Generators
         /// Parameter to set color.
         /// </summary>
         public RGBPixel Color { get; set; }
+        public string Colour { get; set; }
+        public int _testNum { get; set; }
+        public float _testFlt { get; set; }
+
 
         public void Dispose()
         {            

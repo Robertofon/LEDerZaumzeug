@@ -8,9 +8,13 @@
         {
           "$type": "FilterNode",
           "TypeName": "LEDerZaumzeug.Filters.Invert",
+          "Ptest" :  "testinhalt",
           "Quelle": {
             "$type": "GeneratorNode",
-            "TypeName": "LEDerZaumzeug.Generators.SolidColor"
+            "TypeName": "LEDerZaumzeug.Generators.SolidColor",
+            "Color": "(0.3/0.4/1.0)",
+            "_testNum":  5,
+            "_testFlt":  5.5
           }
         }
       
