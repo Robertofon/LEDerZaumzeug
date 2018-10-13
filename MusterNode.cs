@@ -30,16 +30,16 @@ namespace LEDerZaumzeug
         private Dictionary<string, JToken> _eParams;
 
         /// <summary>
-        /// Helfermethode, um die Dreiersequenz zu kapseln.
+        /// Erzeugt das Objekt des Typs in <see cref="TypeName"/> und
+        /// appliziert die vorhandenen Zusatzparameter von <see cref="_eParams"/>.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
         protected T CreateObjectInstance<T>()
         {
             Type t = Type.GetType(this.TypeName);
             var obj = (T)Activator.CreateInstance(t);
             // Hmmm. vllt. ein bisschen blöd, erst json string draus zu machen, aber geht.
-            // Exceptions... könnte passieren.
+            // Exceptions... passieren und sagen, dass Werte nicht zugewiesen werden können (Jo, Syntax Jungs!!)
+            // Von Effizienz: https://stackoverflow.com/questions/32307033/how-to-use-wpf-controls-with-simple-injector-dependencies/52677121#52677121
             string json = JsonConvert.SerializeObject(this._eParams);
             try
             {

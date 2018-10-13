@@ -23,19 +23,8 @@ namespace LEDerZaumzeug
     [Serializable]
     public class OutputNode : MusterNode
     {
-        /// <summary>
-        /// Bei <c>true</c> sind die Werte in <see cref="SizeX"/> und <see cref="SizeY"/>
-        /// nicht relevant bzw. können von der Engine gegeben werden. Bei <c>false</c>
-        /// werden die werte für bar genommen.
-        /// </summary>
-        public bool AutoSize { get; set; }
-
-        public int SizeX { get; set; }
-
-        public int SizeY { get; set; }
-
         [NonSerialized]
-        private IFilter inst;
+        private IOutput inst;
 
         [DebuggerHidden]
         internal IOutput Inst

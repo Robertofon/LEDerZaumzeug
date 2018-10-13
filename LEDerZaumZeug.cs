@@ -13,7 +13,7 @@ namespace LEDerZaumzeug
         private readonly LEDerConfig config;
         private PixelProgram sequenz;
         private MusterPipeline activePipeline;
-        private IEnumerable<IOutput> outputs;
+        private readonly List<IOutput> outputs = new List<IOutput>();
 
         public LEDerZaumZeug(LEDerConfig config, PixelProgram sequenz)
         {
@@ -31,6 +31,8 @@ namespace LEDerZaumzeug
         {
             Console.Write("Start");
 
+            // Outputs bearbeiten
+            this.CheckOutputs();
             // Gette erstes Muster aus der Mustersequenz des LED-Programms.
             MusterNode prg1 = this.sequenz.Seq.First();
 
@@ -46,6 +48,20 @@ namespace LEDerZaumzeug
 
             RGBPixel[,] bild = await engine.ExecuteAsync(3);
             
+        }
+
+        private void CheckOutputs()
+        {
+            this.outputs.Clear();
+            foreach( var outpn in this.config.Outputs)
+            {
+                // Zeugt die Instanz beim Zugriff
+                IOutput o = outpn.Inst;
+                this.outputs.Add(o);
+            }
+
+            // Erkenne Outputs als die Dimension
+            this.outputs.Select( ou=>ou.AutoSize)
         }
 
         public void Stop()
