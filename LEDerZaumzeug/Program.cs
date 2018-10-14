@@ -99,42 +99,6 @@ namespace LEDerZaumzeug
                 TypeNameHandling = TypeNameHandling.Auto,
                 SerializationBinder = knownTypesBinder
             });
-
-
-            var ldc = new LEDerConfig()
-            {
-                SeqShowTime = TimeSpan.FromSeconds(33),
-                Outputs =
-                {
-                    new OutputNode()
-                    {
-                        TypeName="LEDerZaumzeug.Tpm2NetOutput",
-                        AutoSize = false,
-                        SizeX = 8,
-                        SizeY = 12,
-                        Cfg =
-                        {
-                            ["Order"] = "SNV_TL"
-                        }
-                    }
-                }
-            };
-            string gq = Newtonsoft.Json.JsonConvert.SerializeObject(ldc, new JsonSerializerSettings()
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                Formatting = Formatting.Indented,
-                SerializationBinder = knownTypesBinder
-            });
-
-            ITraceWriter tw = new MemoryTraceWriter();
-            var restorcfg = Newtonsoft.Json.JsonConvert.DeserializeObject<LEDerConfig>(gq, new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.Auto,
-                SerializationBinder = knownTypesBinder,
-                DateParseHandling = DateParseHandling.DateTimeOffset,
-                TraceWriter = tw
-            });
-
         }
 
     }

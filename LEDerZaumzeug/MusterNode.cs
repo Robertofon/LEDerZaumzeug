@@ -27,7 +27,7 @@ namespace LEDerZaumzeug
         /// https://www.newtonsoft.com/json/help/html/DeserializeExtensionData.htm
         /// </summary>
         [JsonExtensionData]
-        private Dictionary<string, JToken> _eParams;
+        private JObject _extparams;
 
         /// <summary>
         /// Erzeugt das Objekt des Typs in <see cref="TypeName"/> und
@@ -37,17 +37,17 @@ namespace LEDerZaumzeug
         {
             Type t = Type.GetType(this.TypeName);
             var obj = (T)Activator.CreateInstance(t);
-            // Hmmm. vllt. ein bisschen blöd, erst json string draus zu machen, aber geht.
+            // JSON an neu erzeugtes objekt applizieren.
+            // https://stackoverflow.com/questions/52792214/how-to-apply-jsonextensiondata-dictionarystring-jtoken-to-another-object-wi
             // Exceptions... passieren und sagen, dass Werte nicht zugewiesen werden können (Jo, Syntax Jungs!!)
-            // Von Effizienz: https://stackoverflow.com/questions/32307033/how-to-use-wpf-controls-with-simple-injector-dependencies/52677121#52677121
-            string json = JsonConvert.SerializeObject(this._eParams);
             try
             {
-                JsonConvert.PopulateObject(json, obj, new JsonSerializerSettings()
-                {
-                    MissingMemberHandling = MissingMemberHandling.Error,
-                    Converters = { new RGBPixelConverter() }
-                });
+                new JsonSerializer().Populate(_extparams.CreateReader(), obj);
+                // JsonConvert.PopulateObject(json, obj, new JsonSerializerSettings()
+                // {
+                //     MissingMemberHandling = MissingMemberHandling.Error,
+                //     Converters = { new RGBPixelConverter() }
+                // });
             }
             catch (Exception parsex)
             {

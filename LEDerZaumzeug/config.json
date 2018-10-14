@@ -4,12 +4,11 @@
     {
       "$type": "OutputNode",
       "TypeName": "LEDerZaumzeug.Tpm2NetOutput",
-      "AutoSize": false,
+      "SizeMode": "StaticSetting",
       "SizeX": 8,
       "SizeY": 12,
-      "Cfg": {
-        "Order": "SNV_TL"
-      }
+      "PixelOrder": "SNH_TR"
+      
     }
   ]
 }

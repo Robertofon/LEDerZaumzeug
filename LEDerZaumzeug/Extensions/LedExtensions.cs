@@ -39,7 +39,32 @@ namespace LEDerZaumzeug.Extensions
 
         public static bool IsHoriz(this PixelArrangement pa)
         {
-            return new[] { PixelArrangement.SNH_BL, PixelArrangement.SNH_BR, PixelArrangement.SNH_TL, PixelArrangement.SNH_TR }.Contains(pa);
+            return new[] { 
+                PixelArrangement.SNH_BL, PixelArrangement.SNH_BR, 
+                PixelArrangement.SNH_TL, PixelArrangement.SNH_TR,
+                PixelArrangement.LNH_BL, PixelArrangement.LNH_BR, 
+                PixelArrangement.LNH_TL, PixelArrangement.LNH_TR }.Contains(pa);
         }
+
+        public static bool IsVert(this PixelArrangement pa)
+        {
+            return !IsHoriz(pa);
+        }
+
+        public static bool IsSnakeWise(this PixelArrangement pa)
+        {
+            return pa.ToString().Contains("SN");
+        }
+
+        public static bool IsStartTop(this PixelArrangement pa)
+        {
+            return pa.ToString().Contains("T");
+        }
+
+        public static bool IsStartRight(this PixelArrangement pa)
+        {
+            return pa.ToString().Contains("R");
+        }
+
     }
 }

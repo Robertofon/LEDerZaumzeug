@@ -11,16 +11,18 @@ namespace LEDerZaumzeug
     public interface IOutput : IDisposable
     {
         /// <summary>
-        /// Bei <c>true</c> sind die Werte in <see cref="SizeX"/> und <see cref="SizeY"/>
-        /// nicht relevant bzw. können von der Engine gegeben werden. Bei <c>false</c>
-        /// werden die werte für bar genommen.
+        /// <see cref="SizeModes"/> what to enter here in order
+        /// to give <see cref="SizeX"/> an <see cref="SizeY"/> a meaning.
         /// </summary>
-        SizeMode AutoSize { get; set; }
+        SizeModes SizeMode { get; set; }
 
         int SizeX { get; set; }
 
         int SizeY { get; set; }
 
+        /// <summary>
+        /// Ausspielen der Daten wohin auch immer.
+        /// </summary>
         Task Play(RGBPixel[,] pixels);
 
         Task<OutputInfos> GetInfos();

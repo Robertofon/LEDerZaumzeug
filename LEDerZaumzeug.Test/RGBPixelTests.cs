@@ -124,7 +124,7 @@ namespace LEDerZaumzeug.Test
         }
 
         [Fact]
-        public void TestRGBPixelOperatorUnärMinus()
+        public void TestRGBPixelOperatorUnrMinus()
         {
             RGBPixel a = new RGBPixel(6, 2, 3);
             RGBPixel acta = -a;

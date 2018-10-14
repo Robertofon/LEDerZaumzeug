@@ -61,7 +61,11 @@ namespace LEDerZaumzeug
             }
 
             // Erkenne Outputs als die Dimension
-            this.outputs.Select( ou=>ou.AutoSize)
+            var mo = this.outputs.FirstOrDefault( ou => ou.SizeMode == SizeModes.StaticSetting);
+            if( mo != null)
+            {
+                Console.WriteLine("Fixes Output gefunden: "+ mo.SizeX + "," + mo.SizeY);
+            }
         }
 
         public void Stop()

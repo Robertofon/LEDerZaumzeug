@@ -1,6 +1,6 @@
 ﻿namespace LEDerZaumzeug
 {
-    public enum SizeMode
+    public enum SizeModes
     {
         /// <summary>
         /// Matrix is dynamicly extensible and can accept dimensions from the engine
