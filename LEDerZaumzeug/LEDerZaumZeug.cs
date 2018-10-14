@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace LEDerZaumzeug
 {
@@ -15,7 +16,7 @@ namespace LEDerZaumzeug
         private MusterPipeline activePipeline;
         private readonly List<IOutput> outputs = new List<IOutput>();
         // Rechengrößen für max dimensionen.
-        private int rechenDimX, rechenDimY;
+        private uint masterSizeX, masterSizeY;
 
         public LEDerZaumZeug(LEDerConfig config, PixelProgram sequenz)
         {
@@ -34,45 +35,68 @@ namespace LEDerZaumzeug
             Console.Write("Start");
 
             // Outputs bearbeiten
-            this.CheckOutputs();
+            await this.InitOutputsAsync();
             // Gette erstes Muster aus der Mustersequenz des LED-Programms.
             MusterNode prg1 = this.sequenz.Seq.First();
 
             var engine = new MusterPipeline(prg1);
             try
             {
-                engine.Initialisiere(new MatrixParams() { SizeX = 5, SizeY = 8 });
+                engine.Initialisiere(new MatrixParams() { SizeX = masterSizeX, SizeY = masterSizeY });
             }
             catch(Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
 
-            RGBPixel[,] bild = await engine.ExecuteAsync(3);
-            
+            this.activePipeline = engine;
         }
 
-        private void CheckOutputs()
+        public async Task Run()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+            // Bilder in der Schleife generieren
+            for (int i = 0; i < 100; i++)
+            {
+                RGBPixel[,] bild = await this.activePipeline.ExecuteAsync(i);
+                var outputtasks = this.outputs.Select( output => output.Play(bild));
+                await Task.WhenAll(outputtasks.ToArray());
+            }
+            sw.Stop();
+            Console.WriteLine("100 bilder dauerten: " + TimeSpan.FromTicks(sw.ElapsedTicks));
+        }
+
+
+
+        private async Task InitOutputsAsync()
         {
             this.outputs.Clear();
             foreach( var outpn in this.config.Outputs)
             {
                 // Zeugt die Instanz beim Zugriff
                 IOutput o = outpn.Inst;
-                o.Initialize(this.config);
-                this.outputs.Add(o);
+                bool erfolg = await o.Initialize(this.config);
+                if (erfolg == true)
+                {
+                    this.outputs.Add(o);
+                }
+                else
+                {
+                    Console.WriteLine("lasse Output " + o.GetType().Name + " weg.");
+                }
             }
 
             // Erkenne Outputs als die Dimension
-            var masterout = this.outputs.FirstOrDefault( ou => ou.SizeMode == SizeModes.StaticSetting);
+            var masterout = this.outputs.FirstOrDefault( ou => ou.SizeMode == SizeModes.Static);
             if( masterout != null)
             {
                 Console.WriteLine("Fixes Output gefunden: "+ masterout.SizeX + "," + masterout.SizeY);
-                this.rechenDimX = masterout.SizeX;
-                this.rechenDimY = masterout.SizeY;
+                this.masterSizeX = (uint)masterout.SizeX;
+                this.masterSizeY = (uint)masterout.SizeY;
                 foreach( var outpn in this.outputs)
                 {
-                    outpn.SetSize(this.rechenDimX, this.rechenDimY);
+                    outpn.SetSize(masterout.SizeX, masterout.SizeY);
                 }
             }
 

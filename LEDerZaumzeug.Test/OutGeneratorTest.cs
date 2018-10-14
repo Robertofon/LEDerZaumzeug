@@ -118,5 +118,51 @@ namespace LEDerZaumzeug.Test
             Assert.Equal((3,4), pxMap[23]);
             Assert.Equal((4,4), pxMap[24]);
         }
+
+        [Fact]
+        public void MappedOutputTest()
+        {
+            // Test: R ist 0, G ist 0,5 und B ist 1.
+            RGBPixel[,] px = {  { new RGBPixel(0f,0.5f,1f), new RGBPixel(0f,0.5f,1f) },
+                                { new RGBPixel(0f,0.5f,1f), new RGBPixel(0f,0.5f,1f) }};
+
+            var pxMap = new List<(int, int)>();
+            OutputBase.GenerischeOrder(pxMap, 2, 2, PixelArrangement.LNH_TL);
+
+            byte[] erg = OutputBase.MappedOutput(pxMap, px, SubPixelOrder.RGB);
+            // Prüfe, ob auch die Reihenfolge oben beibehalten wurde
+            Assert.Equal(0, erg[0]);
+            Assert.Equal(127, erg[1]);
+            Assert.Equal(255, erg[2]);
+            Assert.Equal(0, erg[3]);
+            Assert.Equal(127, erg[4]);
+            Assert.Equal(255, erg[5]);
+            Assert.Equal(0, erg[6]);
+            Assert.Equal(127, erg[7]);
+            Assert.Equal(255, erg[8]);
+            Assert.Equal(0, erg[9]);
+            Assert.Equal(127, erg[10]);
+            Assert.Equal(255, erg[11]);
+        }
+
+        [Fact]
+        public void ReMapSubPixelTest()
+        {
+            byte R = 88, G = 55, B = 44;
+            (byte, byte, byte) RGBPx = (R,G,B);
+
+            // interner Test:
+            Assert.NotEqual(R, G);
+            Assert.NotEqual(R, B);
+            Assert.NotEqual(G, B);
+
+            // Reihenfolge RGB - unverändert
+            var erg1 = OutputBase.ReMapSubPixel(RGBPx, SubPixelOrder.RGB);
+            Assert.Equal((R, G, B), erg1);
+
+            // Reihenfolge BGR - verändert
+            var erg2 = OutputBase.ReMapSubPixel(RGBPx, SubPixelOrder.BGR);
+            Assert.Equal((B,G,R), erg2);
+        }
     }
 }

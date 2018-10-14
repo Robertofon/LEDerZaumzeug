@@ -35,6 +35,7 @@ namespace LEDerZaumzeug
             using (var pixelator = new LEDerZaumZeug(lederconfig, programmsequenz))
             {
                 await pixelator.StartAsync();
+                await pixelator.Run();
 
             }
         }

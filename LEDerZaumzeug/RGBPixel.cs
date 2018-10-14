@@ -18,21 +18,6 @@ namespace LEDerZaumzeug
         private static Regex htmlcolor = new Regex("^#[0-9A-Fa-f]?(?<h>[0-9A-Fa-f]{3})$|^#[0-9A-Fa-f]{0,2}(?<h>[0-9A-Fa-f]{6})$");
         public float R, G, B;
 
-        //public RGBPixel(string str)
-        //{
-        //    if(str.StartsWith("#"))
-        //    {
-        //        // HTML-color?
-        //        //TODO
-        //    }
-        //    else
-        //    {
-        //        TryParse(str)
-        //    }
-        //    R = G = B = 0;
-        //}
-
-
         /// <summary>
         /// Konstruktor zur initialisierung mit Werten.
         /// </summary>

@@ -32,4 +32,18 @@
         LNV_BL,
         LNV_BR,
     }
+
+    /// <summary>
+    /// Subpixel orderungen. Üblich sind nur RGB und BGR.
+    /// Rest kann irgendwann hinzugebaut werden.
+    /// </summary>
+    public enum SubPixelOrder
+    {
+        RGB,
+        //RBG,
+        BGR,
+        //BRG,
+        //GRB,
+        //GBR,        
+    }
 }

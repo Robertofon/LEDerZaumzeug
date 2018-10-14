@@ -14,6 +14,7 @@ namespace LEDerZaumzeug.Generators
     public class SolidColor : IGenerator
     {
         private uint sizex, sizey;
+        private RGBPixel[,] pbuf;
 
         /// <summary>
         /// Parameter to set color.
@@ -30,14 +31,13 @@ namespace LEDerZaumzeug.Generators
 
         public Task<RGBPixel[,]> GenPattern(long frame)
         {
-            var p = new RGBPixel[sizex, sizey];
             for( int x= 0; x < sizex; x++)
             {
                 for( int y= 0; y < sizey; y++)
-                p[x,y] = this.Color;
+                    pbuf[x,y] = this.Color;
             }
 
-            return Task.FromResult(p);
+            return Task.FromResult(pbuf);
         }
 
         public Task<GeneratorInfos> GetInfos()
@@ -45,11 +45,12 @@ namespace LEDerZaumzeug.Generators
             return Task.FromResult(new GeneratorInfos());
         }
 
-        public async Task Initialize(MatrixParams mparams)
+        public Task Initialize(MatrixParams mparams)
         {
             this.sizex = mparams.SizeX;
             this.sizey = mparams.SizeY;
-            return;
+            this.pbuf = new RGBPixel[sizex, sizey];
+            return Task.CompletedTask;
         }
     }
 }

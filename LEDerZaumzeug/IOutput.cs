@@ -27,7 +27,7 @@ namespace LEDerZaumzeug
 
         Task<OutputInfos> GetInfos();
 
-        Task Initialize(object paramset);
+        Task<bool> Initialize(LEDerConfig cfg);
 
         /// <summary>
         /// Wird nach <see cref="Initialize(object)"/> aufgerufen, um nach einem Prozess

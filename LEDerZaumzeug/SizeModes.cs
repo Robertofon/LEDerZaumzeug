@@ -23,6 +23,6 @@
         /// as it is not determinable. Output is therefore fixed static const.
         /// Width and Height must be set to the acutal size.
         /// </summary>
-        StaticSetting
+        Static
     }
 }
