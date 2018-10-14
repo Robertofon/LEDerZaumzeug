@@ -8,8 +8,7 @@ namespace LEDerZaumzeug
     {
         Task Initialize(MatrixParams matrixParameters);
 
-        Task<GeneratorInfos> GetInfos();
-        
+      
         Task<RGBPixel[,]> GenPattern(long frame);
     }
 }

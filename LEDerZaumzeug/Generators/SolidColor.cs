@@ -20,10 +20,6 @@ namespace LEDerZaumzeug.Generators
         /// Parameter to set color.
         /// </summary>
         public RGBPixel Color { get; set; }
-        public string Colour { get; set; }
-        public int _testNum { get; set; }
-        public float _testFlt { get; set; }
-
 
         public void Dispose()
         {            
@@ -33,16 +29,13 @@ namespace LEDerZaumzeug.Generators
         {
             for( int x= 0; x < sizex; x++)
             {
-                for( int y= 0; y < sizey; y++)
-                    pbuf[x,y] = this.Color;
+                for (int y = 0; y < sizey; y++)
+                {
+                    pbuf[x, y] = this.Color;
+                }
             }
 
             return Task.FromResult(pbuf);
-        }
-
-        public Task<GeneratorInfos> GetInfos()
-        {
-            return Task.FromResult(new GeneratorInfos());
         }
 
         public Task Initialize(MatrixParams mparams)
