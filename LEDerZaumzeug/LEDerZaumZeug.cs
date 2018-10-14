@@ -14,6 +14,8 @@ namespace LEDerZaumzeug
         private PixelProgram sequenz;
         private MusterPipeline activePipeline;
         private readonly List<IOutput> outputs = new List<IOutput>();
+        // Rechengrößen für max dimensionen.
+        private int rechenDimX, rechenDimY;
 
         public LEDerZaumZeug(LEDerConfig config, PixelProgram sequenz)
         {
@@ -57,15 +59,24 @@ namespace LEDerZaumzeug
             {
                 // Zeugt die Instanz beim Zugriff
                 IOutput o = outpn.Inst;
+                o.Initialize(this.config);
                 this.outputs.Add(o);
             }
 
             // Erkenne Outputs als die Dimension
-            var mo = this.outputs.FirstOrDefault( ou => ou.SizeMode == SizeModes.StaticSetting);
-            if( mo != null)
+            var masterout = this.outputs.FirstOrDefault( ou => ou.SizeMode == SizeModes.StaticSetting);
+            if( masterout != null)
             {
-                Console.WriteLine("Fixes Output gefunden: "+ mo.SizeX + "," + mo.SizeY);
+                Console.WriteLine("Fixes Output gefunden: "+ masterout.SizeX + "," + masterout.SizeY);
+                this.rechenDimX = masterout.SizeX;
+                this.rechenDimY = masterout.SizeY;
+                foreach( var outpn in this.outputs)
+                {
+                    outpn.SetSize(this.rechenDimX, this.rechenDimY);
+                }
             }
+
+
         }
 
         public void Stop()

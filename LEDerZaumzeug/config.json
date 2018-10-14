@@ -3,7 +3,7 @@
   "Outputs": [
     {
       "$type": "OutputNode",
-      "TypeName": "LEDerZaumzeug.Tpm2NetOutput",
+      "TypeName": "LEDerZaumzeug.Outputs.Tpm2NetOutput",
       "SizeMode": "StaticSetting",
       "SizeX": 8,
       "SizeY": 12,

@@ -28,5 +28,13 @@ namespace LEDerZaumzeug
         Task<OutputInfos> GetInfos();
 
         Task Initialize(object paramset);
+
+        /// <summary>
+        /// Wird nach <see cref="Initialize(object)"/> aufgerufen, um nach einem Prozess
+        /// mit diesen und andern Output-Dimensionen eine neue konsens-Dimension zu setzen.
+        /// </summary>
+        /// <param name="rechenDimX"></param>
+        /// <param name="rechenDimY"></param>
+        void SetSize(int rechenDimX, int rechenDimY);
     }
 }

@@ -42,19 +42,17 @@ namespace LEDerZaumzeug
             // Exceptions... passieren und sagen, dass Werte nicht zugewiesen werden können (Jo, Syntax Jungs!!)
             try
             {
-                new JsonSerializer().Populate(_extparams.CreateReader(), obj);
-                // JsonConvert.PopulateObject(json, obj, new JsonSerializerSettings()
-                // {
-                //     MissingMemberHandling = MissingMemberHandling.Error,
-                //     Converters = { new RGBPixelConverter() }
-                // });
+                new JsonSerializer()
+                {
+                    Converters = { new RGBPixelConverter() },
+                    MissingMemberHandling = MissingMemberHandling.Error,
+                }.Populate(_extparams.CreateReader(), obj);
             }
             catch (Exception parsex)
             {
                 Console.WriteLine("Zuweisung von zusatzparametern gescheitert bei Instanz von: " + this.TypeName + parsex.ToString());
             }
-            //Newtonsoft.Json.Linq.
-            //this.Params[].
+
             return obj;
         }
 
