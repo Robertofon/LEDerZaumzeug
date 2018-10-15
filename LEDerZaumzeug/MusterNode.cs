@@ -45,17 +45,20 @@ namespace LEDerZaumzeug
             // Exceptions... passieren und sagen, dass Werte nicht zugewiesen werden können (Jo, Syntax Jungs!!)
             try
             {
-                log.Info($"Populiere Objekt '{obj.GetType().Name} mit Parametern");
-                new JsonSerializer()
+                // wir haben extraparameter
+                if(_extparams != null)
                 {
-                    Converters = { new RGBPixelConverter() },
-                    MissingMemberHandling = MissingMemberHandling.Error,
-                }.Populate(_extparams.CreateReader(), obj);
+                    log.Info($"Populiere Objekt '{obj.GetType().Name} mit Parametern");
+                    new JsonSerializer()
+                    {
+                        Converters = { new RGBPixelConverter() },
+                        MissingMemberHandling = MissingMemberHandling.Error,
+                    }.Populate(_extparams.CreateReader(), obj);
+                }
             }
             catch (Exception parsex)
             {
-                log.Error(parsex, $"Zuweisung von zusatzparametern gescheitert bei Instanz von: {this.TypeName}"+
-                    "Zusatzparameter:");
+                log.Error(parsex, $"Zuweisung von Zusatzparametern gescheitert bei Instanz von: '{this.TypeName}'. Zusatzparameter:");
                 log.Error(JsonConvert.SerializeObject(_extparams, Formatting.Indented));
             }
 

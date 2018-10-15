@@ -21,7 +21,7 @@ namespace LEDerZaumzeug.Generators
         /// <summary>
         /// Parameter to set color.
         /// </summary>
-        public RGBPixel ObjektFarbe { get; set; } = RGBPixel.P1;
+        public RGBPixel Color { get; set; } = RGBPixel.P1;
 
         public int ObjektZahl { get; set; } = 8;
 
@@ -59,7 +59,7 @@ namespace LEDerZaumzeug.Generators
                     // male Objekt, wo es ist
                     if( this.objekte.Any( o=>o.X == x && Convert.ToInt32(o.Y) == y))
                     {
-                        pbuf[x, y] = this.ObjektFarbe;
+                        pbuf[x, y] = this.Color;
                     }
                     else
                     {

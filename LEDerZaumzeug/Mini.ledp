@@ -10,8 +10,9 @@
           "TypeName": "LEDerZaumzeug.Filters.Invert",
           "Quelle": {
             "$type": "GeneratorNode",
-            "TypeName": "LEDerZaumzeug.Generators.SolidColor",
-            "Color": "(0.3/0.4/1.0)"
+            "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+            "Color": "(0.8/0.4/1.0)",
+            "Geschwindigkeitsfaktor": 0.05            
           }
         }
       

@@ -57,11 +57,12 @@ namespace LEDerZaumzeug
             var sw = new Stopwatch();
             sw.Start();
             // Bilder in der Schleife generieren
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 RGBPixel[,] bild = await this.activePipeline.ExecuteAsync(i);
                 var outputtasks = this.outputs.Select( output => output.Play(bild));
                 await Task.WhenAll(outputtasks.ToArray());
+                await Task.Delay(1000/25);
             }
             sw.Stop();
             Console.WriteLine("100 bilder dauerten: " + TimeSpan.FromTicks(sw.ElapsedTicks));

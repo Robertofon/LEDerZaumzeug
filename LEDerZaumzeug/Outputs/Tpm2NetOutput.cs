@@ -102,10 +102,11 @@ namespace LEDerZaumzeug.Outputs
             byte[] byteData = MappedOutput(this.PxMap, pixels, SubPixelOrder.RGB);
 
             // Anzahl der Pakete ermitteln:  (durch 3 ergibt sich gleich ein ganzzahlig durch 3 teilbares Längengebot)
-            int paketzahl = (byteData.Length/3) / (Tpm2NetMaxFrameSize/3);
+            double paketzahld = (double)(byteData.Length) / (double)(Tpm2NetMaxFrameSize);
+            int paketzahl = Convert.ToInt32(Math.Ceiling(paketzahld));
             int frameSizePlan = (Tpm2NetMaxFrameSize / 3) * 3;
             int offset = 0;
-            int i = (paketzahl==1) ? 0 : 1;  // Paketzähler 0 bei paketzahl==1, sonst 1 basiert.
+            int i = 1; // Paketzähler 1 basiert.
 
             // Daten in byteData an 3-Byte-Grenzen aufgeteilt auf mehrere Pakete versenden in einer Schleife
             while ( offset < byteData.Length )
@@ -114,12 +115,14 @@ namespace LEDerZaumzeug.Outputs
                 ushort frameSize = (ushort)frameSizePlan.LimitTo(byteData.Length - offset);
                 var dataSeg = new ArraySegment<byte>(byteData, offset, frameSize);
                 offset += frameSize;
-                byte[] header = Tpm2NetProtokoll(Tmp2BlockTyp.AntwortmitDatenBlockTyp, frameSize, (byte)i, (byte)paketzahl);
+                byte[] header = Tpm2NetProtokoll(Tmp2BlockTyp.DatenPaketBlockTyp, (ushort)(frameSize), (byte)i, (byte)paketzahl);
                 i += 1;
                 var headerseg = new ArraySegment<byte>(header);
                 var byteDataa = new ArraySegment<byte>(byteData);
-                Task<int> sent = _socket.SendAsync(new[] { headerseg, byteData, new byte[] { Tpm2BlockEndByte } }, SocketFlags.None);
-                await sent;
+                //Task<int> sentT = _socket.SendAsync(new[] { headerseg, byteData, new byte[] { Tpm2BlockEndByte } }, SocketFlags.None);
+                
+                Task<int> sentT = _socket.SendAsync(new[] { headerseg, byteData, new byte[] { Tpm2BlockEndByte } }, SocketFlags.None);
+                int sent = await sentT;
             }
         }
 
