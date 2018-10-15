@@ -10,6 +10,8 @@ namespace LEDerZaumzeug
 {
     public abstract class MusterNode
     {
+        private static readonly NLog.ILogger log = NLog.LogManager.GetCurrentClassLogger();
+  
         /// <summary>
         /// Typname, wie ihn <see cref="Type.GetType"/> verarbeiten kann,
         /// um eine Instanz dieser Klasse als Generator, Filter oder Mixer zu erstellen.
@@ -35,6 +37,7 @@ namespace LEDerZaumzeug
         /// </summary>
         protected T CreateObjectInstance<T>()
         {
+            log.Info($"CreateObjectInstance - suche '{this.TypeName}'.");
             Type t = Type.GetType(this.TypeName);
             var obj = (T)Activator.CreateInstance(t);
             // JSON an neu erzeugtes objekt applizieren.
@@ -42,6 +45,7 @@ namespace LEDerZaumzeug
             // Exceptions... passieren und sagen, dass Werte nicht zugewiesen werden können (Jo, Syntax Jungs!!)
             try
             {
+                log.Info($"Populiere Objekt '{obj.GetType().Name} mit Parametern");
                 new JsonSerializer()
                 {
                     Converters = { new RGBPixelConverter() },
@@ -50,7 +54,9 @@ namespace LEDerZaumzeug
             }
             catch (Exception parsex)
             {
-                Console.WriteLine("Zuweisung von zusatzparametern gescheitert bei Instanz von: " + this.TypeName + parsex.ToString());
+                log.Error(parsex, $"Zuweisung von zusatzparametern gescheitert bei Instanz von: {this.TypeName}"+
+                    "Zusatzparameter:");
+                log.Error(JsonConvert.SerializeObject(_extparams, Formatting.Indented));
             }
 
             return obj;

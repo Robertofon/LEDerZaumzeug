@@ -3,14 +3,14 @@
   "Outputs": [
     {
       "$type": "OutputNode",
-      "TypeName": "LEDerZaumzeug.Outputs.NullOutput",
+      "TypeName": "LEDerZaumzeug.Outputs.Tpm2NetOutput",
       "SizeMode": "Static",
       "SizeX": 8,
-      "SizeY": 12
-      //"PixelOrder": "SNH_TR",
-      //"SubPixelOrder": "RGB",
-      //"IP_Adresse": "127.0.0.1",
-      //"UDP_Port": 65505
+      "SizeY": 12,
+      "PixelOrder": "SNH_TR",
+      "SubPixelOrder": "RGB",
+      "IP_Adresse": "172.23.92.148",
+      "UDP_Port": 65506
     }
   ]
 }
