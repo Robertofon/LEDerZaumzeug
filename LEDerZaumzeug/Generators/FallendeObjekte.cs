@@ -44,7 +44,7 @@ namespace LEDerZaumzeug.Generators
             return Task.CompletedTask;
         }
 
-        public Task<RGBPixel[,]> GenPattern(long frame)
+        public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
             if( frame %8 ==0)
             {

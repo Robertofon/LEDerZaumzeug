@@ -3,6 +3,9 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using NLog;
+using System.Threading;
+using LEDerZaumzeug.Extensions;
 
 namespace LEDerZaumzeug
 {
@@ -11,12 +14,20 @@ namespace LEDerZaumzeug
     /// </summary>
     public class LEDerZaumZeug : IDisposable
     {
+        private static readonly ILogger log = LogManager.GetCurrentClassLogger();
         private readonly LEDerConfig config;
         private PixelProgram sequenz;
         private MusterPipeline activePipeline;
         private readonly List<IOutput> outputs = new List<IOutput>();
+        private CancellationTokenSource cts;
+        private Thread runthread;
+
         // Rechengrößen für max dimensionen.
         private uint masterSizeX, masterSizeY;
+
+        // für den Szenenwechsel siehe config.
+        private TimeSpan szeneStart;
+        private int szenenindex;
 
         public LEDerZaumZeug(LEDerConfig config, PixelProgram sequenz)
         {
@@ -37,38 +48,76 @@ namespace LEDerZaumzeug
             // Outputs bearbeiten
             await this.InitOutputsAsync();
             // Gette erstes Muster aus der Mustersequenz des LED-Programms.
-            MusterNode prg1 = this.sequenz.Seq.First();
-
+            this.szenenindex = 0;
+            MusterNode prg1 = this.sequenz.Seq[this.szenenindex];
+            // Daraus eine pipeline bauen:
             var engine = new MusterPipeline(prg1);
+
             try
             {
                 engine.Initialisiere(new MatrixParams() { SizeX = masterSizeX, SizeY = masterSizeY });
             }
             catch(Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                log.Error(ex, "Fehler beim erstellen der Generator und Mixer-Objekte");
+                return;
             }
 
             this.activePipeline = engine;
+
+            this.cts = new CancellationTokenSource();
+            this.runthread = new Thread(Run);
+            this.runthread.Start();
         }
 
-        public async Task Run()
+        private async void Run()
         {
+            // Zielvorgaben für Bilder pro sekunde und daher millisekunden pro Bild
+            double zielfps = 25;
+            TimeSpan spanPf = TimeSpan.FromMilliseconds(Convert.ToInt64(1 / zielfps * 1000));
+            CancellationToken token = this.cts.Token;
+            ulong frame = 0;
+
             var sw = new Stopwatch();
             sw.Start();
+
+            // Programmwechsel
+            this.szeneStart = sw.Elapsed;
+
             // Bilder in der Schleife generieren
-            for (int i = 0; i < 1000; i++)
+            // Ende durch Cancellationtoken
+            while (!token.IsCancellationRequested)
             {
-                RGBPixel[,] bild = await this.activePipeline.ExecuteAsync(i);
+                TimeSpan startticks = sw.Elapsed;
+                this.PeriodischerSzenenwechselCheck(startticks);
+                RGBPixel[,] bild = await this.activePipeline.ExecuteAsync(frame++);
                 var outputtasks = this.outputs.Select( output => output.Play(bild));
                 await Task.WhenAll(outputtasks.ToArray());
-                await Task.Delay(1000/25);
+
+                // Zeit aufsyncen - warten so lange, bis FPS rand kommt.
+                TimeSpan dauer = sw.Elapsed - startticks;
+                TimeSpan wartespan = spanPf - dauer;
+                wartespan = wartespan.LimitTo(TimeSpan.Zero, TimeSpan.MaxValue);
+                log.Info("Aktuell dauer: " + dauer + " Warte: " + wartespan.ToString() + " Msek: " + sw.ElapsedMilliseconds);
+                await Task.Delay(wartespan);
             }
+
             sw.Stop();
-            Console.WriteLine("100 bilder dauerten: " + TimeSpan.FromTicks(sw.ElapsedTicks));
+            log.Info("Cancellation getriggert - räume outputs auf");
+            this.outputs.ForEach(o => o.Dispose());
+            log.Info("Ende jetzt");
+            token.ThrowIfCancellationRequested();
         }
 
-
+        private void PeriodischerSzenenwechselCheck(TimeSpan aktuelleTicks)
+        {
+            if( (aktuelleTicks - this.szeneStart) >= this.config.SeqShowTime )
+            {
+                this.szeneStart = aktuelleTicks;
+                log.Info("Szenenwechsel!"); 
+                // TODO: Noch implementieren
+            }
+        }
 
         private async Task InitOutputsAsync()
         {
@@ -106,7 +155,8 @@ namespace LEDerZaumzeug
 
         public void Stop()
         {
-
+            this.cts.Cancel();
+            this.runthread.Join();
         }
 
 

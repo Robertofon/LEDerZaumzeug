@@ -9,7 +9,7 @@ namespace LEDerZaumzeug.Filters
     /// </summary>
     public class Invert : IFilter
     {
-        public Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, long frame)
+        public Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, ulong frame)
         {
             (int w, int h) = pixels.Dim();
             var res = new RGBPixel[w,h];

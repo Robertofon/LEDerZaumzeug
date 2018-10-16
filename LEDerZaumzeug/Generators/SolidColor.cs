@@ -25,7 +25,7 @@ namespace LEDerZaumzeug.Generators
         {            
         }
 
-        public Task<RGBPixel[,]> GenPattern(long frame)
+        public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
             for( int x= 0; x < sizex; x++)
             {

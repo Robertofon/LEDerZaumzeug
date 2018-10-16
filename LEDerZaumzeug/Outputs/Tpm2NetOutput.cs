@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
 using LEDerZaumzeug.Extensions;
+using NLog;
 
 namespace LEDerZaumzeug.Outputs
 {
@@ -13,7 +14,7 @@ namespace LEDerZaumzeug.Outputs
     /// </summary>
     public class Tpm2NetOutput : OutputBase
     {
-        private static readonly NLog.ILogger log = NLog.LogManager.GetLogger(nameof(Tpm2NetOutput));
+        private static readonly ILogger log = LogManager.GetLogger(nameof(Tpm2NetOutput));
 
         private Socket _socket;
 

@@ -25,7 +25,7 @@ namespace LEDerZaumzeug.Mixer
             return Task.CompletedTask;
         }
 
-        public Task<RGBPixel[,]> Mix(IList<RGBPixel[,]> sources, long frame)
+        public Task<RGBPixel[,]> Mix(IList<RGBPixel[,]> sources, ulong frame)
         {
             float f0 = this.Fade.LimitTo(0f, 1f);
             float f1 = 1f - f0;

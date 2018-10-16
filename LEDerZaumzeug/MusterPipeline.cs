@@ -26,12 +26,12 @@ namespace LEDerZaumzeug
         /// </summary>
         /// <param name="frame">Framenummer. Sollte aufsteigend sein.</param>
         /// <returns>RGBPixel-Bild</returns>
-        public Task<RGBPixel[,]> ExecuteAsync(long frame)
+        public Task<RGBPixel[,]> ExecuteAsync(ulong frame)
         {
             return this.ExecuteIntAsync(this.Root, frame);
         }
         
-        private async Task<RGBPixel[,]> ExecuteIntAsync(MusterNode m, long frame)
+        private async Task<RGBPixel[,]> ExecuteIntAsync(MusterNode m, ulong frame)
         {
             GeneratorNode gn = m as GeneratorNode;
             if( gn != null)

@@ -17,6 +17,6 @@ namespace LEDerZaumzeug
         /// </summary>
         /// <param name="sources"></param>
         /// <returns></returns>
-        Task<RGBPixel[,]> Mix(IList<RGBPixel[,]> sources, long frame);
+        Task<RGBPixel[,]> Mix(IList<RGBPixel[,]> sources, ulong frame);
     }
 }

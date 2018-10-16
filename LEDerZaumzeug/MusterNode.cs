@@ -20,6 +20,7 @@ namespace LEDerZaumzeug
         [JsonProperty(Order = -2)]
         public string TypeName { get; set; }
 
+#pragma warning disable 0649 // standard wert - nie was anderes zugewiesen.
         /// <summary>
         /// Kollektion an extra Parametern, die die einzelnen Generatoren oder Filter
         /// benötigen. So kann direkt in den JSON-Level des <see cref="MusterNode"/> und
@@ -30,6 +31,7 @@ namespace LEDerZaumzeug
         /// </summary>
         [JsonExtensionData]
         private JObject _extparams;
+#pragma warning restore
 
         /// <summary>
         /// Erzeugt das Objekt des Typs in <see cref="TypeName"/> und

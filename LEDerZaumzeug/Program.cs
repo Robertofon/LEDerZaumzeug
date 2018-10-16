@@ -40,7 +40,13 @@ namespace LEDerZaumzeug
                 using (var pixelator = new LEDerZaumZeug(lederconfig, programmsequenz))
                 {
                     await pixelator.StartAsync();
-                    await pixelator.Run();
+
+                    Console.WriteLine("ENTER zum Beenden!!!!!");
+                    Console.ReadLine();
+
+                    // Synce auf
+                    pixelator.Stop();
+                    Console.WriteLine("==========");
                 } 
             }
             catch (Exception ex)

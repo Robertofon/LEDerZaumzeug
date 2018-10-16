@@ -9,6 +9,6 @@ namespace LEDerZaumzeug
         Task Initialize(MatrixParams matrixParameters);
 
       
-        Task<RGBPixel[,]> GenPattern(long frame);
+        Task<RGBPixel[,]> GenPattern(ulong frame);
     }
 }

@@ -6,7 +6,7 @@ namespace LEDerZaumzeug
     {
         Task Initialize(MatrixParams matrixParameters);
 
-        Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, long frame);
+        Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, ulong frame);
 
         Task<FilterInfos> GetInfos();
     }
