@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.26124.0
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDerZaumzeug", "LEDerZaumzeug\LEDerZaumzeug.csproj", "{36D7C477-D762-4327-9D39-3C55F102215C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LEDerZaumzeug.Test", "LEDerZaumzeug.Test\LEDerZaumzeug.Test.csproj", "{0274B980-A3C1-4861-B3AA-E024972474AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDerZaumzeug.Test", "LEDerZaumzeug.Test\LEDerZaumzeug.Test.csproj", "{0274B980-A3C1-4861-B3AA-E024972474AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AvaLEDerWand", "AvaLEDerWand\AvaLEDerWand.csproj", "{15F1473F-509D-4E80-B4FA-9EDB10F76E10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,18 @@ Global
 		{0274B980-A3C1-4861-B3AA-E024972474AB}.Release|x64.Build.0 = Release|Any CPU
 		{0274B980-A3C1-4861-B3AA-E024972474AB}.Release|x86.ActiveCfg = Release|Any CPU
 		{0274B980-A3C1-4861-B3AA-E024972474AB}.Release|x86.Build.0 = Release|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Debug|x64.Build.0 = Debug|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Debug|x86.Build.0 = Debug|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Release|x64.ActiveCfg = Release|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Release|x64.Build.0 = Release|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Release|x86.ActiveCfg = Release|Any CPU
+		{15F1473F-509D-4E80-B4FA-9EDB10F76E10}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,50 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:AvaLEDerWand"
+        
+        Title="Avalon Test-LED-Wand">
+    <Window.DataTemplates>
+    
+        <DataTemplate DataType="{x:Type local:LedVm}">
+            <Ellipse Width="30" Height="30" 
+                     Fill="{Binding LedBrush}" 
+                     Canvas.Left="{Binding Col}" 
+                     Canvas.Top="{Binding Row}"/>
+        </DataTemplate>
+    
+    </Window.DataTemplates>
+
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+            </MenuItem>
+        </Menu>
+
+        <Grid RowDefinitions="*,Auto"  DockPanel.Dock="Bottom" VerticalAlignment="Stretch">
+            <Border Background="DarkGray" CornerRadius="8" BorderThickness="4"
+                    Grid.Row="0" >
+                <Grid DataContext="{Binding }" >
+                    <!--ColumnDefinitions="Auto,Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,"-->
+                    <!--<Ellipse Fill="Black" Canvas.Left="250" Canvas.Top="300" Width="50" Height="20"/>-->
+                    <ItemsControl Items="{Binding Leds}" />
+                </Grid>
+            </Border>
+        
+            
+            <StackPanel Grid.Row="1">
+                <TextBlock Text="{Binding Name}" Margin="3" Background="Green"/>
+
+                <Button Command="{Binding DoKlick}" CommandParameter="34" Content="Klick" />
+                <TextBox Text="" Margin="4" Name="other"/>
+                <TextBlock Text="{Binding #other.Text}"/>
+            </StackPanel>
+        </Grid>
+
+    </DockPanel>
+    
+</Window>
