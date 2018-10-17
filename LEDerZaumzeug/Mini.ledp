@@ -5,16 +5,32 @@
   },
   "Seq": [
     
-        {
-          "$type": "FilterNode",
-          "TypeName": "LEDerZaumzeug.Filters.Invert",
-          "Quelle": {
-            "$type": "GeneratorNode",
-            "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
-            "Color": "(0.8/0.4/1.0)",
-            "Geschwindigkeitsfaktor": 0.05            
-          }
+      {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Kitt",
+          "Color": "(1.0/0.0/0.0)",
+          "KittWidth": 6,
+          "Speed": 0.1          
+      },
+      {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Wave",
+          "Color": "(1.0/0.0/0.0)",
+          "BgColor": "#00D",
+          "WaveLenght": 10,
+          "Direction": "S",
+          "Speed": 0.1          
+      },
+      {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Invert",
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+          "Color": "(0.8/0.4/1.0)",
+          "Geschwindigkeitsfaktor": 0.05            
         }
+      }
       
   ]
 }

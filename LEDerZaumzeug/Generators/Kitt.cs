@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -9,14 +9,15 @@ using System.Threading.Tasks;
 namespace LEDerZaumzeug.Generators
 {
     /// <summary>
-    /// Generator, der eine Sinuswelle vertikaler oder horizontaler ausbreitung in einer Farbe
-    /// darstellt. Mit Hintergrundfarbe überblendet.
+    /// Generator, der die Front-LED des Knigt Industries 2000 (K.I.T.T.) nachbaut.
+    /// Gehen tut es nur horizontal und Zentriert in Höhe und Breite.
     /// </summary>
-    public class Wave : IGenerator
+    public class Kitt : IGenerator
     {
         private uint sizex, sizey;
+        private float richtung = +1;
         private RGBPixel[,] pbuf;
-        
+
         private Random rnd = new Random(Environment.TickCount);
 
         /// <summary>
@@ -24,19 +25,16 @@ namespace LEDerZaumzeug.Generators
         /// </summary>
         public RGBPixel Color { get; set; } = RGBPixel.P1;
 
-        public RGBPixel BgColor { get; set; } = RGBPixel.P0;
-
         /// <summary>
-        /// Wellenlänge in Pixel. Also die Frequenz dessen.
+        /// Breite in Pixeln der Frontleuchte.
         /// </summary>
-        public float WaveLenght { get; set; } = 8;
+        public int KittWidth { get; set; } = 8;
 
         /// <summary>
         /// Geschwindigkeit mit der die Phasenverschiebung pro iteration verschoben wird.
         /// </summary>
         public float Speed { get; set; } = 1f;
 
-        public Richtung Direction { get; set; } = Richtung.O;
 
         public void Dispose()
         {            
@@ -54,24 +52,30 @@ namespace LEDerZaumzeug.Generators
         public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
             // Recycle deinen Puffer
-            // Rechne die Phasenverschiebung
-            double phase = frame / WaveLenght * (Math.PI*2) * this.Speed;
-            // invertiere sie bei Süd und West!
-            if( this.Direction == Richtung.W || this.Direction == Richtung.S )
-            {
-                phase = -phase;
-            }
+            // Pos
+            ulong pos = frame % (ulong)(KittWidth*2);
+
+            // zentrum um herum (gannzzahlig bleiben)
+            uint cx = (sizex - (uint)KittWidth) / 2;
+            uint cy = (sizey - (uint)1) / 2;
+            uint sx = (sizex/2 - (uint)KittWidth/2);
+            uint sy = (sizey/2 - (uint)1/2);
+
 
             for( int x= 0; x < sizex; x++)
             {
                 for (int y = 0; y < sizey; y++)
                 {
+                    if( y >= sy && y < sy+1
                     // je nach richtung x oder y als Laufvariable
-                    int w = (this.Direction == Richtung.W || this.Direction == Richtung.O) ? x : y;
-                    float val = .5f+ (float)(Math.Sin(phase + (w / WaveLenght * (2 * Math.PI))) * 0.5);
-
-                    // Anwenden von linearem additiven überblenden zwischen Forder- und Hintergrund
-                    pbuf[x, y] = (this.Color * val) + (this.BgColor * (1-val));
+                    && x >= sx && x < sx+KittWidth )
+                    {
+                        pbuf[x,y] = this.Color;
+                    }
+                    else
+                    {
+                        pbuf[x, y] = RGBPixel.P0;
+                    }
                 }
             }
 
