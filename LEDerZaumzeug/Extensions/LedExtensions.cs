@@ -13,6 +13,19 @@ namespace LEDerZaumzeug.Extensions
         }
 
         /// <summary>
+        /// Erstellt ein neues 2D-Feld derselben Dimension wie das übergebene.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="arr">Eingabefeld.</param>
+        /// <returns>Neues Feld.</returns>
+        public static T[,] NewSameDim<T>(this T[,] arr)
+        {
+            (int x, int y) = arr.Dim();
+            T[,] res = new T[x,y];
+            return res;
+        }
+
+        /// <summary>
         /// Klont und mappt ein zweidimensionales Feld vom Typ Ti in den Typ To
         /// ebenfalls als zweidimensionales Feld. Liefert das geklonte und modifizierte
         /// Ergebnis zurück.
@@ -35,6 +48,37 @@ namespace LEDerZaumzeug.Extensions
             }
 
             return res;
+        }
+        
+        /// <summary>
+        /// mappt ein zweidimensionales Feld vom Typ Ti in den Typ To
+        /// ebenfalls als zweidimensionales Feld. Beide müssen existieren.
+        /// und dieselbe Dimension haben. Liefert das erste und modifizierte
+        /// Ergebnis zurück.
+        /// </summary>
+        /// <typeparam name="To"></typeparam>
+        /// <typeparam name="Ti"></typeparam>
+        /// <param name="arr1">Eingabefeld und Resultat.</param>
+        /// <param name="arr2">Eingabefeld 2.</param>
+        /// <param name="mapfn"></param>
+        /// <returns>Geklontes und gemapptes Feld.</returns>
+        public static To[,] MapInplace<To>(this To[,] arr1, To[,] arr2, Func<To,To,To> mapfn)
+        {
+            if(arr1.Dim() != arr2.Dim())
+            {
+                throw new ArgumentException("Dims ungleich");
+            }
+
+            var (x,y) = arr1.Dim();
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    arr1[i, j] = mapfn(arr1[i, j], arr2[i, j]);
+                }
+            }
+
+            return arr1;
         }
 
         public static bool IsHoriz(this PixelArrangement pa)
