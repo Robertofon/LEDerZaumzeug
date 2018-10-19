@@ -12,7 +12,7 @@ namespace LEDerZaumzeug.Mixer
     /// Erlaubt es, n Kanäle mit vorgegebenen Operatoren zu fusionieren.
     /// Multiplikation, Addition, Minus, Abwedeln....
     /// </summary>
-    [Description("Arithmetischer Mixer")]
+    [Description("Arithmetischer Mixer mit konfigurierbaren Operatoren")]
     public class OperatorMixer : IMixer
     {
         /// <summary>

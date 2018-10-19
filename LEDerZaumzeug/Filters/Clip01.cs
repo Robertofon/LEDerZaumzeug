@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 namespace LEDerZaumzeug.Filters
 {
     /// <summary>
-    /// Invertiert ein Bild indem Werte von 0..1 auf 1..0 umgedreht werden. 
+    /// Gibt ein Bild 1:1 wieder aus, jedoch alle Werte auf 0,0..1,0 zurechtgestutzt.
     /// </summary>
-    public class Invert : IFilter
+    public class Clip01 : IFilter
     {
         public Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, ulong frame)
         {
@@ -17,7 +17,7 @@ namespace LEDerZaumzeug.Filters
             {
                 for (int y = 0; y < h; y++)
                 {
-                    res[x, y] = (~pixels[x, y]).Clip();
+                    res[x, y] = pixels[x, y].Clip();
                 }
             }
 
