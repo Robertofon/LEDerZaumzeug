@@ -12,9 +12,21 @@ namespace AvaLEDerWand
         private string _name;
         private int t = 0;
 
-        public LedControlViewModel()
+        public LedControlViewModel(int rows, int cols)
         {
-            Leds.Add(new LedVm() { LedBrush = Brushes.AliceBlue });
+            this._rows = rows;
+            this._cols = cols;
+            for( int i=0; i<rows*cols; i++)
+                Leds.Add(new LedVm() { LedBrush = Brushes.AliceBlue });
+        }
+
+        public void FeedData(int[] data)
+        {
+            int i = 0;
+            foreach( var d in data)
+            {
+                this.Leds[i++].LedBrush = new SolidColorBrush((uint) d);
+            }
         }
 
         public void DoKlick(int num)
@@ -22,9 +34,7 @@ namespace AvaLEDerWand
             Random r = new Random(Environment.TickCount);
             this.Name = "Ohoho" + num;
             this.Leds.Add(new LedVm() {
-                LedBrush = new SolidColorBrush((uint)r.Next(int.MaxValue)),
-                Row = ((t % 9) /3)*35,
-                Col = (t % 3) *35
+                LedBrush = new SolidColorBrush((uint)r.Next(int.MaxValue))
             });
             t++;
         }
@@ -38,6 +48,25 @@ namespace AvaLEDerWand
             set
             {
                 this.RaiseAndSetIfChanged(ref _name, value);
+            }
+        }
+
+        private int _rows;
+        private int _cols;
+
+        public int Cols
+        {
+            get => _cols; set
+            {
+                this.RaiseAndSetIfChanged(ref _cols, value);
+            }
+        }
+
+        public int Rows
+        {
+            get => _rows; set
+            {
+                this.RaiseAndSetIfChanged(ref _rows, value);
             }
         }
 
@@ -60,8 +89,5 @@ namespace AvaLEDerWand
                 this.RaiseAndSetIfChanged(ref _ledBrush, value);
             }
         }
-
-        public double Col { get; set; }
-        public double Row { get; set; }
     }
 }
