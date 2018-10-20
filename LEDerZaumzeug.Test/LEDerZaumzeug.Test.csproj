@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\LEDerZaumzeug\LEDerZaumzeug.csproj" />
+    <ProjectReference Include="..\LEDerZaumzeugLib\LEDerZaumzeugLib.csproj" />
   </ItemGroup>
 
 </Project>
