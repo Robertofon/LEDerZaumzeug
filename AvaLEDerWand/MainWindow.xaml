@@ -21,13 +21,15 @@
 
       
         <Grid RowDefinitions="*,Auto"  DockPanel.Dock="Bottom" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
-          <SimpleGrid Rows="2" Columns="3">
-            <Button>a</Button>
-            <Button>b</Button>
-            <Button>c</Button>
-            <Button>c</Button>
-            <Button>c</Button>
-          </SimpleGrid>
+          <Grid ColumnDefinitions="100,1.5*,4*" RowDefinitions="Auto,Auto,Auto"  Margin="4">
+            <TextBlock Text="Col0Row0:" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock Text="Col0Row1:" Grid.Row="0" Grid.Column="0"/>
+            <TextBlock Text="Col0Row2:" Grid.Row="0" Grid.Column="0"/>
+            <CheckBox Content="Col2Row0" Grid.Row="0" Grid.Column="2"/>
+            <Button Content="SpansCol1-2Row1-2" Grid.Row="1" Grid.Column="1" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+          </Grid>
+
+
           <Border Background="DarkGray" CornerRadius="8" BorderThickness="4"
                     Grid.Row="0" >
                     <!--ColumnDefinitions="Auto,Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,"-->

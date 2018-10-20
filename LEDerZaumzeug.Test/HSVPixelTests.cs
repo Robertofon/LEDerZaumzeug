@@ -1,4 +1,4 @@
-using System;
+Ôªøusing System;
 using Xunit;
 
 namespace LEDerZaumzeug.Test
@@ -10,11 +10,11 @@ namespace LEDerZaumzeug.Test
         public void Farbtests()
         {
             RGBPixel schwarz = RGBPixel.P0;
-            RGBPixel weiﬂ = RGBPixel.P1;
+            RGBPixel wei√ü = RGBPixel.P1;
             RGBPixel braun = new RGBPixel(.36f, .18f, .09f);
             RGBPixel blau = new RGBPixel(0, 0, 1);
             RGBPixel rot = new RGBPixel(1, 0, 0);
-            RGBPixel gr¸n = new RGBPixel(0, 1, 0);
+            RGBPixel gr√ºn = new RGBPixel(0, 1, 0);
             RGBPixel magenta = new RGBPixel(1, 0, 1);
             RGBPixel cyan = new RGBPixel(0, 1, 1);
             RGBPixel orange = new RGBPixel(1, .5f, 0);
@@ -23,11 +23,11 @@ namespace LEDerZaumzeug.Test
             RGBPixel safran = new RGBPixel(1, 0.75f, 0);
 
             HSVPixel schwarz1 = HSVPixel.P0;
-            HSVPixel weiﬂ1 = new HSVPixel(0, 0, 1);
+            HSVPixel wei√ü1 = new HSVPixel(0, 0, 1);
             HSVPixel braun1 = new HSVPixel(20, 0.75f, 0.36f);
             HSVPixel blau1 = new HSVPixel(240, 1, 1);
             HSVPixel rot1 = new HSVPixel(0, 1, 1);
-            HSVPixel gr¸n1 = new HSVPixel(120, 1, 1);
+            HSVPixel gr√ºn1 = new HSVPixel(120, 1, 1);
             HSVPixel magenta1 = new HSVPixel(300, 1, 1);
             HSVPixel cyan1 = new HSVPixel(180, 1, 1);
             HSVPixel orange1 = new HSVPixel(30, 1, 1);
@@ -37,17 +37,17 @@ namespace LEDerZaumzeug.Test
 
             Assert.Equal(schwarz1.V, HSVPixel.FromRGB(schwarz).V);
             Assert.Equal(schwarz, (RGBPixel)schwarz1);
-            Assert.Equal(weiﬂ1.V, HSVPixel.FromRGB(weiﬂ).V);
-            Assert.Equal(weiﬂ1.S, HSVPixel.FromRGB(weiﬂ).S);
-            Assert.Equal(weiﬂ, (RGBPixel)weiﬂ1);
+            Assert.Equal(wei√ü1.V, HSVPixel.FromRGB(wei√ü).V);
+            Assert.Equal(wei√ü1.S, HSVPixel.FromRGB(wei√ü).S);
+            Assert.Equal(wei√ü, (RGBPixel)wei√ü1);
             Assert.Equal(braun1, HSVPixel.FromRGB(braun));
             Assert.Equal(braun, (RGBPixel)braun1);
             Assert.Equal(blau1, HSVPixel.FromRGB(blau));
             Assert.Equal(blau, (RGBPixel)blau1);
             Assert.Equal(rot1, HSVPixel.FromRGB(rot));
             Assert.Equal(rot, (RGBPixel)rot1);
-            Assert.Equal(gr¸n1, HSVPixel.FromRGB(gr¸n));
-            Assert.Equal(gr¸n, (RGBPixel)gr¸n1);
+            Assert.Equal(gr√ºn1, HSVPixel.FromRGB(gr√ºn));
+            Assert.Equal(gr√ºn, (RGBPixel)gr√ºn1);
             Assert.Equal(magenta1, HSVPixel.FromRGB(magenta));
             Assert.Equal(magenta, (RGBPixel)magenta1);
             Assert.Equal(cyan1, HSVPixel.FromRGB(cyan));
