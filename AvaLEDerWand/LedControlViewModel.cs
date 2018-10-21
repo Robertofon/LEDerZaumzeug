@@ -11,7 +11,6 @@ namespace AvaLEDerWand
     public class LedControlViewModel : ViewModelBase
     {
         private string _name;
-        private int t = 0;
 
         public LedControlViewModel(int rows, int cols)
         {

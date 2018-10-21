@@ -77,13 +77,5 @@ namespace LEDerZaumzeug.Generators
 
             return Task.FromResult(pbuf);
         }
-
-
-        private class GObjekt
-        {
-            public int X;
-            public float Y;
-            public float Gesch;
-        }
     }
 }
