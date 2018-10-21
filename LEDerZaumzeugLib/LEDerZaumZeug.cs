@@ -45,8 +45,9 @@ namespace LEDerZaumzeug
         {
             Console.Write("Start");
 
-            // Outputs bearbeiten
-            await this.InitOutputsAsync();
+            // Outputs initialisieren
+            this.MesseOutputsEin();
+
             // Gette erstes Muster aus der Mustersequenz des LED-Programms.
             this.szenenindex = 0;
             MusterNode prg1 = this.sequenz.Seq[this.szenenindex];
@@ -119,10 +120,16 @@ namespace LEDerZaumzeug
             }
         }
 
-        private async Task InitOutputsAsync()
+        /// <summary>
+        /// Liest die Konfig und fügt alle Outputs hinzu und ruft
+        /// Initialize, womit sie auch die Konfig kennen. <see cref="IOutputs"/>
+        /// sind erstellt und parametriert. Am Ende ist die interne Liste outputs
+        /// populiert.
+        /// </summary>
+        /// <returns></returns>
+        public async Task AddOutputsFromCfg()
         {
-            this.outputs.Clear();
-            foreach( var outpn in this.config.Outputs)
+            foreach (var outpn in this.config.Outputs)
             {
                 // Zeugt die Instanz beim Zugriff
                 IOutput o = outpn.Inst;
@@ -136,21 +143,43 @@ namespace LEDerZaumzeug
                     Console.WriteLine("lasse Output " + o.GetType().Name + " weg.");
                 }
             }
+        }
 
-            // Erkenne Outputs als die Dimension
-            var masterout = this.outputs.FirstOrDefault( ou => ou.SizeMode == SizeModes.Static);
-            if( masterout != null)
+        /// <summary>
+        /// Fügt erstellte und parametrierte Outputs zur internen Liste hinzu.
+        /// Ruft Initialize auf.
+        /// 
+        /// Das ist eine möglichkeit, um selbst erstellte <see cref="IOutputs"/> zuzufügen.
+        /// </summary>
+        /// <param name="outputs"></param>
+        public async Task AddOutputsDirect(params IOutput[] outputs)
+        {
+            foreach(var o in outputs)
             {
-                Console.WriteLine("Fixes Output gefunden: "+ masterout.SizeX + "," + masterout.SizeY);
+                if(await o.Initialize(this.config))
+                {
+                    this.outputs.Add(o);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Schaut alle Outputs an und ermittelt die korrekte Auflösung, in der gearbeitet werden soll.
+        /// </summary>
+        private void MesseOutputsEin()
+        {
+            // Erkenne Outputs als die Dimension
+            var masterout = this.outputs.FirstOrDefault(ou => ou.SizeMode == SizeModes.Static);
+            if (masterout != null)
+            {
+                log.Info("Fixes Output gefunden: " + masterout.SizeX + "," + masterout.SizeY);
                 this.masterSizeX = (uint)masterout.SizeX;
                 this.masterSizeY = (uint)masterout.SizeY;
-                foreach( var outpn in this.outputs)
+                foreach (var outpn in this.outputs)
                 {
                     outpn.SetSize(masterout.SizeX, masterout.SizeY);
                 }
             }
-
-
         }
 
         public void Stop()

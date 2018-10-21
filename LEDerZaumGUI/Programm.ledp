@@ -1,0 +1,65 @@
+﻿{
+  "MetaInfo": {
+    "Info": "Miniprogramm mit einfachem filter+gen",
+    "Autor": "Robertofon"
+  },
+  "Seq": [
+    {
+      "$type": "FilterNode",
+      "TypeName": "LEDerZaumzeug.Filters.Clip01",
+      "Quelle": {
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
+        "Operator": "Add",
+        "Quelle": [
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Wave",
+            "Color": "(1.0/0.0/0.0)",
+            "BgColor": "#000",
+            "WaveLenght": 10,
+            "Direction": "S",
+            "Speed": 0.5
+          },
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Wave",
+            "Color": "(0.0/1.0/0.0)",
+            "BgColor": "#000",
+            "WaveLenght": 8,
+            "Direction": "W",
+            "Speed": 0.2
+          }
+        ]
+      }
+    },
+
+    {
+      "$type": "GeneratorNode",
+      "TypeName": "LEDerZaumzeug.Generators.Wave",
+      "Color": "(1.0/0.0/0.0)",
+      "BgColor": "#00D",
+      "WaveLenght": 10,
+      "Direction": "S",
+      "Speed": 0.1
+    },
+    {
+      "$type": "GeneratorNode",
+      "TypeName": "LEDerZaumzeug.Generators.Kitt",
+      "Color": "(1.0/0.0/0.0)",
+      "KittWidth": 6,
+      "Speed": 0.1
+    },
+    {
+      "$type": "FilterNode",
+      "TypeName": "LEDerZaumzeug.Filters.Invert",
+      "Quelle": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+        "Color": "(0.8/0.4/1.0)",
+        "Geschwindigkeitsfaktor": 0.05
+      }
+    }
+
+  ]
+}

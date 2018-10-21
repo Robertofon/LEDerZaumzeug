@@ -1,5 +1,6 @@
 ﻿using Avalonia.Diagnostics.ViewModels;
 using Avalonia.Media;
+using Avalonia.Media.Immutable;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,27 +17,28 @@ namespace AvaLEDerWand
         {
             this._rows = rows;
             this._cols = cols;
-            for( int i=0; i<rows*cols; i++)
-                Leds.Add(new LedVm() { LedBrush = Brushes.AliceBlue });
+            ZeilenSpaltenAblgeich(rows, cols);
         }
 
-        public void FeedData(int[] data)
+        private void ZeilenSpaltenAblgeich(int rows, int cols)
+        {
+            if (rows * cols != Leds.Count)
+            {
+                Leds.Clear();
+                for (int i = 0; i < rows * cols; i++)
+                {
+                    Leds.Add(new LedVm() { LedBrush = Brushes.Black });
+                }
+            }
+        }
+
+        public void FeedData(Color[] data)
         {
             int i = 0;
             foreach( var d in data)
             {
-                this.Leds[i++].LedBrush = new SolidColorBrush((uint) d);
+                this.Leds[i++].LedBrush = new ImmutableSolidColorBrush(d);
             }
-        }
-
-        public void DoKlick(int num)
-        {
-            Random r = new Random(Environment.TickCount);
-            this.Name = "Ohoho" + num;
-            this.Leds.Add(new LedVm() {
-                LedBrush = new SolidColorBrush((uint)r.Next(int.MaxValue))
-            });
-            t++;
         }
 
         public string Name
@@ -59,6 +61,7 @@ namespace AvaLEDerWand
             get => _cols; set
             {
                 this.RaiseAndSetIfChanged(ref _cols, value);
+                this.ZeilenSpaltenAblgeich(_rows, _cols);
             }
         }
 
@@ -67,7 +70,8 @@ namespace AvaLEDerWand
             get => _rows; set
             {
                 this.RaiseAndSetIfChanged(ref _rows, value);
-            }
+                this.ZeilenSpaltenAblgeich(_rows, _cols);
+           }
         }
 
         public IList<LedVm> Leds { get; } = new ObservableCollection<LedVm>();

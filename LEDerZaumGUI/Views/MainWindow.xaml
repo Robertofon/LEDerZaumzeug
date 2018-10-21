@@ -1,13 +1,26 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:vm="clr-namespace:AvaloniaApplication1.ViewModels;assembly=AvaloniaApplication1"
-        Icon="resm:AvaloniaApplication1.Assets.avalonia-logo.ico"
-        Title="AvaloniaApplication1">
+        xmlns:vm="clr-namespace:LEDerZaumGUI.ViewModels;assembly=LEDerZaumGUI"
+        xmlns:wand="clr-namespace:AvaLEDerWand;assembly=AvaLEDerWand"
+        Icon="resm:LEDerZaumGUI.Assets.avalonia-logo.ico"
+        Title="LEDerZaumGUI">
 
   <Design.DataContext>
     <vm:MainWindowViewModel/>
   </Design.DataContext>
-  
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+
+  <Grid ColumnDefinitions="300,*,300" RowDefinitions="20,400,Auto,*">
+    <TextBlock Text="{Binding Status}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+    <wand:LedControl Grid.Row="1" Grid.Column="0" DataContext="{Binding LedViewModel}"/>
+    <Border Grid.Row="2" Grid.Column="0" BorderBrush="DarkGray" Background="White" BorderThickness="2" CornerRadius="4" >
+      <WrapPanel Margin="2">
+        <Button Content="Programmladen" Command="{Binding DoProgrammLaden}"  Margin="2"/>
+        <Button Content="Start" Command="{Binding DoStartPixelei}" Margin="2"/>
+        <Button Content="Stop" Command="{Binding DoStopPixelei}"  Margin="2"/>
+      </WrapPanel>
+    </Border>
+    <TextBox Text="{Binding Quelltext}" TextWrapping="NoWrap"  Grid.Row="3" Grid.Column="0"/>
+  </Grid>
   
 </Window>

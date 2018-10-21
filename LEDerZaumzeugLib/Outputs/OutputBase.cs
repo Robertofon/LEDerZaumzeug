@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using LEDerZaumzeug.Extensions;
 using System.Net.Sockets;
+using System;
 
 namespace LEDerZaumzeug.Outputs
 {
@@ -18,8 +19,20 @@ namespace LEDerZaumzeug.Outputs
         /// der <see cref="pxmap"/> heraus und nur das wid auch ausgegeben.</summary>
         private readonly List<(int, int)> pxmap = new List<(int, int)>(200);
 
+        /// <summary>
+        /// Modus, wie Dimension gehandhabt wird. Dynamisch umänderbar oder statisch fix.
+        /// Abfragbar oder nicht.
+        /// </summary>
         public SizeModes SizeMode { get; set; }
+
+        /// <summary>
+        /// Aktuell angedachte X-Ausdehnung. Kann sich ändern.
+        /// </summary>
         public int SizeX { get; set; }
+        
+        /// <summary>
+        /// Aktuell angedachte Y-Ausdehnung. Kann sich ändern.
+        /// </summary>
         public int SizeY { get; set; }
 
         /// <summary>
@@ -37,7 +50,7 @@ namespace LEDerZaumzeug.Outputs
         /// Liste, die für jedes Pixel in der natürlichen ausgabereihenfolge die Koordinaten
         /// im generietten Bild wiedergeben. Lookup table.
         /// </summary>
-        public List<(int,int)> PxMap { get{ return pxmap;} } 
+        public List<(int,int)> PxMap { get { return pxmap;} } 
 
         public void Dispose()
         {
@@ -46,7 +59,8 @@ namespace LEDerZaumzeug.Outputs
 
         public Task<OutputInfos> GetInfos()
         {
-            return Task.FromResult(new OutputInfos() { Dim = new System.Drawing.SizeF(12, 8), DesiredSubSamplemode = SubSample.S1x1 } );
+            throw new NotImplementedException();
+            //return Task.FromResult(new OutputInfos() { Dim = new System.Drawing.SizeF(12, 8), DesiredSubSamplemode = SubSample.S1x1 } );
         }
 
         public virtual Task<bool> Initialize(LEDerConfig config)

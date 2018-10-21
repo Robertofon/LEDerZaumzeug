@@ -1,10 +1,10 @@
 ﻿using System;
 using Avalonia;
 using Avalonia.Logging.Serilog;
-using AvaloniaApplication1.ViewModels;
-using AvaloniaApplication1.Views;
+using LEDerZaumGUI.ViewModels;
+using LEDerZaumGUI.Views;
 
-namespace AvaloniaApplication1
+namespace LEDerZaumGUI
 {
     class Program
     {

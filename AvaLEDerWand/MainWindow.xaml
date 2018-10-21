@@ -4,14 +4,6 @@
         
         
         Title="Avalon Test-LED-Wand">
-    <Window.DataTemplates>
-    
-        <DataTemplate DataType="{x:Type local:LedVm}">
-            <Rectangle Width="30" Height="30" Fill="{Binding LedBrush}" Margin="2"/>
-        </DataTemplate>
-    
-    </Window.DataTemplates>
-
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Datei">
@@ -23,19 +15,7 @@
         <Grid RowDefinitions="*,Auto"  DockPanel.Dock="Bottom" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
           
-          <Border Background="DarkGray" CornerRadius="8" BorderThickness="4"
-                    Grid.Row="0" >
-                    <!--ColumnDefinitions="Auto,Auto,Auto,Auto" RowDefinitions="Auto,Auto,Auto,Auto,"-->
-                    <!--<Ellipse Fill="Black" Canvas.Left="250" Canvas.Top="300" Width="50" Height="20"/>-->
-                    <ItemsControl Items="{Binding Leds}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <local:UniGrid Columns="{Binding Cols}" Rows="{Binding Rows}"/>
-                            <!--<Canvas Margin="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></Canvas>-->
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>                            
-                    </ItemsControl>
-            </Border>
+          <local:LedControl  Grid.Row="0" Margin="2"/>
         
             
             <StackPanel Grid.Row="1">
