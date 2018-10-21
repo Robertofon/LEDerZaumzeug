@@ -5,6 +5,13 @@
   },
   "Seq": [
     {
+      "$type": "GeneratorNode",
+      "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+      "Winkel": 66.3,
+      "Lambda": 20,
+      "Geschwindigkeit": 1.5
+    },
+    {
       "$type": "FilterNode",
       "TypeName": "LEDerZaumzeug.Filters.Clip01",
       "Quelle": {
