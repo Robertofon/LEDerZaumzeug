@@ -25,6 +25,8 @@ namespace LEDerZaumzeug
             var repo = new PluginTypeRepo();
             repo.WithAssembliesInPath(path);
             var mix =repo.GetTypesImplementing<IMixer>();
+            var flt =repo.GetTypesImplementing<IFilter>();
+            var outp =repo.GetTypesImplementing<IOutput>();
 
             try
             {

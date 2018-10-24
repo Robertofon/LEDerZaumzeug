@@ -6,6 +6,13 @@
   "Seq": [
     {
       "$type": "GeneratorNode",
+      "TypeName": "LEDerZaumzeug.Generators.GIF",
+      "Winkel": 166.3,
+      "Pfad": "yoshi.gif",
+      "Geschwindigkeit": 1.9
+    },
+    {
+      "$type": "GeneratorNode",
       "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
       "Winkel": 166.3,
       "Lambda": 20,
