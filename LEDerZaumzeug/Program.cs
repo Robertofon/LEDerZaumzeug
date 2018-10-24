@@ -1,9 +1,14 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using NLog;
 using System;
 using System.Collections.Generic;
+using System.Composition;
+using System.Composition.Convention;
+using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
+using System.Runtime.Loader;
 using System.Threading.Tasks;
 
 namespace LEDerZaumzeug
@@ -14,11 +19,20 @@ namespace LEDerZaumzeug
         private const string StdPath = "Mini.ledp";
         //private const string StdPath = "Sequenz.ledp";
         private const string CfgPath = "config.json";
+        // NLog: setup the logger first to catch all errors
+        private static ILogger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        //[Import(typeof(IMixer),)]
+        private IList<IMixer> Mixers;
         static async Task Main(string[] args)
         {
-            // NLog: setup the logger first to catch all errors
-            var logger = NLog.LogManager.GetCurrentClassLogger();
+
+
+            var path = @"C:\Projekte\LEDerZaumzeug\LEDerZaumzeug\PlugIns";
+            var repo = new PluginTypeRepo();
+            repo.WithAssembliesInPath(path);
+            var mix =repo.GetTypesImplementing<IMixer>();
+
             try
             {
                 NLog.LogManager.ThrowExceptions = true;
@@ -63,6 +77,47 @@ namespace LEDerZaumzeug
             }
         }
 
+        private static bool pred(Type obj)
+        {
+            return true;
+        }
+    }
 
+    public class PluginTypeRepo
+    {
+        private List<System.Reflection.Assembly> assemblies = new List<System.Reflection.Assembly>();
+        public PluginTypeRepo()
+        {
+
+        }
+
+
+        public void WithAssembliesInPath(string path, SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            WithAssembliesInPath(path, null, searchOption);
+        }
+
+
+        public void WithAssembliesInPath(string path, AttributedModelProvider conventions, SearchOption searchOption = SearchOption.TopDirectoryOnly)
+        {
+            //var asi = AssemblyLoadContext.Default.LoadFromAssemblyPath(path + "\\PluginsFSharp.dll")
+            //                ;
+            var assemblies = Directory
+
+                .GetFiles(path, "*.dll", searchOption)
+                .Select(AssemblyLoadContext.Default.LoadFromAssemblyPath);
+                //.ToList();
+            this.assemblies.AddRange(assemblies);
+        }
+
+        public IEnumerable<Type> GetTypesImplementing<T>()
+        {
+            return assemblies.SelectMany(
+                ass=>ass
+                .GetExportedTypes()
+                .Where(t => t.IsSubclassOf(typeof(T))))
+                ;
+            
+        }
     }
 }
