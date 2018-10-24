@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace LEDerZaumzeug.Generators
 {
     /// <summary>
-    /// Generator, der einen HSV-Regenbogen macht.
+    /// Generator, animierte GIF anzeigt.
     /// </summary>
-    public class Regenbogen : IGenerator
+    public class GIF : IGenerator
     {
+        private int _gifframeCount;
+        private Image _image;
         private uint sizex, sizey;
   
         private RGBPixel[,] pbuf;
@@ -29,8 +33,12 @@ namespace LEDerZaumzeug.Generators
 
         public float Winkel { get; set; } = 45f;
 
+        public string Pfad { get; set; } = string.Empty;
+
+
         public void Dispose()
-        {            
+        {        
+            _image?.Dispose();
         }
 
         public Task Initialize(MatrixParams mparams)
@@ -39,23 +47,34 @@ namespace LEDerZaumzeug.Generators
             this.sizey = mparams.SizeY;
             this.pbuf = new RGBPixel[sizex, sizey];
 
+            if(!string.IsNullOrEmpty(Pfad))
+            {
+                using(FileStream pngStream = new FileStream(Pfad,FileMode.Open, FileAccess.Read))
+                _image = new Bitmap(pngStream);
+                FrameDimension dimension = new FrameDimension(_image.FrameDimensionsList[0]);
+                _gifframeCount = _image.GetFrameCount(dimension);
+            }
             return Task.CompletedTask;
         }
 
         public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
             // Recycle deinen Puffer
+            
             // Winkel berechnen in rad
             double wr = this.Winkel / 180d * Math.PI;
-            double sinwr = Math.Sin(wr);
-            double coswr = Math.Cos(wr);
+
+
+            int k = (int)(frame % (ulong)_gifframeCount);
+            _image.SelectActiveFrame(System.Drawing.Imaging.FrameDimension.Page, k);
+            //Image image = Image.GetInstance(_image, System.Drawing.Imaging.ImageFormat.Bmp);
+            Image img = ((Image)_image.Clone());
+
             for( int x= 0; x < sizex; x++)
             {
                 for (int y = 0; y < sizey; y++)
                 {
-                    float fb = (frame*Geschwindigkeit) +
-                        ((float)(y * sinwr+ x * coswr)  * 360f / Lambda);
-                    pbuf[x, y] = new HSVPixel(fb, .9f, .9f);
+                    pbuf[x, y] = new HSVPixel(1, .9f, .9f);
                 }
             }
 

@@ -7,9 +7,9 @@
     {
       "$type": "GeneratorNode",
       "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-      "Winkel": 66.3,
+      "Winkel": 166.3,
       "Lambda": 20,
-      "Geschwindigkeit": 1.5
+      "Geschwindigkeit": 1.9
     },
     {
       "$type": "FilterNode",
