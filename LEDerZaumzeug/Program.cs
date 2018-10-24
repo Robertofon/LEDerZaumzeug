@@ -3,9 +3,6 @@ using Newtonsoft.Json.Serialization;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.Composition;
-using System.Composition.Convention;
-using System.Composition.Hosting;
 using System.IO;
 using System.Linq;
 using System.Runtime.Loader;
@@ -22,13 +19,9 @@ namespace LEDerZaumzeug
         // NLog: setup the logger first to catch all errors
         private static ILogger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        //[Import(typeof(IMixer),)]
-        private IList<IMixer> Mixers;
         static async Task Main(string[] args)
         {
-
-
-            var path = @"C:\Projekte\LEDerZaumzeug\LEDerZaumzeug\PlugIns";
+            var path = @"./PlugIns";
             var repo = new PluginTypeRepo();
             repo.WithAssembliesInPath(path);
             var mix =repo.GetTypesImplementing<IMixer>();
@@ -93,12 +86,6 @@ namespace LEDerZaumzeug
 
 
         public void WithAssembliesInPath(string path, SearchOption searchOption = SearchOption.TopDirectoryOnly)
-        {
-            WithAssembliesInPath(path, null, searchOption);
-        }
-
-
-        public void WithAssembliesInPath(string path, AttributedModelProvider conventions, SearchOption searchOption = SearchOption.TopDirectoryOnly)
         {
             //var asi = AssemblyLoadContext.Default.LoadFromAssemblyPath(path + "\\PluginsFSharp.dll")
             //                ;
