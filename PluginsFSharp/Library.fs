@@ -16,13 +16,26 @@ type FFilter =
             Task.FromResult(src);
 
 
-type FMixer =
+type FMixer = 
     interface IMixer with
         member x.Initialize(matrixParameters:MatrixParams): Task =
             Task.CompletedTask
         member x.Mix(sources: IList<RGBPixel[,]> , frame: UInt64 ) : Task<RGBPixel[,]> =
             Task.FromResult(sources.[0]) 
 
+
+type FGenerator =
+    interface IGenerator with
+        member this.Dispose(): unit = 
+            raise (System.NotImplementedException())
+        member x.Initialize(matrixParameters:MatrixParams): Task =
+            x.sizeX <- matrixParameters.SizeX;
+            x.sizeY <- matrixParameters.SizeY;
+            Task.CompletedTask
+        member x.GenPattern(frame: UInt64 ) : Task<RGBPixel[,]> =
+            Task.FromResult( Array2D.create ((int)x.sizeX) ((int)x.sizeY) RGBPixel.P0); 
+    val mutable sizeX: uint32
+    val mutable sizeY: uint32
 
 
 type FOutput =
