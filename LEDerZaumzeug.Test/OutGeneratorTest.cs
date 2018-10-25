@@ -163,6 +163,10 @@ namespace LEDerZaumzeug.Test
             // Reihenfolge BGR - verändert
             var erg2 = OutputBase.ReMapSubPixel(RGBPx, SubPixelOrder.BGR);
             Assert.Equal((B,G,R), erg2);
+
+            // Reihenfolge GRB - verändert
+            var erg3 = OutputBase.ReMapSubPixel(RGBPx, SubPixelOrder.GRB);
+            Assert.Equal((G,R,B), erg3);
         }
     }
 }

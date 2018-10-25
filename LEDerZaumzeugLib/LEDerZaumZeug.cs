@@ -107,7 +107,6 @@ namespace LEDerZaumzeug
             log.Info("Cancellation getriggert - räume outputs auf");
             this.outputs.ForEach(o => o.Dispose());
             log.Info("Ende jetzt");
-            token.ThrowIfCancellationRequested();
         }
 
         private void PeriodischerSzenenwechselCheck(TimeSpan aktuelleTicks)
