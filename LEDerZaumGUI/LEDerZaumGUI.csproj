@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="Programm.ledp" />
+    <None Remove="Views\SzeneEditorControl.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Programm.ledp">
@@ -29,5 +30,10 @@
   <ItemGroup>
     <ProjectReference Include="..\AvaLEDerWand\AvaLEDerWand.csproj" />
     <ProjectReference Include="..\LEDerZaumzeugLib\LEDerZaumzeugLib.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Views\SzeneEditorControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

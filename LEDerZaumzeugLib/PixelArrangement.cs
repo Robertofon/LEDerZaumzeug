@@ -43,7 +43,7 @@
         //RBG,
         BGR,
         //BRG,
-        //GRB,
+        GRB,
         //GBR,        
     }
 }

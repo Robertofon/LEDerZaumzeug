@@ -150,6 +150,8 @@ namespace LEDerZaumzeug.Outputs
             {
                 case SubPixelOrder.BGR:
                     return (pixel.Item3, pixel.Item2, pixel.Item1);
+                case SubPixelOrder.GRB:
+                    return (pixel.Item2, pixel.Item1, pixel.Item3);
                 default:
                     return pixel;
             }
