@@ -2,5 +2,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
  <!-- der Editor für eine Szene -->
 
-  <Grid ColumnDefinitions="Auto"></Grid>
+  <Grid ColumnDefinitions="Auto" RowDefinitions="Auto,Auto">
+    <TextBlock Grid.Row="0" Grid.Column="0" Text="Sequenzen" />
+
+    <ListBox Grid.Row="1" Grid.Column="0"
+           Items="{Binding Seq}" SelectedItem="{Binding SelProg}">
+    </ListBox>
+  </Grid>
 </UserControl>

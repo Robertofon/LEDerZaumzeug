@@ -9,7 +9,7 @@ using AvaLEDerWand;
 
 namespace LEDerZaumGUI.ViewModels
 {
-    public class EditorViewModel : ViewModelBase
+    public class SzeneEditorViewModel : ViewModelBase
     {
         private string _info;
         private MusterNode _selnode;

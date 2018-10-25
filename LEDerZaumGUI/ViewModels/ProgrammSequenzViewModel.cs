@@ -29,6 +29,7 @@ namespace LEDerZaumGUI.ViewModels
                 this.RaiseAndSetIfChanged(ref _info, value);
             }
         }
+        
         public List<MusterNode> Seq { get; private set; }
 
         public MusterNode SelNode

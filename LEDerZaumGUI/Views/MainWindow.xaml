@@ -2,6 +2,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:LEDerZaumGUI.ViewModels;assembly=LEDerZaumGUI"
         xmlns:wand="clr-namespace:AvaLEDerWand;assembly=AvaLEDerWand"
+        xmlns:local="clr-namespace:LEDerZaumGUI.Views"
         Icon="resm:LEDerZaumGUI.Assets.avalonia-logo.ico"
         Title="LEDerZaumGUI">
 
@@ -21,6 +22,8 @@
       </WrapPanel>
     </Border>
     <TextBox Text="{Binding Quelltext}" TextWrapping="NoWrap"  Grid.Row="3" Grid.Column="0"/>
+
+    <local:SzeneEditorControl Grid.Row="1" Grid.Column="1" DataContext="{Binding Prg}"/>
   </Grid>
   
 </Window>

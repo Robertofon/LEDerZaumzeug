@@ -18,7 +18,10 @@ namespace LEDerZaumGUI.ViewModels
         private string _status = "Nix";
         private string _quelltext = "Nix";
 
+        public ProgrammSequenzViewModel PrgVM { get; } = new ProgrammSequenzViewModel();
+ 
         public LedControlViewModel LedViewModel { get; } = new LedControlViewModel(24,16);
+
         public string Status
         {
             get => _status;
@@ -45,6 +48,7 @@ namespace LEDerZaumGUI.ViewModels
             }
 
             Status = "Programm geladen";
+            PrgVM.LadeVonString(this.Quelltext);
         }
 
         public async Task DoStartPixelei(object o)
