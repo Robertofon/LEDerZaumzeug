@@ -9,7 +9,8 @@ namespace LEDerZaumGUI.ViewModels
     public class ProgrammSequenzViewModel : ViewModelBase
     {
         private string _info;
-        private MusterNode _selnode;
+        private SeqItemNode _selnode;
+        private List<SeqItemNode> _seq;
 
         //private string _quelltext = "Nix";
         //public string Quelltext
@@ -30,9 +31,16 @@ namespace LEDerZaumGUI.ViewModels
             }
         }
         
-        public List<MusterNode> Seq { get; private set; }
+        public List<SeqItemNode> Seq
+        {
+            get { return _seq; }
+            private set
+            {
+                this.RaiseAndSetIfChanged(ref _seq, value);
+            }
+        }
 
-        public MusterNode SelNode
+        public SeqItemNode SelNode
         {
             get
             {

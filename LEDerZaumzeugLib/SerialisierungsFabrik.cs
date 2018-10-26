@@ -33,7 +33,7 @@ namespace LEDerZaumzeug
 
         private static KnownTypesBinder knownTypesBinder = new KnownTypesBinder
         {
-            KnownTypes = new List<Type> { typeof(FilterNode), typeof(GeneratorNode), typeof(MixerNode), typeof(OutputNode) }
+            KnownTypes = new List<Type> { typeof(SeqItemNode), typeof(FilterNode), typeof(GeneratorNode), typeof(MixerNode), typeof(OutputNode) }
         };
 
         public static async Task<PixelProgram> ReadProgramFromStreamAsync(Stream stream)

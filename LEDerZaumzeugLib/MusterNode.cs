@@ -8,7 +8,36 @@ using System.Text.RegularExpressions;
 
 namespace LEDerZaumzeug
 {
-    public abstract class MusterNode
+    public abstract class BaseNode
+    {
+
+    }
+
+    /// <summary>
+    /// Repräsentiert einen Baum mit Namen und einem Wurzelknoten
+    /// als <see cref="MusterNode"/>. Existiert nur, um weitere
+    /// Metadaten in Pro Muster-Kompositions-Item einzubauen.
+    /// </summary>
+    [Serializable]
+    public class SeqItemNode : BaseNode
+    {
+        /// <summary>
+        /// Name des Musterbaums
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Wurzel des Muster-Generator-Baums. Hier anfangen
+        /// </summary>
+        public MusterNode Start { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name;
+        }
+    }
+
+    public abstract class MusterNode : BaseNode
     {
         private static readonly NLog.ILogger log = NLog.LogManager.GetCurrentClassLogger();
   
@@ -67,8 +96,17 @@ namespace LEDerZaumzeug
             return obj;
         }
 
+        public override string ToString()
+        {
+            return "MN: " + this.TypeName;
+        }
     }
 
+    /// <summary>
+    /// Generator knoten des Muster-Generierungs Baums in seiner Serialsierungsform.
+    /// <see cref="Inst"/> wird via <see cref="MusterNode.TypeName"/> instantiiert.
+    /// Generatoren sind die Blätter des Baumes und somit die eigentlichen Pixelbild-Quellen.
+    /// </summary>
     [Serializable]
     public class GeneratorNode : MusterNode
     {
@@ -85,7 +123,11 @@ namespace LEDerZaumzeug
         }
     }
 
-
+    /// <summary>
+    /// Repräsentiert einen Serialisierten Filterknoten.
+    /// Daher mit <see cref="MusterNode.TypeName"/> und als 
+    /// einzelne Quelle, aus der er sich Speist gibt es <see cref="Quelle"/>.
+    /// </summary>
     [Serializable]
     public class FilterNode : MusterNode
     {
@@ -105,6 +147,12 @@ namespace LEDerZaumzeug
     }
 
 
+    /// <summary>
+    /// Repräsentiert einen serialisierten Knoten eines Mixers.
+    /// Ein Zusammenführer von mehreren Quellen. Daher mit  
+    /// <see cref="MusterNode.TypeName"/> und als die mehreren Quellen, 
+    /// aus denen er sich Speist gibt es <see cref="Quelle"/>.
+    /// </summary>
     [Serializable]
     public class MixerNode : MusterNode
     {

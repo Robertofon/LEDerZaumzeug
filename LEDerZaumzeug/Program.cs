@@ -14,19 +14,25 @@ namespace LEDerZaumzeug
     class Program
     {
         private const string StdPath = "Mini.ledp";
-        //private const string StdPath = "Sequenz.ledp";
         private const string CfgPath = "config.json";
         // NLog: setup the logger first to catch all errors
         private static ILogger logger = NLog.LogManager.GetCurrentClassLogger();
 
         static async Task Main(string[] args)
         {
+            var programmladepfad = StdPath;
             var path = @"./PlugIns";
-            var repo = new PluginTypeRepo();
-            repo.WithAssembliesInPath(path);
-            var mix =repo.GetTypesImplementing<IMixer>();
-            var flt =repo.GetTypesImplementing<IFilter>();
-            var outp =repo.GetTypesImplementing<IOutput>();
+            //var repo = new PluginTypeRepo();
+            //repo.WithAssembliesInPath(path);
+            //var mix =repo.GetTypesImplementing<IMixer>();
+            //var flt =repo.GetTypesImplementing<IFilter>();
+            //var outp =repo.GetTypesImplementing<IOutput>();
+
+            // Cmd params
+            if( args.Length == 1 && File.Exists(args[0]))
+            {
+                programmladepfad = args[0];
+            }
 
             try
             {
@@ -41,7 +47,7 @@ namespace LEDerZaumzeug
                 }
 
                 PixelProgram programmsequenz = null;
-                using (Stream stream = File.OpenRead(StdPath))
+                using (Stream stream = File.OpenRead(programmladepfad))
                 {
                     programmsequenz = await SerialisierungsFabrik.ReadProgramFromStreamAsync(stream);
                 }

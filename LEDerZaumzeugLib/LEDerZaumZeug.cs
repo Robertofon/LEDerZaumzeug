@@ -50,9 +50,9 @@ namespace LEDerZaumzeug
 
             // Gette erstes Muster aus der Mustersequenz des LED-Programms.
             this.szenenindex = 0;
-            MusterNode prg1 = this.sequenz.Seq[this.szenenindex];
+            SeqItemNode prg1 = this.sequenz.Seq[this.szenenindex];
             // Daraus eine pipeline bauen:
-            var engine = new MusterPipeline(prg1);
+            var engine = new MusterPipeline(prg1.Start);
 
             try
             {
