@@ -11,7 +11,7 @@ namespace LEDerZaumzeug
     /// Dies ist die Exekutor-Klasse. Serialisierter Baum geht rein.
     /// Und ein Exekutor läuft drüber und generiert das finale Muster.
     /// </summary>
-    public class MusterPipeline
+    public class MusterPipeline : IDisposable
     {
         public MusterPipeline(MusterNode root)
         {
@@ -105,6 +105,64 @@ namespace LEDerZaumzeug
                 this.Aktiviere(fnode.Quelle, mparams);
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // Dient zur Erkennung redundanter Aufrufe.
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // verwalteten Zustand (verwaltete Objekte) entsorgen.
+                    RekursivesDispose(this.Root);
+                }
+
+                // TODO: nicht verwaltete Ressourcen (nicht verwaltete Objekte) freigeben und Finalizer weiter unten überschreiben.
+                // TODO: große Felder auf Null setzen.
+
+                disposedValue = true;
+            }
+        }
+
+        private static void RekursivesDispose(MusterNode node)
+        {
+            if(node is GeneratorNode)
+            {
+                ((GeneratorNode)node).Inst.Dispose();
+            }
+            else if(node is FilterNode)
+            {
+                ((FilterNode)node).Inst.Dispose();
+                RekursivesDispose(((FilterNode)node).Quelle);
+            }
+            else if(node is MixerNode)
+            {
+                ((MixerNode)node).Inst.Dispose();
+                foreach (MusterNode m in ((MixerNode)node).Quelle)
+                {
+                    RekursivesDispose(m);
+                }
+            }
+
+        }
+
+        ~MusterPipeline()
+        {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
+            Dispose(false);
+        }
+
+        // Dieser Code wird hinzugefügt, um das Dispose-Muster richtig zu implementieren.
+        public void Dispose()
+        {
+            // Ändern Sie diesen Code nicht. Fügen Sie Bereinigungscode in Dispose(bool disposing) weiter oben ein.
+            Dispose(true);
+            // Für, wenn der Finalizer weiter oben überschrieben wird.
+            GC.SuppressFinalize(this);
+        }
+        #endregion
 
     }
 

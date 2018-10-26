@@ -41,6 +41,18 @@ namespace LEDerZaumzeug
             Stop();
         }
 
+        /// <summary>
+        /// Geht zur nächsten Szene und fängt am Ende neu an.
+        /// </summary>
+        public void SzeneWeiter()
+        {
+            if (runthread == null)
+                return;
+
+            this.szenenindex = (this.szenenindex + 1) % this.sequenz.Seq.Count;
+            this.AktviereSzene(this.szenenindex);
+        }
+
         public async Task StartAsync()
         {
             Console.Write("Start");
@@ -50,25 +62,43 @@ namespace LEDerZaumzeug
 
             // Gette erstes Muster aus der Mustersequenz des LED-Programms.
             this.szenenindex = 0;
-            SeqItemNode prg1 = this.sequenz.Seq[this.szenenindex];
+            this.AktviereSzene(this.szenenindex);
+
+            // Checke erfolg:
+            if(this.activePipeline == null)
+            {
+                log.Error("Kann Engine nicht starten, da erste Szene im Eimer ist.");
+                throw new InvalidOperationException("Programmszene 0 kaputt");
+            }
+
+
+            this.cts = new CancellationTokenSource();
+            this.runthread = new Thread(Run);
+            this.runthread.Start();
+        }
+
+        private void AktviereSzene(int szenenindex)
+        {
+            SeqItemNode prg = this.sequenz.Seq[szenenindex];
             // Daraus eine pipeline bauen:
-            var engine = new MusterPipeline(prg1.Start);
+            var engine = new MusterPipeline(prg.Start);
 
             try
             {
                 engine.Initialisiere(new MatrixParams() { SizeX = masterSizeX, SizeY = masterSizeY });
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 log.Error(ex, "Fehler beim erstellen der Generator und Mixer-Objekte");
                 return;
             }
-
+            var lastpipeline = this.activePipeline;
             this.activePipeline = engine;
 
-            this.cts = new CancellationTokenSource();
-            this.runthread = new Thread(Run);
-            this.runthread.Start();
+            if( lastpipeline != null)
+            {
+                lastpipeline.Dispose();
+            }
         }
 
         private async void Run()
@@ -99,23 +129,29 @@ namespace LEDerZaumzeug
                 TimeSpan dauer = sw.Elapsed - startticks;
                 TimeSpan wartespan = spanPf - dauer;
                 wartespan = wartespan.LimitTo(TimeSpan.Zero, TimeSpan.MaxValue);
-                log.Info("Aktuell dauer: " + dauer + " Warte: " + wartespan.ToString() + " Msek: " + sw.ElapsedMilliseconds);
+                log.Trace("Aktuell dauer: " + dauer + " Warte: " + wartespan.ToString() + " Msek: " + sw.ElapsedMilliseconds);
                 await Task.Delay(wartespan);
             }
 
             sw.Stop();
             log.Info("Cancellation getriggert - räume outputs auf");
             this.outputs.ForEach(o => o.Dispose());
-            log.Info("Ende jetzt");
+            log.Info("Beende jetzt");
         }
 
         private void PeriodischerSzenenwechselCheck(TimeSpan aktuelleTicks)
         {
+            if(this.config.SeqShowTime == TimeSpan.Zero)
+            {
+                // Kein Szenewechsel bei 0 zeit
+                return;
+            }
+
             if( (aktuelleTicks - this.szeneStart) >= this.config.SeqShowTime )
             {
                 this.szeneStart = aktuelleTicks;
-                log.Info("Szenenwechsel!"); 
-                // TODO: Noch implementieren
+                log.Trace("Szenenwechsel!");
+                this.SzeneWeiter();
             }
         }
 
@@ -185,6 +221,7 @@ namespace LEDerZaumzeug
         {
             this.cts.Cancel();
             this.runthread.Join();
+            this.runthread = null;
         }
 
 

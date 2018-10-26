@@ -65,6 +65,10 @@ namespace LEDerZaumzeug.Mixer
             return Task.FromResult(res);
         }
 
+        void IDisposable.Dispose()
+        {
+        }
+
         public enum Operatoren 
         {
             Mul,

@@ -23,7 +23,8 @@
     </Border>
     <TextBox Text="{Binding Quelltext}" TextWrapping="NoWrap"  Grid.Row="3" Grid.Column="0"/>
 
-    <local:SzeneEditorControl Grid.Row="1" Grid.Column="1" DataContext="{Binding Prg}"/>
+    <local:SzeneEditorControl Grid.Row="1" Grid.Column="1" DataContext="{Binding PrgVM}" 
+                              VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
   </Grid>
   
 </Window>

@@ -8,6 +8,8 @@ open System
 
 type FFilter =
     interface IFilter with
+        member this.Dispose(): unit = 
+            raise (System.NotImplementedException())
         member this.GetInfos(): Task<FilterInfos> = 
             raise (System.NotImplementedException())
         member x.Initialize(mp:MatrixParams): Task =
@@ -18,6 +20,8 @@ type FFilter =
 
 type FMixer = 
     interface IMixer with
+        member this.Dispose(): unit = 
+            raise (System.NotImplementedException())
         member x.Initialize(matrixParameters:MatrixParams): Task =
             Task.CompletedTask
         member x.Mix(sources: IList<RGBPixel[,]> , frame: UInt64 ) : Task<RGBPixel[,]> =

@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace LEDerZaumzeug
 {
-    public interface IFilter
+    public interface IFilter : IDisposable
     {
         Task Initialize(MatrixParams matrixParameters);
 

@@ -13,7 +13,7 @@ namespace LEDerZaumGUI.ViewModels
     {
         private InternalAvaOutput _avaOutput;
         private LEDerZaumZeug _lz;
-        private LEDerConfig _lcfg = new LEDerConfig() { Outputs = { }, SeqShowTime = TimeSpan.FromSeconds(33) };
+        private LEDerConfig _lcfg = new LEDerConfig() { Outputs = { }, SeqShowTime = TimeSpan.FromSeconds(14) };
 
         private string _status = "Nix";
         private string _quelltext = "Nix";

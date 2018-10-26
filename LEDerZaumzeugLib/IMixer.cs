@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LEDerZaumzeug
@@ -8,7 +9,7 @@ namespace LEDerZaumzeug
     /// Hier können Mehrere Generatoren oder Filter zusammengeführt/ 
     /// zusammengemixt werden
     /// </summary>
-    public interface IMixer
+    public interface IMixer : IDisposable
     {
         Task Initialize(MatrixParams matrixParameters);
 

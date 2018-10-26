@@ -2,9 +2,38 @@
   "Name": "Minitest",
   "Autor": "Robertofon",
   "MetaInfo": {
-    "Info": "Miniprogramm mit einfachem filter+gen",
+    "Info": "Miniprogramm mit einfachem filter+gen"
   },
   "Seq": [
+    {
+      "$type": "SeqItemNode",
+      "Name": "Welle blau als grau",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Graustufen",
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Wave",
+          "Color": "(0.0/0.0/1.0)",
+          "BgColor": "#010",
+          "WaveLenght": 10,
+          "Direction": "N",
+          "Speed": 0.1
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Kitt",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Kitt",
+        "Color": "(1.0/0.0/0.0)",
+        "KittWidth": 12,
+        "KittHeight": 3,
+        "Speed": 0.9
+      }
+    },
     {
       "$type": "SeqItemNode",
       "Name": "Welle rotgrün überlagert",
@@ -21,7 +50,7 @@
               "TypeName": "LEDerZaumzeug.Generators.Wave",
               "Color": "(1.0/0.0/0.0)",
               "BgColor": "#000",
-              "WaveLenght": 11.123,
+              "WaveLenght": 21.123,
               "Direction": "N",
               "Speed": 1.1571
             },
@@ -29,8 +58,8 @@
               "$type": "GeneratorNode",
               "TypeName": "LEDerZaumzeug.Generators.Wave",
               "Color": "(0.0/1.0/0.0)",
-              "BgColor": "#000",
-              "WaveLenght": 8,
+              "BgColor": "#004",
+              "WaveLenght": 28,
               "Direction": "W",
               "Speed": 0.2
             }
@@ -43,9 +72,9 @@
       "Name": "Animierte Bilder",
       "Start": {
         "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.GIF",
+        "TypeName": "LEDerZaumzeug.Generators.Image",
         "Winkel": 166.3,
-        "Pfad": "yoshi.gif",
+        "Pfad": "..\\..\\..\\yoshi.gif",
         "Geschwindigkeit": 1.9
       }
     },
@@ -75,13 +104,13 @@
     },
     {
       "$type": "SeqItemNode",
-      "Name": "Kitt",
+      "Name": "Regenbogenfarben",
       "Start": {
         "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.Kitt",
-        "Color": "(1.0/0.0/0.0)",
-        "KittWidth": 6,
-        "Speed": 0.1
+        "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+        "Winkel": 0,
+        "Lambda": 200,
+        "Geschwindigkeit": 4.9
       }
     },
     {

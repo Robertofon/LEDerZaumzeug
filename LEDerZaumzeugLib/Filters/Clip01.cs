@@ -33,5 +33,9 @@ namespace LEDerZaumzeug.Filters
         {
             return Task.CompletedTask;
         }
+
+        void IDisposable.Dispose()
+        {
+        }
     }
 }

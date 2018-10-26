@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 namespace LEDerZaumzeug.Filters
 {
     /// <summary>
-    /// Invertiert ein Bild indem Werte von 0..1 auf 1..0 umgedreht werden. 
+    /// Gibt ein HSV-Sättigungsmäßig wieder aus.
     /// </summary>
-    public class Invert : IFilter
+    public class Graustufen : IFilter
     {
         public Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, ulong frame)
         {
@@ -17,7 +17,8 @@ namespace LEDerZaumzeug.Filters
             {
                 for (int y = 0; y < h; y++)
                 {
-                    res[x, y] = (~pixels[x, y]).Clip();
+                    HSVPixel hsv = pixels[x, y];
+                    res[x, y] = hsv.Grau();
                 }
             }
 
@@ -33,9 +34,9 @@ namespace LEDerZaumzeug.Filters
         {
             return Task.CompletedTask;
         }
+
         void IDisposable.Dispose()
         {
         }
-
     }
 }

@@ -173,5 +173,10 @@ namespace LEDerZaumzeug
             return !a.Equals(b);
         }
 
+        public static implicit operator HSVPixel(RGBPixel rgb)
+        {
+            return HSVPixel.FromRGB(rgb);
+        }
+
     }
 }

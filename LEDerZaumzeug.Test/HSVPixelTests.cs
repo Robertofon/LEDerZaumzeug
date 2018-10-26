@@ -5,6 +5,16 @@ namespace LEDerZaumzeug.Test
 {
     public class HSVPixelTests
     {
+        [Fact]
+        public void Grautests()
+        {
+            var px1 = new HSVPixel(32, 1, 0.4f);
+            Assert.Equal(new HSVPixel(32, 0, 0.4f), px1.Grau());
+            var px2 = new HSVPixel(75, 1, 0);
+            Assert.Equal(new HSVPixel(75, 0, 0), px2.Grau());
+            var px3 = new HSVPixel(0, 1, 1.4f);
+            Assert.Equal(new HSVPixel(0, 0, 1.4f), px3.Grau());
+        }
 
         [Fact]
         public void Farbtests()

@@ -2,7 +2,7 @@
   "Name": "Minitest",
   "Autor": "Robertofon",
   "MetaInfo": {
-    "Info": "Miniprogramm mit einfachem filter+gen",
+    "Info": "Miniprogramm mit einfachem filter+gen"
   },
   "Seq": [
     {
@@ -10,7 +10,7 @@
       "Name": "Animierte Bilder",
       "Start": {
         "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.GIF",
+        "TypeName": "LEDerZaumzeug.Generators.Image",
         "Winkel": 166.3,
         "Pfad": "yoshi.gif",
         "Geschwindigkeit": 1.9

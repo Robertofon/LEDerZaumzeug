@@ -98,5 +98,14 @@ namespace LEDerZaumzeug
         {
             return $"HSV({H}°,{S},{V})";
         }
+
+        /// <summary>
+        /// Macht aus dem Pixel ein graustufiges (Sättigung=0)
+        /// </summary>
+        /// <returns>Ein grauwertpixel.</returns>
+        public HSVPixel Grau()
+        {
+            return new HSVPixel(H, 0f, V);
+        }
     }
 }

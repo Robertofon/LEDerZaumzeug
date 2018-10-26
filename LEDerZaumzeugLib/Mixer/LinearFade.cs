@@ -46,5 +46,9 @@ namespace LEDerZaumzeug.Mixer
 
             throw new ArgumentException("Unterstütze nicht mehr als zwei Eingaben und auch nicht 0");
         }
+        void IDisposable.Dispose()
+        {
+        }
+
     }
 }
