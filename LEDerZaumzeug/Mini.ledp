@@ -12,7 +12,7 @@
         "$type": "GeneratorNode",
         "TypeName": "LEDerZaumzeug.Generators.Image",
         "Winkel": 166.3,
-        "Pfad": "yoshi.gif",
+        "Pfad": "yoshi_s.gif",
         "Geschwindigkeit": 1.9
       }
     },

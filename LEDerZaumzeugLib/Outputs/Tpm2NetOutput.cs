@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net;
@@ -38,9 +39,16 @@ namespace LEDerZaumzeug.Outputs
                     throw new ArgumentNullException("UDP_Port fehlt!");
                 }
 
+                IPAddress adr;
+                if(!IPAddress.TryParse(IP_Adresse, out adr))
+                {
+                    IPHostEntry entry = Dns.GetHostEntry(hostNameOrAddress: this.IP_Adresse);
+                    adr = entry.AddressList.FirstOrDefault();
+                }
+
                 // UDP socket aufmachen
                 _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                await _socket.ConnectAsync(IPAddress.Parse(IP_Adresse), UDP_Port);
+                await _socket.ConnectAsync(adr, UDP_Port);
                 if (_socket.Connected)
                 {
                     Console.WriteLine("Happy: conn" + IP_Adresse + ":" + UDP_Port);

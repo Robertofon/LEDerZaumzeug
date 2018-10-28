@@ -38,7 +38,10 @@ namespace LEDerZaumzeug
 
         public void Dispose()
         {
-            Stop();
+            if(this.runthread!=null)
+            {
+                Stop();
+            }
         }
 
         /// <summary>
@@ -141,9 +144,11 @@ namespace LEDerZaumzeug
 
         private void PeriodischerSzenenwechselCheck(TimeSpan aktuelleTicks)
         {
-            if(this.config.SeqShowTime == TimeSpan.Zero)
+            if(this.config.SeqShowTime == TimeSpan.Zero
+                || this.sequenz.Seq.Count() == 1 )
             {
                 // Kein Szenewechsel bei 0 zeit
+                // oder bei nur einem Sequenzitem
                 return;
             }
 

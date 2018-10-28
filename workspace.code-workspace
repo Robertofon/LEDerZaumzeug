@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "AvaLEDerWand"
+		},
+		{
+			"path": "LEDerZaumzeug"
+		},
+		{
+			"path": "LEDerZaumzeugLib"
+		},
+		{
+			"path": "LEDerZaumGUI"
+		}
+	],
+	"settings": {}
+}
