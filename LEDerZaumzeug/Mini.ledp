@@ -7,6 +7,40 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Rausch über",
+      "Start": {
+          "$type": "MixerNode",
+          "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
+          "Operator": "Mult",
+          "Quelle": [
+            {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Wave",
+              "Color": "(1.0/0.0/0.0)",
+              "BgColor": "#000",
+              "WaveLenght": 11.123,
+              "Direction": "N",
+              "Speed": 1.1571
+            },
+            {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Rauschen",
+              "Farbe": "#Dc0"
+            }
+          ]
+      }
+    }, 
+    {
+      "$type": "SeqItemNode",
+      "Name": "Rausch",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Rauschen",
+        "Farbe": "#DE0"
+      }
+    }, 
+    {
+      "$type": "SeqItemNode",
       "Name": "Animierte Bilder",
       "Start": {
         "$type": "GeneratorNode",
@@ -88,14 +122,33 @@
       "$type": "SeqItemNode",
       "Name": "Fallende Obj",
       "Start": {
-        "$type": "FilterNode",
-        "TypeName": "LEDerZaumzeug.Filters.Invert",
-        "Quelle": {
           "$type": "GeneratorNode",
           "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
           "Color": "(0.8/0.4/1.0)",
-          "Geschwindigkeitsfaktor": 0.05
-        }
+          "Geschwindigkeitsfaktor": 0.25,
+          "ObjektZahl":33
+        
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Fallende Obj",
+      "Start": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+          "Color": "(0.8/1.0/0.0)",
+          "Geschwindigkeitsfaktor": 2.0
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Fallende Obj",
+      "Start": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+          "Color": "(0.2/0.0/0.7)",
+          "Geschwindigkeitsfaktor": 2.0,
+          "ObjektZahl": 22        
       }
     }
   ]
