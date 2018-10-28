@@ -1,27 +1,58 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:local="clr-namespace:LEDerZaumGUI"
+             xmlns:ledzeug="clr-namespace:LEDerZaumzeug;assembly=LEDerZaumzeugLib"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <UserControl.DataTemplates>
+      <TreeDataTemplate DataType="ledzeug:GeneratorNode">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock>Gen:</TextBlock>
+          <TextBlock Text="{Binding TypeName}"/>
+          <Button Content="x"  Height="15" Width="15"/>
+        </StackPanel>
+      </TreeDataTemplate>
+
+      <TreeDataTemplate DataType="ledzeug:MixerNode" ItemsSource="{Binding Quelle}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock>Mixer:</TextBlock>
+          <TextBlock Text="{Binding TypeName}"/>
+          <Button Content="x"  Height="15" Width="15"/>
+        </StackPanel>
+      </TreeDataTemplate>
+    
+      <TreeDataTemplate DataType="ledzeug:FilterNode" ItemsSource="{Binding QuelleN}">
+        <StackPanel Orientation="Horizontal">
+          <TextBlock>Filt:</TextBlock>
+          <TextBlock Text="{Binding TypeName}"/>
+          <Button Content="x" Height="15" Width="15"/>
+        </StackPanel>
+      </TreeDataTemplate>
+    </UserControl.DataTemplates>
  <!-- der Editor für eine Szene -->
+  <Border BorderBrush="Yellow" BorderThickness="2">
+    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" >
+      <TextBlock Grid.Row="0" Grid.Column="0" Text="Sequenzen" />
 
-  <Grid ColumnDefinitions="Auto" RowDefinitions="Auto,Auto" >
-    <TextBlock Grid.Row="0" Grid.Column="0" Text="Sequenzen" />
+      <ListBox Grid.Row="1" Grid.Column="0" MinHeight="100" 
+             Items="{Binding Seq}" SelectedItem="{Binding SelSeqItem}">
+      </ListBox>
 
-    <ListBox Grid.Row="1" Grid.Column="0" 
-           Items="{Binding Seq}" SelectedItem="{Binding SelProg}">
-    </ListBox>
+      <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelSeqItem.Name}" />
 
-    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelProg.Name}" />
+      <TreeView Grid.Row="1" Grid.Column="1"  Items="{Binding SelSeqItem.Start, Converter={x:Static local:SingularListConverter.Inst}}">
+        <!--<TreeView.ItemTemplate>
+          <TreeDataTemplate>
+            <
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding TypeName}"/>
+              <Button>OO</Button>
+            </StackPanel>
+          </TreeDataTemplate>
+        </TreeView.ItemTemplate>-->
+      </TreeView>
 
-    <TreeView Grid.Row="1" Grid.Column="1"
-              Items="{Binding SelProg.Start}">
-      <TreeView.ItemTemplate>
-        <TreeDataTemplate>
-          <StackPanel Orientation="Horizontal">
-            <TextBlock Text="{Binding TypeName}"/>
-            <Button>OO</Button>
-          </StackPanel>
-        </TreeDataTemplate>
-      </TreeView.ItemTemplate>
-    </TreeView>
-              
-  </Grid>
+      <Border BorderBrush="Blue" BorderThickness="2" Grid.Row="1" Grid.Column="2">
+        <TextBlock >Todo infozu programm</TextBlock>
+      </Border>
+    </Grid>
+  </Border>
 </UserControl>

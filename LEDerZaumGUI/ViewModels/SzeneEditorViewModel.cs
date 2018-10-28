@@ -12,7 +12,8 @@ namespace LEDerZaumGUI.ViewModels
     public class SzeneEditorViewModel : ViewModelBase
     {
         private string _info;
-        private SeqItemNode _selnode;
+        private SeqItemNode _selSeqItem;
+        private List<SeqItemNode> _seq;
 
         //private string _quelltext = "Nix";
         //public string Quelltext
@@ -32,18 +33,38 @@ namespace LEDerZaumGUI.ViewModels
                 this.RaiseAndSetIfChanged(ref _info, value);
             }
         }
-        public List<SeqItemNode> Seq { get; private set; }
 
-        public SeqItemNode SelNode
+        public List<SeqItemNode> Seq
         {
             get
             {
-                return _selnode;
+                return _seq;
+            }
+            private set
+            {
+                this.RaiseAndSetIfChanged(ref _seq, value);
+            }
+        }
+
+        public SeqItemNode SelSeqItem
+        {
+            get
+            {
+                return _selSeqItem;
             }
 
             set
             {
-                this.RaiseAndSetIfChanged(ref _selnode, value);
+                this.RaiseAndSetIfChanged(ref _selSeqItem, value);
+            }
+        }
+
+        public IList<MusterNode> Test
+        {
+            get
+            {
+                return new[] { new MixerNode() { Quelle = { new FilterNode() { Quelle = new GeneratorNode() } } },
+                new MixerNode(){ Quelle={new FilterNode(){ Quelle=new GeneratorNode()}, new GeneratorNode() } } };
             }
         }
 
@@ -55,13 +76,11 @@ namespace LEDerZaumGUI.ViewModels
                 this.Info = pgm.MetaInfo["Info"]?.ToString();
                 this.Seq = pgm.Seq;
             }
-            catch(Exception task)
+            catch (Exception task)
             {
 
             }
         }
-
-
 
     }
 }

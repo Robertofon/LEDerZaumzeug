@@ -18,7 +18,7 @@ namespace LEDerZaumGUI.ViewModels
         private string _status = "Nix";
         private string _quelltext = "Nix";
 
-        public ProgrammSequenzViewModel PrgVM { get; } = new ProgrammSequenzViewModel();
+        public SzeneEditorViewModel PrgVM { get; } = new SzeneEditorViewModel();
  
         public LedControlViewModel LedViewModel { get; } = new LedControlViewModel(24,16);
 

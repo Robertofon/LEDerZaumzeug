@@ -144,6 +144,12 @@ namespace LEDerZaumzeug
         }
 
         public MusterNode Quelle { get; set; }
+
+        /// <summary>
+        /// Nur da für TreeView, da dieser immer ein IEnumerable haben will.
+        /// </summary>
+        [DebuggerHidden]
+        public MusterNode[]  QuelleN { get { return new[] { Quelle }; } }
     }
 
 
