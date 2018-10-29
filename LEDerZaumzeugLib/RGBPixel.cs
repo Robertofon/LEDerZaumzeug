@@ -147,7 +147,7 @@ namespace LEDerZaumzeug
         }
 
         /// <summary>
-        /// Skalare Multiplikation um einen einfachen floag-Wert.
+        /// Skalare Multiplikation um einen einfachen float-Wert mit jeder Komponente.
         /// </summary>
         /// <param name="p">Pixel zu modifizieren.</param>
         /// <param name="f">Faktor, der draufmultipliziert wird.</param>
@@ -155,6 +155,18 @@ namespace LEDerZaumzeug
         public static RGBPixel operator *(RGBPixel p, float f)
         {
             return new RGBPixel(p.R * f, p.G * f, p.B * f);
+        }
+
+        /// <summary>
+        /// Skalare Division um einen einfachen float-Wert mit jeder Komponente.
+        /// Dabei kann natürlich eine Div0-Ex passieren.
+        /// </summary>
+        /// <param name="p">Pixel zu modifizieren.</param>
+        /// <param name="f">Faktor, der invers draufmultipliziert wird.</param>
+        /// <returns></returns>
+        public static RGBPixel operator /(RGBPixel p, float f)
+        {
+            return new RGBPixel(p.R / f, p.G / f, p.B / f);
         }
 
         /// <summary>

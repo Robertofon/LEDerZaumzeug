@@ -7,7 +7,7 @@ namespace LEDerZaumzeug.Extensions
 {
     public static class LedExtensions
     {
-        public static (int,int) Dim<T>(this T[,] arr)
+        public static (int, int) Dim<T>(this T[,] arr)
         {
             return (arr.GetLength(0), arr.GetLength(1));
         }
@@ -21,7 +21,7 @@ namespace LEDerZaumzeug.Extensions
         public static T[,] NewSameDim<T>(this T[,] arr)
         {
             (int x, int y) = arr.Dim();
-            T[,] res = new T[x,y];
+            T[,] res = new T[x, y];
             return res;
         }
 
@@ -35,10 +35,10 @@ namespace LEDerZaumzeug.Extensions
         /// <param name="arr">Eingabefeld.</param>
         /// <param name="mapfn"></param>
         /// <returns>Geklontes und gemapptes Feld.</returns>
-        public static To[,] Clone2<To,Ti>(this Ti[,] arr, Func<Ti,To> mapfn)
+        public static To[,] Clone2<To, Ti>(this Ti[,] arr, Func<Ti, To> mapfn)
         {
             (int x, int y) = arr.Dim();
-            To[,] res = new To[x,y];
+            To[,] res = new To[x, y];
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
@@ -49,7 +49,7 @@ namespace LEDerZaumzeug.Extensions
 
             return res;
         }
-        
+
         /// <summary>
         /// mappt ein zweidimensionales Feld vom Typ Ti in den Typ To
         /// ebenfalls als zweidimensionales Feld. Beide müssen existieren.
@@ -62,14 +62,14 @@ namespace LEDerZaumzeug.Extensions
         /// <param name="arr2">Eingabefeld 2.</param>
         /// <param name="mapfn"></param>
         /// <returns>Geklontes und gemapptes Feld.</returns>
-        public static To[,] MapInplace<To>(this To[,] arr1, To[,] arr2, Func<To,To,To> mapfn)
+        public static To[,] MapInplace<To>(this To[,] arr1, To[,] arr2, Func<To, To, To> mapfn)
         {
-            if(arr1.Dim() != arr2.Dim())
+            if (arr1.Dim() != arr2.Dim())
             {
                 throw new ArgumentException("Dims ungleich");
             }
 
-            var (x,y) = arr1.Dim();
+            var (x, y) = arr1.Dim();
             for (int i = 0; i < x; i++)
             {
                 for (int j = 0; j < y; j++)
@@ -83,10 +83,10 @@ namespace LEDerZaumzeug.Extensions
 
         public static bool IsHoriz(this PixelArrangement pa)
         {
-            return new[] { 
-                PixelArrangement.SNH_BL, PixelArrangement.SNH_BR, 
+            return new[] {
+                PixelArrangement.SNH_BL, PixelArrangement.SNH_BR,
                 PixelArrangement.SNH_TL, PixelArrangement.SNH_TR,
-                PixelArrangement.LNH_BL, PixelArrangement.LNH_BR, 
+                PixelArrangement.LNH_BL, PixelArrangement.LNH_BR,
                 PixelArrangement.LNH_TL, PixelArrangement.LNH_TR }.Contains(pa);
         }
 
@@ -108,6 +108,18 @@ namespace LEDerZaumzeug.Extensions
         public static bool IsStartRight(this PixelArrangement pa)
         {
             return pa.ToString().Contains("R");
+        }
+
+        public static (int, int) EnsureArray2D<T>(this T[,] bsp, ref T[,] res)
+        {
+            // wiederverwenden desselben Speichers -> jetzt dynamisch anlegen
+            (int, int) dim = bsp.Dim();
+            if (res == null || res.Dim() != dim)
+            {
+                (int w, int h) = dim;
+                res = new T[w, h];
+            }
+            return dim;
         }
 
     }

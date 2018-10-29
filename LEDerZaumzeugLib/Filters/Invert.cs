@@ -9,19 +9,20 @@ namespace LEDerZaumzeug.Filters
     /// </summary>
     public class Invert : IFilter
     {
+        private RGBPixel[,] _res;
+
         public Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, ulong frame)
         {
-            (int w, int h) = pixels.Dim();
-            var res = new RGBPixel[w,h];
+            (int w, int h) = pixels.EnsureArray2D(ref _res);
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
                 {
-                    res[x, y] = (~pixels[x, y]).Clip();
+                    _res[x, y] = (~pixels[x, y]).Clip();
                 }
             }
 
-            return Task.FromResult(res);
+            return Task.FromResult(_res);
         }
 
         public Task<FilterInfos> GetInfos()
@@ -33,8 +34,10 @@ namespace LEDerZaumzeug.Filters
         {
             return Task.CompletedTask;
         }
+
         void IDisposable.Dispose()
         {
+            // nichts zu Disposen
         }
 
     }

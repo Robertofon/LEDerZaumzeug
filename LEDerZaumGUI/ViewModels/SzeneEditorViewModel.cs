@@ -11,6 +11,7 @@ namespace LEDerZaumGUI.ViewModels
 {
     public class SzeneEditorViewModel : ViewModelBase
     {
+        private static NLog.ILogger log = NLog.LogManager.GetCurrentClassLogger();
         private string _info;
         private SeqItemNode _selSeqItem;
         private List<SeqItemNode> _seq;
@@ -78,7 +79,8 @@ namespace LEDerZaumGUI.ViewModels
             }
             catch (Exception task)
             {
-
+                log.Error(task, "Fehler beim Parsen des Programms");
+                MessageBus.Current.SendMessage(task.Message);
             }
         }
 

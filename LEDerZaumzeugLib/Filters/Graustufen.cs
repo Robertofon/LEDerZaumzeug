@@ -9,20 +9,21 @@ namespace LEDerZaumzeug.Filters
     /// </summary>
     public class Graustufen : IFilter
     {
+        private RGBPixel[,] _res;
+
         public Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, ulong frame)
         {
-            (int w, int h) = pixels.Dim();
-            var res = new RGBPixel[w,h];
+            (int w, int h) = pixels.EnsureArray2D(ref _res);
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
                 {
                     HSVPixel hsv = pixels[x, y];
-                    res[x, y] = hsv.Grau();
+                    _res[x, y] = hsv.Grau();
                 }
             }
 
-            return Task.FromResult(res);
+            return Task.FromResult(_res);
         }
 
         public Task<FilterInfos> GetInfos()
@@ -37,6 +38,7 @@ namespace LEDerZaumzeug.Filters
 
         void IDisposable.Dispose()
         {
+            // Nichts zu tun
         }
     }
 }

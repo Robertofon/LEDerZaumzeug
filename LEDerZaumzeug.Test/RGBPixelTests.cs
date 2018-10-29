@@ -92,6 +92,16 @@ namespace LEDerZaumzeug.Test
             Assert.Equal(15, b.B);
         }
 
+        [Fact]
+        public void TestRGBPixelOperatorSkalarDiv()
+        {
+            RGBPixel a = new RGBPixel(6, 36, 600);
+            RGBPixel b = a / 6f;
+            Assert.Equal(1, b.R);
+            Assert.Equal(6, b.G);
+            Assert.Equal(100, b.B);
+        }
+
 
         [Fact]
         public void TestRGBPixelOperatorMal()
