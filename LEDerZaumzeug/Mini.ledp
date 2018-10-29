@@ -7,6 +7,127 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Fallende Obj",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Faktor",
+        "Skalar": 1,
+        "Quelle": {
+          "$type": "FilterNode",
+          "TypeName": "LEDerZaumzeug.Filters.Gauss3x3",
+          "Quelle": {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+            "Color": "(1/0/0)",
+            "Geschwindigkeitsfaktor": 0.55
+          }
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Regenbogen im CRT",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.CRT",
+        "Sprung": 24,
+        "Num": 4,
+        "Weite": 1,
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+          "Winkel": 2.3,
+          "Lambda": 22,
+          "Geschwindigkeit": 3
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Welle blau als grau",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Graustufen",
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Wave",
+          "Color": "(0.0/0.0/1.0)",
+          "BgColor": "#010",
+          "WaveLenght": 10,
+          "Direction": "N",
+          "Speed": 0.1
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Kitt",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Kitt",
+        "Color": "(1.0/0.0/0.0)",
+        "KittWidth": 12,
+        "KittHeight": 3,
+        "Speed": 0.9
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Welle rotgrün überlagert",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Clip01",
+        "Quelle": {
+          "$type": "MixerNode",
+          "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
+          "Operator": "Add",
+          "Quelle": [
+            {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Wave",
+              "Color": "(1.0/0.0/0.0)",
+              "BgColor": "#000",
+              "WaveLenght": 21.123,
+              "Direction": "N",
+              "Speed": 1.1571
+            },
+            {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Wave",
+              "Color": "(0.0/1.0/0.0)",
+              "BgColor": "#004",
+              "WaveLenght": 28,
+              "Direction": "W",
+              "Speed": 0.2
+            }
+          ]
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Animierte Bilder",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Image",
+        "Winkel": 166.3,
+        "Pfad": "..\\..\\..\\yoshi.gif",
+        "Geschwindigkeit": 1.9
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Regenbogen im Winkel",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+        "Winkel": 166.3,
+        "Lambda": 20,
+        "Geschwindigkeit": 1.9
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Rausch über",
       "Start": {
           "$type": "MixerNode",
