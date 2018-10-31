@@ -1,6 +1,7 @@
 ﻿using LEDerZaumzeug.Extensions;
 using System;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace LEDerZaumzeug.Filters
@@ -40,6 +41,7 @@ namespace LEDerZaumzeug.Filters
         /// <param name="mx">Max X, muss mit pixels.GetDimension(0) passen.</param>
         /// <param name="my">Max X, muss mit pixels.GetDimension(1) passen.</param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private RGBPixel Kern(RGBPixel[,] pixels, int x, int y, int mx, int my)
         {
             if (x < 1) // x linker rand

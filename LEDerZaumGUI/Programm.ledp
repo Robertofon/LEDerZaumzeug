@@ -7,6 +7,26 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Blubber-Blasen",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
+        "Geschwindigkeit": 1
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Animierte Bilder",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Bild",
+        "Winkel": 166.3,
+        "Pfad": "..\\..\\..\\yoshi.gif",
+        "Geschwindigkeit": 1
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Fallende Obj",
       "Start": {
         "$type": "FilterNode",
@@ -102,17 +122,6 @@
             }
           ]
         }
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Animierte Bilder",
-      "Start": {
-        "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.Image",
-        "Winkel": 166.3,
-        "Pfad": "..\\..\\..\\yoshi.gif",
-        "Geschwindigkeit": 1.9
       }
     },
     {

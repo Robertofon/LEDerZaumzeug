@@ -13,7 +13,7 @@ namespace LEDerZaumzeug
     /// Kann nebenbei auch Operatoren und HLS oder Graustufen.
     /// Gleichheit unterstützt struct intrinsisch!
     /// </summary>
-    public struct RGBPixel
+    public struct RGBPixel : IEquatable<RGBPixel>
     {
         private static Regex htmlcolor = new Regex("^#[0-9A-Fa-f]?(?<h>[0-9A-Fa-f]{3})$|^#[0-9A-Fa-f]{0,2}(?<h>[0-9A-Fa-f]{6})$");
         public float R, G, B;
@@ -104,6 +104,23 @@ namespace LEDerZaumzeug
         public RGBPixel Clip()
         {
             return new RGBPixel(R.LimitTo(0f, 1f), G.LimitTo(0f, 1f), B.LimitTo(0f, 1f));
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is RGBPixel && Equals((RGBPixel)obj);
+        }
+
+        public bool Equals(RGBPixel other)
+        {
+            return R == other.R &&
+                   G == other.G &&
+                   B == other.B;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(R, G, B);
         }
 
         /// <summary>
