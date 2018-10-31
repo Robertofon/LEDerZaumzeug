@@ -38,6 +38,12 @@ namespace LEDerZaumzeug.Mixer
             Func<RGBPixel,RGBPixel,RGBPixel> fn;
             switch (this.Operator)
             {
+                case Operatoren.Max:
+                    fn = (a,b) => a = Math.Max(a, b);
+                    break;
+                case Operatoren.Min:
+                    fn = (a,b) => a = Math.Min(a, b);
+                    break;
                 case Operatoren.Add:
                     fn = (a,b) => a = a + b;
                     break;
@@ -71,6 +77,8 @@ namespace LEDerZaumzeug.Mixer
 
         public enum Operatoren 
         {
+            Max,
+            Min,
             Mul,
             Add,
             Sub,
