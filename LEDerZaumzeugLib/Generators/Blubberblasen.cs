@@ -17,7 +17,8 @@ using SixLabors.Shapes;
 namespace LEDerZaumzeug.Generators
 {
     /// <summary>
-    /// Generator, der Bilder oder auch animierte GIF/PNG anzeigt.
+    /// Generator, der Blasen nach oben steigen lässt.
+    /// TODO: Kollisionsdetektor/vermeidung
     /// </summary>
     public class Blubberblasen : IGenerator
     {
@@ -31,7 +32,7 @@ namespace LEDerZaumzeug.Generators
         private List<Blase> _bl = new List<Blase>();
 
         /// <summary>
-        /// Geschwindigkeit mit der die Phasenverschiebung pro iteration verschoben wird.
+        /// Geschwindigkeit mit der die Blasen nach oben wandern.
         /// </summary>
         public float Geschwindigkeit { get; set; } = .51f;
 
