@@ -7,6 +7,19 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Textanzeige",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.GenText",
+        "Geschwindigkeit": 1.5,
+        "Size": 17.5,
+        "Style": "Italic",
+        "FontFamily": "Arial",
+        "Text":  "Großes Kino"
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Blubber-Blasen",
       "Start": {
         "$type": "GeneratorNode",

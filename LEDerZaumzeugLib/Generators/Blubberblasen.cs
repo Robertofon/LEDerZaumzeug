@@ -65,7 +65,7 @@ namespace LEDerZaumzeug.Generators
             _image.Mutate(ctx =>
             {
                 //ctx.
-                ctx.Fill(RgbaVector.Black);
+                ctx.Fill(new RgbaVector(0,0,0));
                 foreach (Blase b in _bl)
                 {
                     var e = new EllipsePolygon(b.X, b.Y, b.R);

@@ -40,7 +40,7 @@ namespace LEDerZaumzeug.Generators
         /// <summary>
         /// Schriftgröße
         /// </summary>
-        public float Size { get; set; } = 12;
+        public float Size { get; set; } = 14;
 
         public FontStyle Style { get; set; }
 
@@ -65,24 +65,19 @@ namespace LEDerZaumzeug.Generators
             SizeF sz = TextMeasurer.Measure(this.Text, new RendererOptions(font));
             Size _tsize = new Size(Convert.ToInt32(sz.Width + 1), Convert.ToInt32(sz.Height + 1));
             this._image = new Image<Rgba32>(_tsize.Width, _tsize.Height);
-            var textGraphicOptions = new TextGraphicsOptions(true)
-            {
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
-            };
             _image.Mutate(ctx =>
             {
                 //ctx.Fill(Rgba32.Black);
-                ctx.DrawText(textGraphicOptions, this.Text, font, Rgba32.White, new PointF(_image.Width/2, _image.Height/2));
+                ctx.DrawText(this.Text, font, Brushes.Solid(Rgba32.White), Pens.Solid(Rgba32.Beige,0), PointF.Empty);
             });
 
-            _tpos = 0;
+            _tpos = _image.Width/2;
             return Task.CompletedTask;
         }
 
         public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
-            int y_st = (int)sizey - (_image.Height / 2);
+            int y_st = (int)sizey/2 - (_image.Height / 2)+1;
             int y_ed = y_st + _image.Height;
             int x_ed = _image.Width + (int)_tpos;
 
@@ -107,7 +102,7 @@ namespace LEDerZaumzeug.Generators
             // Text scrollen lassen und resetten
             _tpos -= this.Geschwindigkeit;
             if (_tpos + _image.Width + 6 < 0)
-                _tpos = 0;
+                _tpos = _image.Width / 2;
             return Task.FromResult(pbuf);
         }
 
