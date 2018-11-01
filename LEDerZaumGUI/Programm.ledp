@@ -11,7 +11,7 @@
       "Start": {
         "$type": "GeneratorNode",
         "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
-        "Geschwindigkeit": 1
+        "Geschwindigkeit": 2
       }
     },
     {
