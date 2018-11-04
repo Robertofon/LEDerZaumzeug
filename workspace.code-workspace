@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "LEDerZaumGUI"
+		},
+		{
+			"path": "LEDerZaumzeug.Test"
 		}
 	],
 	"settings": {}

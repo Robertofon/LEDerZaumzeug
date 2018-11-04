@@ -27,7 +27,15 @@ namespace LEDerZaumzeug.Generators
         /// </summary>
         public float Geschwindigkeit { get; set; } = 1f;
 
+        /// <summary>
+        /// Startwert oder einziger wert des Winkels, in dem sich die Welle fortbewegt.
+        /// </summary>
         public float Winkel { get; set; } = 45f;
+
+        /// <summary>
+        /// Geschwindigkeit mit der der Winkel bei jeder Iteration erhöht wird.
+        /// </summary>
+        public float RotRate { get; set; } = 0;
 
         public void Dispose()
         {            
@@ -46,7 +54,7 @@ namespace LEDerZaumzeug.Generators
         {
             // Recycle deinen Puffer
             // Winkel berechnen in rad
-            double wr = this.Winkel / 180d * Math.PI;
+            double wr = (this.Winkel + (frame * this.RotRate)) / 180d * Math.PI;
             double sinwr = Math.Sin(wr);
             double coswr = Math.Cos(wr);
             for( int x= 0; x < sizex; x++)

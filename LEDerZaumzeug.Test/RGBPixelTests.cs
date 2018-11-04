@@ -104,6 +104,32 @@ namespace LEDerZaumzeug.Test
 
 
         [Fact]
+        public void TestRGBPixelOperatorMax()
+        {
+            RGBPixel a = new RGBPixel(1, 2, 3);
+            RGBPixel b = new RGBPixel(5,10,100);
+            RGBPixel act = RGBPixel.Max(a,b);
+            Assert.Equal(new RGBPixel(5,10,100), act);
+
+            RGBPixel c = new RGBPixel(0.3f,3,0.2f);
+            act = RGBPixel.Max(a,c);
+            Assert.Equal(new RGBPixel(1,3,3), act);
+        }
+
+        [Fact]
+        public void TestRGBPixelOperatorMin()
+        {
+            RGBPixel a = new RGBPixel(1, 2, 3);
+            RGBPixel b = new RGBPixel(5,10,100);
+            RGBPixel act = RGBPixel.Min(a,b);
+            Assert.Equal(new RGBPixel(1,2,3), act);
+
+            RGBPixel c = new RGBPixel(0.3f,3,0.2f);
+            act = RGBPixel.Min(a,c);
+            Assert.Equal(new RGBPixel(0.3f,2,0.2f), act);
+        }
+
+        [Fact]
         public void TestRGBPixelOperatorMal()
         {
             RGBPixel a = new RGBPixel(1, 2, 3);

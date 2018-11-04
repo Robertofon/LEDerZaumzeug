@@ -39,10 +39,10 @@ namespace LEDerZaumzeug.Mixer
             switch (this.Operator)
             {
                 case Operatoren.Max:
-                    fn = (a,b) => a = new RGBPixel(Math.Max(a.R, b.R), Math.Max(a.G, b.G), Math.Max(a.B, b.B));
+                    fn = (a,b) => a = RGBPixel.Max(a, b);
                     break;
                 case Operatoren.Min:
-                    fn = (a,b) => a = new RGBPixel(Math.Min(a.R, b.R), Math.Min(a.G, b.G), Math.Min(a.B, b.B));
+                    fn = (a,b) => a = RGBPixel.Min(a, b);
                     break;
                 case Operatoren.Add:
                     fn = (a,b) => a = a + b;

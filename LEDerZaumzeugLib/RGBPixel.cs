@@ -187,6 +187,28 @@ namespace LEDerZaumzeug
         }
 
         /// <summary>
+        /// Maximum-Operator zwischen a und b. liefert komponentenweise Math.Max.
+        /// </summary>
+        /// <param name="a">Pixel a.</param>
+        /// <param name="b">Pixel b</param>
+        /// <returns>komponentenweise Math.Max.</returns>
+        public static RGBPixel Max(RGBPixel a, RGBPixel b)
+        {
+            return new RGBPixel(Math.Max(a.R, b.R), Math.Max(a.G, b.G), Math.Max(a.B, b.B));
+        }
+        
+        /// <summary>
+        /// Minimum-Operator zwischen a und b. liefert komponentenweise Math.Min.
+        /// </summary>
+        /// <param name="a">Pixel a.</param>
+        /// <param name="b">Pixel b</param>
+        /// <returns>komponentenweise Math.Min.</returns>
+        public static RGBPixel Min(RGBPixel a, RGBPixel b)
+        {
+            return new RGBPixel(Math.Min(a.R, b.R), Math.Min(a.G, b.G), Math.Min(a.B, b.B));
+        }
+        
+        /// <summary>
         /// Überladener == operator.
         /// </summary>
         public static bool operator==(RGBPixel a, RGBPixel b)

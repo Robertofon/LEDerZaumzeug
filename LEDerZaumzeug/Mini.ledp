@@ -7,6 +7,40 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Fallende Obj",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+        "Faktor": 0.5,
+        "Quelle": {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+            "Color": "(1/0/.6)",
+            "Geschwindigkeitsfaktor": 0.55
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Regenbogen im CRT",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.CRT",
+        "Sprung": 24,
+        "Num": 4,
+        "Weite": 1,
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+          "Winkel": 2.3,
+          "RotRate": 1.1,
+          "Lambda": 22,
+          "Geschwindigkeit": 3
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Animierte Bilder",
       "Start": {
         "$type": "GeneratorNode",
@@ -25,39 +59,6 @@
         "Anzahl": 28,
         "Color": "#0FF",
         "Geschwindigkeit": 1
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Fallende Obj",
-      "Start": {
-        "$type": "FilterNode",
-        "TypeName": "LEDerZaumzeug.Filters.Faktor",
-        "Skalar": 1,
-        "Quelle": {
-            "$type": "GeneratorNode",
-            "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
-            "Color": "(1/0/0)",
-            "Geschwindigkeitsfaktor": 0.55
-        }
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Regenbogen im CRT",
-      "Start": {
-        "$type": "FilterNode",
-        "TypeName": "LEDerZaumzeug.Filters.CRT",
-        "Sprung": 24,
-        "Num": 4,
-        "Weite": 1,
-        "Quelle": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-          "Winkel": 2.3,
-          "Lambda": 22,
-          "Geschwindigkeit": 3
-        }
       }
     },
     {
