@@ -7,6 +7,17 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Animierte Bilder",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Sterne",
+        "Anzahl": 28,
+        "Color": "#0FF",
+        "Geschwindigkeit": 1
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Fallende Obj",
       "Start": {
         "$type": "FilterNode",
