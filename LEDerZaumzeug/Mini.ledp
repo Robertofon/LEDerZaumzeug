@@ -10,6 +10,17 @@
       "Name": "Animierte Bilder",
       "Start": {
         "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Bild",
+        "Winkel": 166.3,
+        "Pfad": "egg.gif",
+        "Geschwindigkeit": 1.9
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Sterne",
+      "Start": {
+        "$type": "GeneratorNode",
         "TypeName": "LEDerZaumzeug.Generators.Sterne",
         "Anzahl": 28,
         "Color": "#0FF",
@@ -24,14 +35,10 @@
         "TypeName": "LEDerZaumzeug.Filters.Faktor",
         "Skalar": 1,
         "Quelle": {
-          "$type": "FilterNode",
-          "TypeName": "LEDerZaumzeug.Filters.Gauss3x3",
-          "Quelle": {
             "$type": "GeneratorNode",
             "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
             "Color": "(1/0/0)",
             "Geschwindigkeitsfaktor": 0.55
-          }
         }
       }
     },
@@ -113,17 +120,6 @@
             }
           ]
         }
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Animierte Bilder",
-      "Start": {
-        "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.Image",
-        "Winkel": 166.3,
-        "Pfad": "..\\..\\..\\yoshi.gif",
-        "Geschwindigkeit": 1.9
       }
     },
     {
