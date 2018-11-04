@@ -7,6 +7,17 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Animierte Bilder",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Bild",
+        "Winkel": 166.3,
+        "Pfad": "..\\..\\..\\yoshi.gif",
+        "Geschwindigkeit": 1
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Textanzeige",
       "Start": {
         "$type": "GeneratorNode",
@@ -25,17 +36,6 @@
         "$type": "GeneratorNode",
         "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
         "Geschwindigkeit": 2
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Animierte Bilder",
-      "Start": {
-        "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.Bild",
-        "Winkel": 166.3,
-        "Pfad": "..\\..\\..\\yoshi.gif",
-        "Geschwindigkeit": 1
       }
     },
     {
