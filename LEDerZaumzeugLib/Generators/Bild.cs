@@ -11,6 +11,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Transforms;
 using SixLabors.Primitives;
+using LEDerZaumzeug.Extensions;
 
 namespace LEDerZaumzeug.Generators
 {
@@ -21,11 +22,11 @@ namespace LEDerZaumzeug.Generators
     {
         private static ILogger _log = NLog.LogManager.GetCurrentClassLogger();
         private int _imgframeCount;
-        private Image<Rgba32>[] _images;
         private uint sizex, sizey;
   
         private RGBPixel[,] pbuf;
-        
+        private Image<Rgba32> _resized;
+
         /// <summary>
         /// Geschwindigkeit mit der die Phasenverschiebung pro iteration verschoben wird.
         /// </summary>
@@ -37,11 +38,8 @@ namespace LEDerZaumzeug.Generators
 
 
         public void Dispose()
-        {  
-            foreach (var item in _images)
-            {
-                item.Dispose();
-            }
+        {
+            _resized?.Dispose();
         }
 
         public Task Initialize(MatrixParams mparams)
@@ -57,21 +55,15 @@ namespace LEDerZaumzeug.Generators
                 {
                     using(var image = SixLabors.ImageSharp.Image.Load(pngStream))
                     {
-                        var results = new List<Image<Rgba32>>();
-                        foreach( var fr in image.Frames)
-                        { 
-                            Image<Rgba32> result = image.Clone(
-                                ctx => ctx.Resize(
-                                    new ResizeOptions
-                                    {
-                                        Size = size,
-                                        Mode = ResizeMode.Crop,
-                                        Sampler = new BoxResampler()
-                                    }));
-                            results.Add( result);
-                        }
-                        _images = results.ToArray();
-                        _imgframeCount = _images.Length;
+                        _resized = image.Clone(
+                        ctx => ctx.Resize(
+                            new ResizeOptions
+                            {
+                                Size = size,
+                                Mode = ResizeMode.Crop,
+                                Sampler = new BoxResampler()
+                            }));
+                        _imgframeCount = _resized.Frames.Count.LimitTo(1, int.MaxValue);
                     }
                 }
             }
@@ -82,17 +74,12 @@ namespace LEDerZaumzeug.Generators
         public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
             // Recycle deinen Puffer
-            
-            // Winkel berechnen in rad
-            double wr = this.Winkel / 180d * Math.PI;
-
             int k = (int)((ulong)(frame*Geschwindigkeit) % (ulong)_imgframeCount);
-            //Image image = Image.GetInstance(_image, System.Drawing.Imaging.ImageFormat.Bmp);
             for( int x= 0; x < sizex; x++)
             {
                 for (int y = 0; y < sizey; y++)
                 {
-                    Rgba32 pxl = _images[k][x, y];
+                    Rgba32 pxl = _resized.Frames[k][x, y];
                     pbuf[x, y] = new RGBPixel(pxl.R/255f, pxl.G/255f, pxl.B/255f);
                 }
             }

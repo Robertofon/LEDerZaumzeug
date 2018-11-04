@@ -7,15 +7,6 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
-      "Name": "Blubber-Blasen",
-      "Start": {
-        "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
-        "Geschwindigkeit": 1
-      }
-    },
-    {
-      "$type": "SeqItemNode",
       "Name": "Animierte Bilder",
       "Start": {
         "$type": "GeneratorNode",
@@ -23,6 +14,28 @@
         "Winkel": 166.3,
         "Pfad": "..\\..\\..\\yoshi.gif",
         "Geschwindigkeit": 1
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Textanzeige",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.GenText",
+        "Geschwindigkeit": 1.5,
+        "Size": 17.5,
+        "Style": "Italic",
+        "FontFamily": "Arial",
+        "Text":  "Großes Kino"
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Blubber-Blasen",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
+        "Geschwindigkeit": 2
       }
     },
     {
