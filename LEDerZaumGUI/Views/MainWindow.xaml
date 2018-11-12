@@ -12,7 +12,7 @@
 
 
   <Grid ColumnDefinitions="300,*,300" RowDefinitions="20,400,Auto,*">
-    <TextBlock Text="{Binding Status}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0"/>
+    <TextBlock Text="{Binding Status}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"/>
     <wand:LedControl Grid.Row="1" Grid.Column="0" DataContext="{Binding LedViewModel}"/>
     <Border Grid.Row="2" Grid.Column="0" BorderBrush="DarkGray" Background="White" BorderThickness="2" CornerRadius="4" >
       <WrapPanel Margin="2">

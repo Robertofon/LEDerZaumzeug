@@ -41,6 +41,9 @@ namespace LEDerZaumzeug.Generators
         /// <summary> Dicke der Linien</summary>
         public float N { get; set; } = 1;
 
+        /// <summary> Anzahl der Linien, wenn anwendbar.</summary>
+        public int Anzahl { get; set; } = 3; 
+
         public void Dispose()
         {
             _malbild?.Dispose();
@@ -66,9 +69,37 @@ namespace LEDerZaumzeug.Generators
             switch (this.Art)
             {
                 case LinienTyp.Kreuz:
+                    {
+                        ulong w = (ulong)(frame*Geschwindigkeit) % 100;
+                        double wr = w /100d * Math.PI;
+                        double ph = 2*Math.PI / Anzahl;
+                        PointF mp = new PointF(sizex/2f, sizey/2f);
+                        _malbild.Mutate( i=>
+                        {
+                            i.Fill(NamedColors<RgbaVector>.Black);
+                            for(int l = 0; l<this.Anzahl; l++)
+                            {
+                                i.DrawLines(new GraphicsOptions(false), fb, this.N, 
+                                    mp, new PointF(mp.X + (float)Math.Cos(wr+ph*l)*sizex, mp.Y + (float)Math.Sin(wr+ph*l)*sizey));
+                            }
+                        });
+                    }
                 break;
 
                 case LinienTyp.Raute:
+                    {
+                        float w = 0.01f * ((ulong)(frame*Geschwindigkeit) % 100);
+                        _malbild.Mutate( i=>
+                        {
+                            i.Fill(NamedColors<RgbaVector>.Black);
+                            i.DrawLines(new GraphicsOptions(false), fb, this.N, 
+                                new PointF(sizex*w, 0),
+                                new PointF(sizex, sizey*w),
+                                new PointF(sizex*(1-w), sizey),
+                                new PointF(0, sizey*(1-w)),
+                                new PointF(sizex*w, 0));
+                        });
+                    }
                 break;
 
                 default:
@@ -107,6 +138,13 @@ namespace LEDerZaumzeug.Generators
                     pbuf[x, y] = new RGBPixel(pxl.R, pxl.G, pxl.B);
                 }
             }
+
+            if(this.Farbwechsel)
+            {
+                HSVPixel h = this.Farbe;
+                h.H += 1;
+                this.Farbe = h;
+            }
             return Task.FromResult(pbuf);
         }
 
@@ -119,6 +157,7 @@ namespace LEDerZaumzeug.Generators
         RadarRL,
         RadarRLR,
         RadarLR,
-        RadarV
+        RadarV,
+        RadarVOV
     }
 }

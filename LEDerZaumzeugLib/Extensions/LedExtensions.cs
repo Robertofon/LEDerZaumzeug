@@ -50,6 +50,34 @@ namespace LEDerZaumzeug.Extensions
             return res;
         }
 
+        public static T[,] Each<T>(this T[,] arr, Func<T,T> mapfn) where T: struct
+        {
+            (int x, int y) = arr.Dim();
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    arr[i,j] = mapfn(arr[i,j]);
+                }
+            }
+
+            return arr;
+        }
+
+        public static T Aggregate<T>(this T[,] arr, T seed, Func<T,T,T> mapfn) where T: struct
+        {
+            (int x, int y) = arr.Dim();
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    seed = mapfn(seed, arr[i,j]);
+                }
+            }
+
+            return seed;
+        }
+
         /// <summary>
         /// mappt ein zweidimensionales Feld vom Typ Ti in den Typ To
         /// ebenfalls als zweidimensionales Feld. Beide müssen existieren.
