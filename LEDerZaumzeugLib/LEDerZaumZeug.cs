@@ -92,7 +92,7 @@ namespace LEDerZaumzeug
             }
             catch (Exception ex)
             {
-                log.Error(ex, "Fehler beim erstellen der Generator und Mixer-Objekte" + ex.Message);
+                log.Error(ex, "Fehler beim erstellen der Generator und Mixer-Objekte : " + ex.Message);
                 return;
             }
             var lastpipeline = this.activePipeline;

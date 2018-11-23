@@ -15,10 +15,11 @@
         "Quelle": {
             "$type": "GeneratorNode",
             "TypeName": "LEDerZaumzeug.Generators.Linien",
-            "Farbe": "(0/.40/.6)",
-            "Art": "RadarRLR",
+            "Farbe": "(0/.40/.9)",
+            "Farbwechsel": true,
+            "Art": "Raute",
             "N": 1,
-            "Geschwindigkeit": 0.5
+            "Geschwindigkeit": 2
         }
       }
     },

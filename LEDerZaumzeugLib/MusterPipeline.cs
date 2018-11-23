@@ -81,7 +81,14 @@ namespace LEDerZaumzeug
             {
                 MixerNode mnode = (MixerNode)node;
                 // MixerNode evaluieren und somit erzeugen.
-                mnode.Inst.Initialize(mparams);
+                try
+                {
+                    mnode.Inst.Initialize(mparams);
+                }
+                catch (System.Exception ex)
+                {
+                    throw new MusterPipelineException(mnode, ex);
+                }
                 foreach (var qnode in mnode.Quelle)
                 {
                     // Rekursion
@@ -93,14 +100,28 @@ namespace LEDerZaumzeug
             {
                 GeneratorNode gnode = (GeneratorNode)node;
                 // Generatorinstanz erzeugen lassen.
-                gnode.Inst.Initialize(mparams);
+                try
+                {
+                    gnode.Inst.Initialize(mparams);
+                }
+                catch (System.Exception ex)
+                {
+                    throw new MusterPipelineException(gnode, ex);
+                }
             }
 
             if (node is FilterNode)
             {
                 FilterNode fnode = (FilterNode)node;
                 // Filterinstanz erzeugen durch Zugriff
-                fnode.Inst.Initialize(mparams);
+                try
+                {
+                    fnode.Inst.Initialize(mparams);                    
+                }
+                catch (System.Exception ex)
+                {
+                    throw new MusterPipelineException(fnode, ex);
+                }
                 // Rekursion
                 this.Aktiviere(fnode.Quelle, mparams);
             }
@@ -166,5 +187,20 @@ namespace LEDerZaumzeug
 
     }
 
+    public class MusterPipelineException : System.Exception
+    {
+        public MusterPipelineException(MusterNode mn, System.Exception inner)
+            :base ("Node : " + mn.ToString() + " - " + inner, inner)
+        {
+            this.Node = mn;
+        }
+
+        public MusterNode Node { get; private set; }
+
+        // public override string ToString()
+        // {
+        //     return "Node: " + Node.ToString() + 
+        // } 
+    }
 
 }

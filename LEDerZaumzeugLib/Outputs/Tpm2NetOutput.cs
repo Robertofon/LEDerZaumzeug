@@ -62,7 +62,7 @@ namespace LEDerZaumzeug.Outputs
             }
             catch( Exception ex)
             {
-                log.Error(ex, "Fehler beim Initialisieren: ");
+                log.Error(ex, "Fehler beim Initialisieren von Tpm2NetOutput: " + ex.Message);
                 return false;
             }
 
