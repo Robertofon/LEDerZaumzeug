@@ -15,9 +15,10 @@
         "Quelle": {
             "$type": "GeneratorNode",
             "TypeName": "LEDerZaumzeug.Generators.Linien",
-            "Farbe": "(0/.40/.9)",
+            "Farbe": "(0.9/.40/.9)",
             "Farbwechsel": true,
-            "Art": "Raute",
+            "Anzahl": 4,
+            "Art": "Kreuz",
             "N": 1,
             "Geschwindigkeit": 2
         }

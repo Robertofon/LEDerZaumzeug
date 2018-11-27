@@ -39,24 +39,7 @@ namespace LEDerZaumzeug.Outputs
                     throw new ArgumentNullException("UDP_Port fehlt!");
                 }
 
-                IPAddress adr;
-                if(!IPAddress.TryParse(IP_Adresse, out adr))
-                {
-                    IPHostEntry entry = Dns.GetHostEntry(hostNameOrAddress: this.IP_Adresse);
-                    adr = entry.AddressList.FirstOrDefault();
-                }
-
-                // UDP socket aufmachen
-                _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
-                await _socket.ConnectAsync(adr, UDP_Port);
-                if (_socket.Connected)
-                {
-                    Console.WriteLine("Happy: conn" + IP_Adresse + ":" + UDP_Port);
-                }
-                else
-                {
-                    Console.WriteLine("Nix conn" + IP_Adresse + ":" + UDP_Port);
-                }
+                await OpenSocket();
 
                 return true;
             }
@@ -66,6 +49,29 @@ namespace LEDerZaumzeug.Outputs
                 return false;
             }
 
+        }
+
+        public async Task OpenSocket()
+        {
+            IPAddress adr;
+            if(!IPAddress.TryParse(IP_Adresse, out adr))
+            {
+                log.Info("Resolve: " + this.IP_Adresse);
+                IPHostEntry entry = Dns.GetHostEntry(hostNameOrAddress: this.IP_Adresse);
+                adr = entry.AddressList.FirstOrDefault();
+            }
+
+            // UDP socket aufmachen
+            _socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp);
+            await _socket.ConnectAsync(adr, UDP_Port);
+            if (_socket.Connected)
+            {
+                Console.WriteLine("Happy: conn" + IP_Adresse + ":" + UDP_Port);
+            }
+            else
+            {
+                Console.WriteLine("Nix conn" + IP_Adresse + ":" + UDP_Port);
+            }
         }
 
         /// <summary>
@@ -130,8 +136,27 @@ namespace LEDerZaumzeug.Outputs
                 var byteDataa = new ArraySegment<byte>(byteData);
                 //Task<int> sentT = _socket.SendAsync(new[] { headerseg, byteData, new byte[] { Tpm2BlockEndByte } }, SocketFlags.None);
                 
-                Task<int> sentT = _socket.SendAsync(new[] { headerseg, byteData, new byte[] { Tpm2BlockEndByte } }, SocketFlags.None);
-                int sent = await sentT;
+                // Socket könnte verschwinden. Resistent werden und wieder aufbauen.
+                try
+                {
+                    Task<int> sentT = _socket.SendAsync(new[] { headerseg, byteData, new byte[] { Tpm2BlockEndByte } }, SocketFlags.None);
+                    int sent = await sentT;
+                }
+                catch(SocketException se)
+                {
+                    const int wait = 1000;
+                    log.Warn("SocketException " + se.Message);
+                    log.Info("Versuche wiederherzustellen.. warte " + TimeSpan.FromMilliseconds(wait));
+                    await Task.Delay(wait);
+                    try
+                    {
+                        await OpenSocket();
+                    }
+                    catch(Exception restorex)
+                    {
+                        log.Error("Restore der Verbindung gescheitert");
+                    }
+                }
             }
         }
 
