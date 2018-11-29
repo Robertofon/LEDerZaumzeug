@@ -26,6 +26,10 @@ namespace LEDerZaumzeug.Generators
         private uint sizex, sizey;
         private float _tpos;
         private RGBPixel[,] pbuf;
+        private readonly string[] fontpfade = 
+        {
+            "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
+        };
 
         /// <summary>
         /// Geschwindigkeit mit der der Text verschoben wird.
@@ -64,8 +68,19 @@ namespace LEDerZaumzeug.Generators
             var size = new Size((int)this.sizex, (int)this.sizey);
             this.pbuf = new RGBPixel[sizex, sizey];
 
+            Font font =null;
             var fonts = new FontCollection();
-            Font font = SystemFonts.CreateFont(this.FontFamily, this.Size, this.Style);
+            foreach(var f in fontpfade)
+            {
+                if( System.IO.File.Exists(f))
+                {
+                    font = fonts.Install(f);
+                }
+            }
+            try{
+                font = SystemFonts.CreateFont(this.FontFamily, this.Size, this.Style);
+            }
+            catch(Exception d){}
             SizeF sz = TextMeasurer.Measure(this.Text, new RendererOptions(font));
             Size _tsize = new Size(Convert.ToInt32(sz.Width + 1), Convert.ToInt32(sz.Height + 1));
             this._image = new Image<Rgba32>(_tsize.Width, _tsize.Height);

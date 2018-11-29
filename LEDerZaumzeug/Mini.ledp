@@ -16,6 +16,29 @@
           "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
           "Faktor": 0.5,
           "Quelle": {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.GenText",
+              "Farbe": "(0.9/.40/.9)",
+              "Geschwindigkeit": true,
+              "Text": "ChCh",
+              "Size": 14,
+              "Style": "Regular",
+              "FontFamily": "Noto Sans TC"
+          }
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Schrift zapp chch Nachleucht",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.CRT",
+        "Quelle": {
+          "$type": "FilterNode",
+          "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+          "Faktor": 0.5,
+          "Quelle": {
             "$type": "GeneratorNode",
             "TypeName": "LEDerZaumzeug.Generators.Linien",
             "Farbe": "(0.4/0/.9)",
