@@ -32,17 +32,26 @@ namespace LEDerZaumzeug.Generators
         /// </summary>
         public float Geschwindigkeit { get; set; } = 1f;
 
+        /// <summary>
+        /// Art des bildes: Kreuz, Raute, RadarLR, RadarRL, RadarRLR, RadarVO, RadarOV, RadarVOV.
+        /// </summary>
         public LinienTyp Art { get; set; }
 
+        /// <summary>
+        /// <c>true</c> für Farbwechsel im Farbkreis. false für konsant <see cref="Farbe"/>.
+        /// </summary>
         public bool Farbwechsel { get; set;}
 
+        /// <summary>
+        /// Farbe, wenn <see cref="Farbwechsel"/> nicht aktiv ist.
+        /// </summary>
         public RGBPixel Farbe { get; set; }
 
         /// <summary> Dicke der Linien</summary>
         public float N { get; set; } = 1;
 
         /// <summary> Anzahl der Linien, wenn anwendbar.</summary>
-        public int Anzahl { get; set; } = 3; 
+        public int Anzahl { get; set; } = 4; 
 
         public void Dispose()
         {
@@ -126,6 +135,11 @@ namespace LEDerZaumzeug.Generators
                         });
                     }
                 break;
+                case LinienTyp.RadarVO:
+                case LinienTyp.RadarOV:
+                case LinienTyp.RadarVOV:
+                    throw new NotImplementedException();
+                break;
 
                 
             }
@@ -157,7 +171,8 @@ namespace LEDerZaumzeug.Generators
         RadarRL,
         RadarRLR,
         RadarLR,
-        RadarV,
+        RadarVO,
+        RadarOV,
         RadarVOV
     }
 }

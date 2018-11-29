@@ -38,10 +38,13 @@ namespace LEDerZaumzeug.Generators
         public string Text { get; set; } = "LEDerZaumzeug";
 
         /// <summary>
-        /// Schriftgröße
+        /// Schriftgröße 8..40.
         /// </summary>
         public float Size { get; set; } = 14;
 
+        /// <summary>
+        /// Style der Schrift. Bold, Italic, SemiBold, Normal.
+        /// </summary>
         public FontStyle Style { get; set; }
 
         /// <summary>
@@ -61,6 +64,7 @@ namespace LEDerZaumzeug.Generators
             var size = new Size((int)this.sizex, (int)this.sizey);
             this.pbuf = new RGBPixel[sizex, sizey];
 
+            var fonts = new FontCollection();
             Font font = SystemFonts.CreateFont(this.FontFamily, this.Size, this.Style);
             SizeF sz = TextMeasurer.Measure(this.Text, new RendererOptions(font));
             Size _tsize = new Size(Convert.ToInt32(sz.Width + 1), Convert.ToInt32(sz.Height + 1));

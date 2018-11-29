@@ -7,6 +7,29 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Schrift zapp chch Nachleucht",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.CRT",
+        "Quelle": {
+          "$type": "FilterNode",
+          "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+          "Faktor": 0.5,
+          "Quelle": {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Linien",
+            "Farbe": "(0.4/0/.9)",
+            "Farbwechsel": false,
+            "Anzahl": 4,
+            "Art": "RadarRLR",
+            "N": 2,
+            "Geschwindigkeit": 2
+          }
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Linie mit Nachleucht",
       "Start": {
         "$type": "FilterNode",
