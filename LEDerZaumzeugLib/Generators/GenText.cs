@@ -74,7 +74,7 @@ namespace LEDerZaumzeug.Generators
             {
                 if( System.IO.File.Exists(f))
                 {
-                    font = fonts.Install(f);
+                    fonts.Install(f);
                 }
             }
             try{

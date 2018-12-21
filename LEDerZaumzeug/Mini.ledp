@@ -43,7 +43,7 @@
       "Start": {
           "$type": "GeneratorNode",
           "TypeName": "LEDerZaumzeug.Generators.Feuer",
-          "Geschwindigkeit": 3
+          "Geschwindigkeit": 0.5
       }
     },
     {
@@ -64,14 +64,14 @@
             "Anzahl": 4,
             "Art": "RadarRLR",
             "N": 2,
-            "Geschwindigkeit": 2
+            "Geschwindigkeit": 0.5
           }
         }
       }
     },
     {
       "$type": "SeqItemNode",
-      "Name": "Linie mit Nachleucht",
+      "Name": "Linie kreuz mit Nachleucht",
       "Start": {
         "$type": "FilterNode",
         "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
@@ -84,7 +84,26 @@
             "Anzahl": 4,
             "Art": "Kreuz",
             "N": 1,
-            "Geschwindigkeit": 2
+            "Geschwindigkeit": 1.5
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Linie 3 rlr mit Nachleucht",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+        "Faktor": 0.5,
+        "Quelle": {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Linien",
+            "Farbe": "(0.0/.6/.2)",
+            "Farbwechsel": true,
+            "Anzahl": 4,
+            "Art": "RadarRLR",
+            "N": 3,
+            "Geschwindigkeit": 0.8
         }
       }
     },
@@ -223,7 +242,7 @@
       "Start": {
           "$type": "MixerNode",
           "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
-          "Operator": "Mult",
+          "Operator": "Max",
           "Quelle": [
             {
               "$type": "GeneratorNode",
