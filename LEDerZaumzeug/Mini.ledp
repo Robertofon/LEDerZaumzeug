@@ -30,6 +30,24 @@
     },
     {
       "$type": "SeqItemNode",
+      "Name": "Blubber-Blasen",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
+        "Geschwindigkeit": 2
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Feuer",
+      "Start": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Feuer",
+          "Geschwindigkeit": 3
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Schrift zapp chch Nachleucht",
       "Start": {
         "$type": "FilterNode",
