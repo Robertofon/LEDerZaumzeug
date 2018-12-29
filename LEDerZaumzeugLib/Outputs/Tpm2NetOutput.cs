@@ -66,11 +66,11 @@ namespace LEDerZaumzeug.Outputs
             await _socket.ConnectAsync(adr, UDP_Port);
             if (_socket.Connected)
             {
-                Console.WriteLine("Happy: conn" + IP_Adresse + ":" + UDP_Port);
+                Console.WriteLine("Erfolg connected: {0}:{1}", IP_Adresse, UDP_Port);
             }
             else
             {
-                Console.WriteLine("Nix conn" + IP_Adresse + ":" + UDP_Port);
+                Console.WriteLine("Nix connected: {0}:{1}", IP_Adresse, UDP_Port);
             }
         }
 
