@@ -9,7 +9,7 @@
       "SizeY": 12,
       "PixelOrder": "SNH_TR",
       "SubPixelOrder": "RGB",
-      "IP_Adresse": "ropixel01",
+      "IP_Adresse": "ropixel01.chaoschemnitz.de",
       "UDP_Port": 65506
     }
   ]
