@@ -7,6 +7,36 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Sterne Mit Blubber",
+      "Start": {
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
+        "Operator": "Max",
+        "Quelle": [
+          {
+            "$type": "FilterNode",
+            "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+            "Faktor": 0.5,
+            "Quelle": {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Sterne",
+              "Anzahl": 48,
+              "Color": "#FFF",
+              "Geschwindigkeit": 1.5
+            }
+          },
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+            "Winkel": 66.3,
+            "Lambda": 12,
+            "Geschwindigkeit": 3.9
+          }
+        ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Blubber-Blasen",
       "Start": {
         "$type": "GeneratorNode",
