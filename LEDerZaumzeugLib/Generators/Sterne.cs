@@ -73,10 +73,12 @@ namespace LEDerZaumzeug.Generators
             int topup = Convert.ToInt32(diff/4.0);
             for(int i=0; i<topup; i++)
             {
-                _st.Add(new Stern(){ 
-                    X=rnd.Next((int)sizex),
-                    Y=rnd.Next((int)sizey),
-                    Hell=1.0f });
+                _st.Add(new Stern()
+                    { 
+                        X=rnd.Next((int)sizex),
+                        Y=rnd.Next((int)sizey),
+                        Hell=1.0f 
+                    });
             }
         }
 
