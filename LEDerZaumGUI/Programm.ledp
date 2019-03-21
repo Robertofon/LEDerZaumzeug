@@ -7,6 +7,39 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Kamm",
+      "Start": {
+          "$type": "MixerNode",
+          "TypeName": "LEDerZaumzeug.Mixer.Kamm",
+          "Orientierung": "Hori",
+          "Quelle": [
+            {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Linien",
+              "Farbe": "(0.2/.40/.6)",
+              "Art": "RadarRLR",
+              "N": 4,
+              "Geschwindigkeit": 0.5
+            },
+            {
+              "$type": "FilterNode",
+              "TypeName": "LEDerZaumzeug.Filters.CRT",
+              "Sprung": 24,
+              "Num": 6,
+              "Weite": 1,
+              "Quelle": {
+                "$type": "GeneratorNode",
+                "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+                "Winkel": 6.3,
+                "Lambda": 20,
+                "Geschwindigkeit": 4
+              }
+            }
+          ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Plasma",
       "Start": {
           "$type": "GeneratorNode",
