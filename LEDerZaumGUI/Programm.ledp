@@ -7,11 +7,38 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
-      "Name": "Kamm",
+      "Name": "Kamm1",
       "Start": {
           "$type": "MixerNode",
           "TypeName": "LEDerZaumzeug.Mixer.Kamm",
-          "Orientierung": "Hori",
+          "Orientierung": "Verti",
+          "Quelle": [
+            {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Wave",
+              "Color": "(0.0/0.3/1.0)",
+              "BgColor": "#030",
+              "WaveLenght": 10,
+              "Direction": "N",
+              "Speed": 0.22
+            },
+            {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+              "Winkel": 26.3,
+              "Lambda": 25,
+              "Geschwindigkeit": 2
+            }
+          ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Kamm2",
+      "Start": {
+          "$type": "MixerNode",
+          "TypeName": "LEDerZaumzeug.Mixer.Kamm",
+          "Orientierung": "Horiz",
           "Quelle": [
             {
               "$type": "GeneratorNode",
