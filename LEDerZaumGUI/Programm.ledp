@@ -7,6 +7,16 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Plasma",
+      "Start": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Plasma",
+          "N": 4,
+          "Geschwindigkeit": 3
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Kamm1",
       "Start": {
           "$type": "MixerNode",
@@ -63,16 +73,6 @@
               }
             }
           ]
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Plasma",
-      "Start": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.Plasma",
-          "N": 4,
-          "Geschwindigkeit": 3
       }
     },
     {

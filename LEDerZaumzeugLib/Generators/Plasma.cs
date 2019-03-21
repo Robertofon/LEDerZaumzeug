@@ -54,17 +54,26 @@ namespace LEDerZaumzeug.Generators
         public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
             // Male nächste Iteration ins malbild.
+            ulong schritt = frame % 100;
+            float f = schritt/100f;
 
-
-
+            // Bild mit modulo wiederholen (immer Quadratisch)
+            int d = _startbild.GetLength(0);
             // Recycle deinen Puffer und übertrage das Bild dahin.
             for( int x= 0; x < sizex; x++)
             {
                 for (int y = 0; y < sizey; y++)
                 {
-                    var pxl = _startbild[x, y];
+                    var pxl = (_zielbild[x%d,y%d] * (f)) + _startbild[x%d, y%d] * (1.0f-f);
                     pbuf[x, y] = new HSVPixel(pxl, 1, 1);
                 }
+            }
+
+            // Wechsle Bilder durch alle x frames
+            if(schritt == 0)
+            {
+                _startbild = _zielbild;
+                _zielbild  = DiamondBrick(N);
             }
 
             return Task.FromResult(pbuf);
@@ -81,14 +90,13 @@ namespace LEDerZaumzeug.Generators
             float min = landschaft.Aggregate(float.MaxValue, Math.Min);
             landschaft.Each( g => g *360/(max-min) );
 
-
             return landschaft;
         }
 
         private void Quadrat(float[,] land, int stx, int sty, int edx, int edy)
         {
             // Abbruchbed
-            if( stx==edx || sty==edy )
+            if( edx-stx <= 1 || edy-sty <= 1 )
             {
                 return;
             }
@@ -127,6 +135,8 @@ namespace LEDerZaumzeug.Generators
 
             int mpx = (stx+edx)/2;
             int mpy = (sty+edy)/2;
+            stx += d;  // mod von negativen Zahlen vermeiden
+            sty += d;
             land[mpx, mpy] = (land[stx%d, mpy] + land[mpx, sty%d] 
                             + land[edx%d, mpy] + land[mpx, edy%d])
                                 / 4 + (float)rnd.NextDouble();
