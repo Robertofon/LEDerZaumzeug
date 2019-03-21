@@ -42,13 +42,13 @@ namespace LEDerZaumzeug.Mixer
                         if(Orientierung == Ori.Horiz)
                         {    
                             zz = i;
-                            zm = x;
+                            zm = x-1;
                             k = j;
                         }
                         else
                         {
                             zz = j;
-                            zm = y;
+                            zm = y-1;
                             k = i;
                         }
 
