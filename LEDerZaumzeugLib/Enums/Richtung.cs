@@ -1,4 +1,4 @@
-﻿namespace LEDerZaumzeug
+﻿namespace LEDerZaumzeug.Enums
 {
     /// <summary>
     /// Variante von Himmelsrichtungen.
