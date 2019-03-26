@@ -5,8 +5,13 @@ namespace LEDerZaumzeug
     /// </summary>
     public struct Punkt
     {
-        int X;
-        int Y;
+        public Punkt(uint x, uint y)
+        {
+            this.x=x; this.y=y;
+        }
+
+        public uint x;
+        public uint y;
     }
 
 }

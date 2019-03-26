@@ -9,6 +9,25 @@
       "$type": "SeqItemNode",
       "Name": "Kamm1",
       "Start": {
+            "$type": "FilterNode",
+            "TypeName": "LEDerZaumzeug.Filters.Wanderlicht",
+            "Geschwindigkeitsfaktor": 0.5,
+            "Farbe": "#666",
+            "Wanderweg": "Zeilenweise",
+            "Invers": true,
+            "Quelle": {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+              "Winkel": 16.3,
+              "Lambda": 30,
+              "Geschwindigkeit": 4
+            }
+          }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Kamm1",
+      "Start": {
           "$type": "MixerNode",
           "TypeName": "LEDerZaumzeug.Mixer.Kamm",
           "Orientierung": "Verti",

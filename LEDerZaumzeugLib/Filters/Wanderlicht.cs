@@ -1,5 +1,8 @@
 using LEDerZaumzeug.Extensions;
+using LEDerZaumzeug.Enums;
 using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace LEDerZaumzeug.Filters
@@ -11,6 +14,10 @@ namespace LEDerZaumzeug.Filters
     /// </summary>
     public class Wanderlicht : IFilter
     {
+        private uint sizex, sizey;
+        private int pposx, pposy;
+        private IEnumerator<Punkt> weg;
+
         private RGBPixel[,] _res;
 
         /// <summary>
@@ -46,32 +53,45 @@ namespace LEDerZaumzeug.Filters
 
         public Task<RGBPixel[,]> Filter(RGBPixel[,] pixels, ulong frame)
         {
+            Punkt spot = this.weg.Current;
             (int w, int h) = pixels.EnsureArray2D(ref _res);
             for (int x = 0; x < w; x++)
             {
                 for (int y = 0; y < h; y++)
                 {
-                    _res[x, y] = pixels[x, y];
+                    if((spot.x == x && spot.y == y && !Invers)
+                        || ((spot.x != x || spot.y != y) && Invers))
+                    {
+                        _res[x, y] = this.Farbe;
+                    }
+                    else
+                    {
+                        _res[x, y] = pixels[x, y];
+                    }
                 }
             }
+            this.weg.MoveNext();
 
             return Task.FromResult(_res);
         }
-
-        private int pposx, pposy;
 
         public Task<FilterInfos> GetInfos()
         {
             return Task.FromResult(default(FilterInfos));
         }
 
-        public Task Initialize(MatrixParams matrixParameters)
+        public Task Initialize(MatrixParams mparams)
         {
+            this.sizex = mparams.SizeX;
+            this.sizey = mparams.SizeY;
             switch (this.Wanderweg)
             {
                 case WanderOrder.Zeilenweise:
-                    return GenZeilenweise(this.StartEcke);
+                    this.weg = GenZeilenweise(this.StartEcke).GetEnumerator();
+                    break;
                 default:
+                    this.weg = GenSpaltenweise(this.StartEcke).GetEnumerator();
+                    break;
             }
             pposx = pposy=0;
             return Task.CompletedTask;
@@ -79,13 +99,41 @@ namespace LEDerZaumzeug.Filters
 
         private IEnumerable<Punkt> GenZeilenweise(Ecke start)
         {
-            Punkt p = Startpunkt(start);
+            uint xreset = start==Ecke.LinksOben || start==Ecke.LinksUnten ? 0u : this.sizex-1;
+            uint xiter = start==Ecke.LinksOben || start==Ecke.LinksUnten ? +1u : -1u;
+            uint yreset = start==Ecke.LinksOben || start==Ecke.RechtsOben ? 0u : this.sizey-1;
+            uint yiter = start==Ecke.LinksOben || start==Ecke.RechtsOben ? +1u : -1u;
+            Punkt p = new Point(xreset,yreset);
             while(true)
             {
-                yield p;
-                p = new Punkt(p.x+1, p.y);
-                if( p.x>)
+                yield return p;
 
+                // weiterzählen
+                p = new Punkt(p.x+xiter, p.y);
+                if(p.x >= this.sizex || p.x < 0)
+                    p = new Punkt(xreset, p.y+yiter);
+                if(p.y >= this.sizey || p.y < 0)
+                    p = new Punkt(xreset, yreset);
+            }
+        }
+
+        private IEnumerable<Punkt> GenSpaltenweise(Ecke start)
+        {
+            uint xreset = start==Ecke.LinksOben || start==Ecke.LinksUnten ? 0 : this.sizex-1;
+            uint xiter = start==Ecke.LinksOben || start==Ecke.LinksUnten ? +1u : -1u;
+            uint yreset = start==Ecke.LinksOben || start==Ecke.RechtsOben ? 0 : this.sizey-1;
+            uint yiter = start==Ecke.LinksOben || start==Ecke.RechtsOben ? +1u : -1u;
+            Punkt p = new Point(xreset,yreset);
+            while(true)
+            {
+                yield return p;
+
+                // weiterzählen
+                p = new Punkt(p.x, p.y+yiter);
+                if(p.y >= this.sizey || p.y < 0)
+                    p = new Punkt(p.x+xiter, yreset);
+                if(p.x >= this.sizex || p.x < 0)
+                    p = new Punkt(xreset, yreset);
             }
         }
 
