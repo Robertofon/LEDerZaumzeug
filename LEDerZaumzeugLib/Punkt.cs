@@ -10,6 +10,11 @@ namespace LEDerZaumzeug
             this.x=x; this.y=y;
         }
 
+        public Punkt(long x, long y)
+        {
+            this.x=(uint) x; this.y=(uint) y;
+        }
+
         public uint x;
         public uint y;
     }

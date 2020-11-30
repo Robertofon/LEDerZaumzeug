@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using NLog;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Transforms;
-using SixLabors.Primitives;
-using SixLabors.Shapes;
 
 
 namespace LEDerZaumzeug.Generators
@@ -64,8 +64,7 @@ namespace LEDerZaumzeug.Generators
             // Male den nächsten Rahmen in das Bild.
             _image.Mutate(ctx =>
             {
-                //ctx.
-                ctx.Fill(new RgbaVector(0,0,0));
+                ctx.Fill(Color.Black);
                 foreach (Blase b in _bl)
                 {
                     var e = new EllipsePolygon(b.X, b.Y, b.R);
@@ -98,7 +97,7 @@ namespace LEDerZaumzeug.Generators
                     X = (float)(_rnd.NextDouble() * sizex),
                     Y = sizey + 1,
                     R = (float)(_rnd.NextDouble() * _maxR),
-                    Fb = new RgbaVector((float)_rnd.NextDouble(), (float)_rnd.NextDouble(), (float)_rnd.NextDouble())
+                    Fb = Color.FromRgb((byte)_rnd.Next(256), (byte)_rnd.Next(256), (byte)_rnd.Next(256))
                 });
             }
 
@@ -116,7 +115,7 @@ namespace LEDerZaumzeug.Generators
         private struct Blase
         {
             public float X, Y, R;
-            public RgbaVector Fb;
+            public Color Fb;
         }
     }
 }

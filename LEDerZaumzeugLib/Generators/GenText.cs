@@ -10,9 +10,8 @@ using NLog;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Transforms;
-using SixLabors.Primitives;
-using SixLabors.Shapes;
 using SixLabors.Fonts;
+using SixLabors.ImageSharp.Drawing.Processing;
 
 namespace LEDerZaumzeug.Generators
 {
@@ -81,13 +80,13 @@ namespace LEDerZaumzeug.Generators
                 font = SystemFonts.CreateFont(this.FontFamily, this.Size, this.Style);
             }
             catch(Exception d){}
-            SizeF sz = TextMeasurer.Measure(this.Text, new RendererOptions(font));
+            FontRectangle sz = TextMeasurer.Measure(this.Text, new RendererOptions(font));
             Size _tsize = new Size(Convert.ToInt32(sz.Width + 1), Convert.ToInt32(sz.Height + 1));
             this._image = new Image<Rgba32>(_tsize.Width, _tsize.Height);
             _image.Mutate(ctx =>
             {
                 //ctx.Fill(Rgba32.Black);
-                ctx.DrawText(this.Text, font, Brushes.Solid(Rgba32.White), Pens.Solid(Rgba32.Beige,0), PointF.Empty);
+                ctx.DrawText(this.Text, font, Brushes.Solid(Color.White), Pens.Solid(Color.Beige,0), PointF.Empty);
             });
 
             _tpos = _image.Width/2;

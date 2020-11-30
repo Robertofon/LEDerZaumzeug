@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
+using SixLabors.ImageSharp;
 
 namespace LEDerZaumzeug
 {
@@ -29,6 +31,19 @@ namespace LEDerZaumzeug
             R = r;
             G = g;
             B = b;
+        }
+
+        /// <summary>
+        /// Konstruktor zur initialisierung mit Werten.
+        /// </summary>
+        /// <param name="r">Rot</param>
+        /// <param name="g">Grün</param>
+        /// <param name="b">Blau</param>
+        public RGBPixel(byte r, byte g, byte b)
+        {
+            R = r/255f;
+            G = g/255f;
+            B = b/255f;
         }
 
         /// <summary>
@@ -227,6 +242,11 @@ namespace LEDerZaumzeug
         public static implicit operator HSVPixel(RGBPixel rgb)
         {
             return HSVPixel.FromRGB(rgb);
+        }
+
+        public static implicit operator Color(RGBPixel rgb)
+        {
+            return Color.FromRgb((byte) (rgb.B * 255), (byte) (rgb.B * 255), (byte) (rgb.B * 255));
         }
 
     }

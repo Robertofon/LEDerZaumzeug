@@ -10,8 +10,8 @@ using NLog;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Transforms;
-using SixLabors.Primitives;
 using LEDerZaumzeug.Extensions;
+using SixLabors.ImageSharp.Formats;
 
 namespace LEDerZaumzeug.Generators
 {
@@ -25,7 +25,7 @@ namespace LEDerZaumzeug.Generators
         private uint sizex, sizey;
   
         private RGBPixel[,] pbuf;
-        private Image<Rgba32> _resized;
+        private Image _resized;
 
         /// <summary>
         /// Geschwindigkeit mit der die Phasenverschiebung pro iteration verschoben wird.
@@ -55,14 +55,7 @@ namespace LEDerZaumzeug.Generators
                 {
                     using(var image = SixLabors.ImageSharp.Image.Load(pngStream))
                     {
-                        _resized = image.Clone(
-                        ctx => ctx.Resize(
-                            new ResizeOptions
-                            {
-                                Size = size,
-                                Mode = ResizeMode.Crop,
-                                Sampler = new BoxResampler()
-                            }));
+                        _resized = image.Clone((IImageProcessingContext ctx) => ctx.Resize(size, new BoxResampler(), true));
                         _imgframeCount = _resized.Frames.Count.LimitTo(1, int.MaxValue);
                     }
                 }
@@ -73,17 +66,21 @@ namespace LEDerZaumzeug.Generators
 
         public Task<RGBPixel[,]> GenPattern(ulong frame)
         {
-            // Recycle deinen Puffer
-            int k = (int)((ulong)(frame*Geschwindigkeit) % (ulong)_imgframeCount);
-            for( int x= 0; x < sizex; x++)
+            using (Image<Rgba32> cloned = _resized.CloneAs<Rgba32>())
             {
-                for (int y = 0; y < sizey; y++)
+                // Recycle deinen Puffer
+                int k = (int) ((ulong) (frame * Geschwindigkeit) % (ulong) _imgframeCount);
+                for (int x = 0; x < sizex; x++)
                 {
-                    Rgba32 pxl = _resized.Frames[k][x, y];
-                    pbuf[x, y] = new RGBPixel(pxl.R/255f, pxl.G/255f, pxl.B/255f);
+                    for (int y = 0; y < sizey; y++)
+                    {
+                        Rgba32 pxl = cloned.Frames[k][x, y];
+                        pbuf[x, y] = new RGBPixel(pxl.R / 255f, pxl.G / 255f, pxl.B / 255f);
+                    }
                 }
+
+                return Task.FromResult(pbuf);
             }
-            return Task.FromResult(pbuf);
         }
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SixLabors.ImageSharp;
 
 namespace LEDerZaumzeug.Filters
 {
@@ -99,19 +100,19 @@ namespace LEDerZaumzeug.Filters
 
         private IEnumerable<Punkt> GenZeilenweise(Ecke start)
         {
-            uint xreset = start==Ecke.LinksOben || start==Ecke.LinksUnten ? 0u : this.sizex-1;
-            uint xiter = start==Ecke.LinksOben || start==Ecke.LinksUnten ? +1u : -1u;
+            uint xreset = start==Ecke.LinksOben || start==Ecke.LinksUnten ? 0 : this.sizex-1;
+            int xiter = start==Ecke.LinksOben || start==Ecke.LinksUnten ? +1 : -1;
             uint yreset = start==Ecke.LinksOben || start==Ecke.RechtsOben ? 0u : this.sizey-1;
-            uint yiter = start==Ecke.LinksOben || start==Ecke.RechtsOben ? +1u : -1u;
-            Punkt p = new Point(xreset,yreset);
+            int yiter = start==Ecke.LinksOben || start==Ecke.RechtsOben ? +1 : -1;
+            Punkt p = new Punkt(xreset,yreset);
             while(true)
             {
                 yield return p;
 
                 // weiterzählen
-                p = new Punkt(p.x+xiter, p.y);
+                p = new Punkt((uint) (p.x+xiter), p.y);
                 if(p.x >= this.sizex || p.x < 0)
-                    p = new Punkt(xreset, p.y+yiter);
+                    p = new Punkt(xreset, (uint) (p.y+yiter));
                 if(p.y >= this.sizey || p.y < 0)
                     p = new Punkt(xreset, yreset);
             }
@@ -120,10 +121,10 @@ namespace LEDerZaumzeug.Filters
         private IEnumerable<Punkt> GenSpaltenweise(Ecke start)
         {
             uint xreset = start==Ecke.LinksOben || start==Ecke.LinksUnten ? 0 : this.sizex-1;
-            uint xiter = start==Ecke.LinksOben || start==Ecke.LinksUnten ? +1u : -1u;
+            int xiter = start==Ecke.LinksOben || start==Ecke.LinksUnten ? +1 : -1;
             uint yreset = start==Ecke.LinksOben || start==Ecke.RechtsOben ? 0 : this.sizey-1;
-            uint yiter = start==Ecke.LinksOben || start==Ecke.RechtsOben ? +1u : -1u;
-            Punkt p = new Point(xreset,yreset);
+            int yiter = start==Ecke.LinksOben || start==Ecke.RechtsOben ? +1 : -1;
+            Punkt p = new Punkt(xreset,yreset);
             while(true)
             {
                 yield return p;
