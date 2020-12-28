@@ -11,6 +11,7 @@ using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Transforms;
 using LEDerZaumzeug.Extensions;
+using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 
 namespace LEDerZaumzeug.Generators
@@ -100,7 +101,7 @@ namespace LEDerZaumzeug.Generators
                         float w = 0.01f * ((ulong)(frame*Geschwindigkeit) % 100);
                         _malbild.Mutate( i=>
                         {
-                            i.Fill(Color.Black);
+                            i.Clear(Color.Black);
                             i.DrawLines(new ShapeGraphicsOptions(){GraphicsOptions = {Antialias = false}}, fb, this.N, 
                                 new PointF(sizex*w, 0),
                                 new PointF(sizex, sizey*w),
@@ -119,8 +120,9 @@ namespace LEDerZaumzeug.Generators
                         koo = (this.Art == LinienTyp.RadarRL)? sizex-koo-1 : koo;
                         _malbild.Mutate( i=>
                         {
-                            i.Fill(Color.Black);
-                            i.DrawLines(new ShapeGraphicsOptions() { GraphicsOptions = { Antialias = false } }, fb, this.N, new PointF((float)koo, 0), new PointF((float)koo, sizey-1));
+                            i.Clear(Color.Black);
+                            i.DrawLines(new ShapeGraphicsOptions() { GraphicsOptions = { Antialias = false } }, 
+                                fb, this.N, new PointF((float)koo, 0), new PointF((float)koo, sizey-1));
                         });
                     }
                 break;
@@ -128,10 +130,13 @@ namespace LEDerZaumzeug.Generators
                     {
                         ulong koo = (ulong)(frame*Geschwindigkeit) % (sizex*2);
                         koo = (koo>=sizex)? sizex - (koo % sizex) -1 : koo % sizex;
+                        ILineSegment s = new LinearLineSegment(new PointF((float)koo, 0), new PointF((float)koo, sizey - 1));
+                        IPath p= new SixLabors.ImageSharp.Drawing.Path(s);
                         _malbild.Mutate( i=>
                         {
-                            i.Fill(Color.Black);
-                            i.DrawLines(new ShapeGraphicsOptions() { GraphicsOptions = { Antialias = false } }, fb, this.N, new PointF((float)koo, 0), new PointF((float)koo, sizey-1));
+                            i.Clear(Color.Black);
+                            i.Draw(new ShapeGraphicsOptions() { GraphicsOptions = { Antialias = false } },
+                                fb, N, p);
                         });
                     }
                 break;
