@@ -9,79 +9,123 @@
       "$type": "SeqItemNode",
       "Name": "Kamm1",
       "Start": {
-            "$type": "FilterNode",
-            "TypeName": "LEDerZaumzeug.Filters.Wanderlicht",
-            "Geschwindigkeitsfaktor": 0.5,
-            "Farbe": "#666",
-            "Wanderweg": "Zeilenweise",
-            "Invers": true,
-            "Quelle": {
-              "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-              "Winkel": 16.3,
-              "Lambda": 30,
-              "Geschwindigkeit": 4
-            }
-          }
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Wanderlicht",
+        "Geschwindigkeitsfaktor": 0.5,
+        "Farbe": "#666",
+        "Wanderweg": "Zeilenweise",
+        "Invers": true,
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+          "Winkel": 16.3,
+          "Lambda": 30,
+          "Geschwindigkeit": 4
+        }
+      }
     },
     {
       "$type": "SeqItemNode",
       "Name": "Kamm1",
       "Start": {
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.Kamm",
+        "Orientierung": "Verti",
+        "Quelle": [
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Wave",
+            "Color": "(0.0/0.3/1.0)",
+            "BgColor": "#030",
+            "WaveLenght": 10,
+            "Direction": "N",
+            "Speed": 0.22
+          },
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+            "Winkel": 26.3,
+            "Lambda": 25,
+            "Geschwindigkeit": 2
+          }
+        ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Welle rotgrün überlagert",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Clip01",
+        "Quelle": {
           "$type": "MixerNode",
-          "TypeName": "LEDerZaumzeug.Mixer.Kamm",
-          "Orientierung": "Verti",
+          "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
+          "Operator": "Add",
           "Quelle": [
             {
               "$type": "GeneratorNode",
               "TypeName": "LEDerZaumzeug.Generators.Wave",
-              "Color": "(0.0/0.3/1.0)",
-              "BgColor": "#030",
-              "WaveLenght": 10,
+              "Color": "(1.0/0.0/0.0)",
+              "BgColor": "#000",
+              "WaveLenght": 21.123,
               "Direction": "N",
-              "Speed": 0.22
+              "Speed": 1.1571
             },
             {
               "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-              "Winkel": 26.3,
-              "Lambda": 25,
-              "Geschwindigkeit": 2
+              "TypeName": "LEDerZaumzeug.Generators.Wave",
+              "Color": "(0.0/1.0/0.0)",
+              "BgColor": "#004",
+              "WaveLenght": 28,
+              "Direction": "W",
+              "Speed": 0.2
             }
           ]
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Regenbogen im Winkel",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+        "Winkel": 166.3,
+        "Lambda": 20,
+        "Geschwindigkeit": 1.9
       }
     },
     {
       "$type": "SeqItemNode",
       "Name": "Kamm2",
       "Start": {
-          "$type": "MixerNode",
-          "TypeName": "LEDerZaumzeug.Mixer.Kamm",
-          "Orientierung": "Horiz",
-          "Quelle": [
-            {
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.Kamm",
+        "Orientierung": "Horiz",
+        "Quelle": [
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Linien",
+            "Farbe": "(0.2/.40/.6)",
+            "Art": "RadarRLR",
+            "N": 4,
+            "Geschwindigkeit": 0.5
+          },
+          {
+            "$type": "FilterNode",
+            "TypeName": "LEDerZaumzeug.Filters.CRT",
+            "Sprung": 24,
+            "Num": 6,
+            "Weite": 1,
+            "Quelle": {
               "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Linien",
-              "Farbe": "(0.2/.40/.6)",
-              "Art": "RadarRLR",
-              "N": 4,
-              "Geschwindigkeit": 0.5
-            },
-            {
-              "$type": "FilterNode",
-              "TypeName": "LEDerZaumzeug.Filters.CRT",
-              "Sprung": 24,
-              "Num": 6,
-              "Weite": 1,
-              "Quelle": {
-                "$type": "GeneratorNode",
-                "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-                "Winkel": 6.3,
-                "Lambda": 20,
-                "Geschwindigkeit": 4
-              }
+              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+              "Winkel": 6.3,
+              "Lambda": 20,
+              "Geschwindigkeit": 4
             }
-          ]
+          }
+        ]
       }
     },
     {
@@ -127,9 +171,9 @@
       "$type": "SeqItemNode",
       "Name": "Feuer",
       "Start": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.Feuer",
-          "Geschwindigkeit": 0.5
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Feuer",
+        "Geschwindigkeit": 0.5
       }
     },
     {
@@ -157,20 +201,20 @@
     },
     {
       "$type": "SeqItemNode",
-      "Name": "Linie kreuz mit Nachleucht",
+      "Name": "Linie Raute mit Nachleucht",
       "Start": {
         "$type": "FilterNode",
         "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
         "Faktor": 0.5,
         "Quelle": {
-            "$type": "GeneratorNode",
-            "TypeName": "LEDerZaumzeug.Generators.Linien",
-            "Farbe": "(0.9/.40/.9)",
-            "Farbwechsel": true,
-            "Anzahl": 4,
-            "Art": "Kreuz",
-            "N": 1,
-            "Geschwindigkeit": 1.5
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Linien",
+          "Farbe": "(0.9/.40/.9)",
+          "Farbwechsel": true,
+          "Anzahl": 4,
+          "Art": "Raute",
+          "N": 1,
+          "Geschwindigkeit": 1.5
         }
       }
     },
@@ -182,14 +226,14 @@
         "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
         "Faktor": 0.5,
         "Quelle": {
-            "$type": "GeneratorNode",
-            "TypeName": "LEDerZaumzeug.Generators.Linien",
-            "Farbe": "(0.0/.6/.2)",
-            "Farbwechsel": true,
-            "Anzahl": 4,
-            "Art": "RadarRLR",
-            "N": 3,
-            "Geschwindigkeit": 0.8
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Linien",
+          "Farbe": "(0.0/.6/.2)",
+          "Farbwechsel": true,
+          "Anzahl": 4,
+          "Art": "RadarRLR",
+          "N": 3,
+          "Geschwindigkeit": 0.8
         }
       }
     },
@@ -212,10 +256,10 @@
         "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
         "Faktor": 0.5,
         "Quelle": {
-            "$type": "GeneratorNode",
-            "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
-            "Color": "(1/0/.6)",
-            "Geschwindigkeitsfaktor": 0.55
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+          "Color": "(1/0/.6)",
+          "Geschwindigkeitsfaktor": 0.55
         }
       }
     },
@@ -326,27 +370,27 @@
       "$type": "SeqItemNode",
       "Name": "Rausch über",
       "Start": {
-          "$type": "MixerNode",
-          "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
-          "Operator": "Max",
-          "Quelle": [
-            {
-              "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Wave",
-              "Color": "(1.0/0.0/0.0)",
-              "BgColor": "#000",
-              "WaveLenght": 11.123,
-              "Direction": "N",
-              "Speed": 1.1571
-            },
-            {
-              "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Rauschen",
-              "Farbe": "#Dc0"
-            }
-          ]
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
+        "Operator": "Max",
+        "Quelle": [
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Wave",
+            "Color": "(1.0/0.0/0.0)",
+            "BgColor": "#000",
+            "WaveLenght": 11.123,
+            "Direction": "N",
+            "Speed": 1.1571
+          },
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Rauschen",
+            "Farbe": "#Dc0"
+          }
+        ]
       }
-    }, 
+    },
     {
       "$type": "SeqItemNode",
       "Name": "Rausch",
@@ -355,7 +399,7 @@
         "TypeName": "LEDerZaumzeug.Generators.Rauschen",
         "Farbe": "#DE0"
       }
-    }, 
+    },
     {
       "$type": "SeqItemNode",
       "Name": "Animierte Bilder",
@@ -439,33 +483,33 @@
       "$type": "SeqItemNode",
       "Name": "Fallende Obj",
       "Start": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
-          "Color": "(0.8/0.4/1.0)",
-          "Geschwindigkeitsfaktor": 0.25,
-          "ObjektZahl":33
-        
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+        "Color": "(0.8/0.4/1.0)",
+        "Geschwindigkeitsfaktor": 0.25,
+        "ObjektZahl": 33
+
       }
     },
     {
       "$type": "SeqItemNode",
       "Name": "Fallende Obj",
       "Start": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
-          "Color": "(0.8/1.0/0.0)",
-          "Geschwindigkeitsfaktor": 2.0
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+        "Color": "(0.8/1.0/0.0)",
+        "Geschwindigkeitsfaktor": 2.0
       }
     },
     {
       "$type": "SeqItemNode",
       "Name": "Fallende Obj",
       "Start": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
-          "Color": "(0.2/0.0/0.7)",
-          "Geschwindigkeitsfaktor": 2.0,
-          "ObjektZahl": 22        
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.FallendeObjekte",
+        "Color": "(0.2/0.0/0.7)",
+        "Geschwindigkeitsfaktor": 2.0,
+        "ObjektZahl": 22
       }
     }
   ]

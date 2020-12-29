@@ -89,11 +89,20 @@ namespace LEDerZaumzeug.Generators
                         PointF mp = new PointF(sizex/2f, sizey/2f);
                         _malbild.Mutate( (IImageProcessingContext i)=>
                         {
-                            i.Fill(Color.Black);
-                            for(int l = 0; l<this.Anzahl; l++)
+                            try
                             {
-                                i.DrawLines(new ShapeGraphicsOptions() { GraphicsOptions = { Antialias = false } }, fb, this.N, 
-                                    mp, new PointF(mp.X + (float)Math.Cos(wr+ph*l)*sizex, mp.Y + (float)Math.Sin(wr+ph*l)*sizey));
+                                i.Fill(Color.Black);
+                                for(int l = 0; l<this.Anzahl; l++)
+                                {
+                                    PointF pointF = new PointF(mp.X + (float)Math.Cos(wr+ph*l)*sizex, mp.Y + (float)Math.Sin(wr+ph*l)*sizey);
+                                    i.DrawLines(new ShapeGraphicsOptions() { GraphicsOptions = { Antialias = false } }, fb, this.N, 
+                                        mp, pointF);
+                                }
+
+                            }
+                            catch (Exception e)
+                            {
+                                //HACK, TODO, geht nicht, wegen Bug in Bib.
                             }
                         });
                     }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
+using LEDerZaumzeug.Extensions;
 
 namespace LEDerZaumzeug.Generators
 {
@@ -73,12 +75,15 @@ namespace LEDerZaumzeug.Generators
             int topup = Convert.ToInt32(diff/4.0);
             for(int i=0; i<topup; i++)
             {
-                _st.Add(new Stern()
-                    { 
-                        X=rnd.Next((int)sizex),
-                        Y=rnd.Next((int)sizey),
-                        Hell=1.0f 
-                    });
+                Stern stern = new Stern()
+                { 
+                    X=(rnd.Next((int)sizex)),
+                    Y=(rnd.Next((int)sizey)),
+                    Hell=1.0f 
+                };
+                if(stern.X>=sizex || stern.Y>=sizey)
+                    Debugger.Break();
+                _st.Add(stern);
             }
         }
 

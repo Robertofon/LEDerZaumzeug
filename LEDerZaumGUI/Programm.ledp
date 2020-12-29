@@ -7,6 +7,85 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
+      "Name": "Linie Raute mit Nachleucht",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+        "Faktor": 0.5,
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Linien",
+          "Farbe": "(0.9/.40/.5)",
+          "Farbwechsel": true,
+          "Anzahl": 4,
+          "Art": "Raute",
+          "N": 1,
+          "Geschwindigkeit": 1.5
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Linie kreuz mit Nachleucht",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+        "Faktor": 0.5,
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Linien",
+          "Farbe": "(0.9/.40/.9)",
+          "Farbwechsel": true,
+          "Anzahl": 4,
+          "Art": "Kreuz",
+          "N": 1,
+          "Geschwindigkeit": 1.5
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Sterne",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Sterne",
+        "Anzahl": 28,
+        "Color": "#0FF",
+        "Geschwindigkeit": 1
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Sterne Mit Blubber",
+      "Start": {
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.OperatorMixer",
+        "Operator": "Max",
+        "Quelle": [
+          {
+            "$type": "FilterNode",
+            "TypeName": "LEDerZaumzeug.Filters.Nachleucht",
+            "Faktor": 0.5,
+            "Quelle": {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Sterne",
+              "Anzahl": 48,
+              "Color": "#FFF",
+              "Geschwindigkeit": 1.5
+            }
+          },
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+            "Winkel": 66.3,
+            "Lambda": 12,
+            "Geschwindigkeit": 3.9
+          }
+        ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Blubber-Blasen",
       "Start": {
         "$type": "GeneratorNode",
