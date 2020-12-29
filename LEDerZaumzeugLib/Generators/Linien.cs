@@ -26,7 +26,7 @@ namespace LEDerZaumzeug.Generators
         private uint sizex, sizey;
   
         private RGBPixel[,] pbuf;
-        private Image<RgbaVector> _malbild;
+        private Image<Rgba32> _malbild;
 
         /// <summary>
         /// Geschwindigkeit mit der die Koordinaten weiterwandern.
@@ -66,7 +66,10 @@ namespace LEDerZaumzeug.Generators
             var size = new Size((int)this.sizex, (int)this.sizey);
             this.pbuf = new RGBPixel[sizex, sizey];
 
-            _malbild = new Image<RgbaVector>(size.Width, size.Height);
+            // HACK: N>1 nicht gut
+            this.N = 1;
+
+            _malbild = new Image<Rgba32>(size.Width, size.Height);
 
             return Task.CompletedTask;
         }

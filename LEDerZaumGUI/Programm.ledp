@@ -7,100 +7,11 @@
   "Seq": [
     {
       "$type": "SeqItemNode",
-      "Name": "Kamm1",
+      "Name": "Blubber-Blasen",
       "Start": {
-            "$type": "FilterNode",
-            "TypeName": "LEDerZaumzeug.Filters.Wanderlicht",
-            "Geschwindigkeitsfaktor": 0.5,
-            "Farbe": "#666",
-            "Wanderweg": "Zeilenweise",
-            "Invers": true,
-            "Quelle": {
-              "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-              "Winkel": 16.3,
-              "Lambda": 30,
-              "Geschwindigkeit": 4
-            }
-          }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Plasma",
-      "Start": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.Plasma",
-          "N": 4,
-          "Geschwindigkeit": 3
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Kamm1",
-      "Start": {
-          "$type": "MixerNode",
-          "TypeName": "LEDerZaumzeug.Mixer.Kamm",
-          "Orientierung": "Verti",
-          "Quelle": [
-            {
-              "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Wave",
-              "Color": "(0.0/0.3/1.0)",
-              "BgColor": "#030",
-              "WaveLenght": 10,
-              "Direction": "N",
-              "Speed": 0.22
-            },
-            {
-              "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-              "Winkel": 26.3,
-              "Lambda": 25,
-              "Geschwindigkeit": 2
-            }
-          ]
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Kamm2",
-      "Start": {
-          "$type": "MixerNode",
-          "TypeName": "LEDerZaumzeug.Mixer.Kamm",
-          "Orientierung": "Horiz",
-          "Quelle": [
-            {
-              "$type": "GeneratorNode",
-              "TypeName": "LEDerZaumzeug.Generators.Linien",
-              "Farbe": "(0.2/.40/.6)",
-              "Art": "RadarRLR",
-              "N": 4,
-              "Geschwindigkeit": 0.5
-            },
-            {
-              "$type": "FilterNode",
-              "TypeName": "LEDerZaumzeug.Filters.CRT",
-              "Sprung": 24,
-              "Num": 6,
-              "Weite": 1,
-              "Quelle": {
-                "$type": "GeneratorNode",
-                "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
-                "Winkel": 6.3,
-                "Lambda": 20,
-                "Geschwindigkeit": 4
-              }
-            }
-          ]
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Feuer",
-      "Start": {
-          "$type": "GeneratorNode",
-          "TypeName": "LEDerZaumzeug.Generators.Feuer",
-          "Geschwindigkeit": 3
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
+        "Geschwindigkeit": 2
       }
     },
     {
@@ -115,9 +26,107 @@
           "TypeName": "LEDerZaumzeug.Generators.Linien",
           "Farbe": "(0/.40/.6)",
           "Art": "RadarRLR",
-          "N": 1,
+          "N": 2,
           "Geschwindigkeit": 0.5
         }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Kamm1",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Wanderlicht",
+        "Geschwindigkeitsfaktor": 0.5,
+        "Farbe": "#666",
+        "Wanderweg": "Zeilenweise",
+        "Invers": true,
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+          "Winkel": 16.3,
+          "Lambda": 30,
+          "Geschwindigkeit": 4
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Plasma",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Plasma",
+        "N": 4,
+        "Geschwindigkeit": 3
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Kamm1",
+      "Start": {
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.Kamm",
+        "Orientierung": "Verti",
+        "Quelle": [
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Wave",
+            "Color": "(0.0/0.3/1.0)",
+            "BgColor": "#030",
+            "WaveLenght": 10,
+            "Direction": "N",
+            "Speed": 0.22
+          },
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+            "Winkel": 26.3,
+            "Lambda": 25,
+            "Geschwindigkeit": 2
+          }
+        ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Kamm2",
+      "Start": {
+        "$type": "MixerNode",
+        "TypeName": "LEDerZaumzeug.Mixer.Kamm",
+        "Orientierung": "Horiz",
+        "Quelle": [
+          {
+            "$type": "GeneratorNode",
+            "TypeName": "LEDerZaumzeug.Generators.Linien",
+            "Farbe": "(0.2/.40/.6)",
+            "Art": "RadarRLR",
+            "N": 1,
+            "Geschwindigkeit": 0.5
+          },
+          {
+            "$type": "FilterNode",
+            "TypeName": "LEDerZaumzeug.Filters.CRT",
+            "Sprung": 24,
+            "Num": 6,
+            "Weite": 1,
+            "Quelle": {
+              "$type": "GeneratorNode",
+              "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+              "Winkel": 6.3,
+              "Lambda": 20,
+              "Geschwindigkeit": 4
+            }
+          }
+        ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Feuer",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.Feuer",
+        "Geschwindigkeit": 3
       }
     },
     {
@@ -157,15 +166,6 @@
         "Style": "Italic",
         "FontFamily": "Arial",
         "Text": "Großes Kino"
-      }
-    },
-    {
-      "$type": "SeqItemNode",
-      "Name": "Blubber-Blasen",
-      "Start": {
-        "$type": "GeneratorNode",
-        "TypeName": "LEDerZaumzeug.Generators.Blubberblasen",
-        "Geschwindigkeit": 2
       }
     },
     {

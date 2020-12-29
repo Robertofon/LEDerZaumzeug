@@ -86,7 +86,7 @@ namespace LEDerZaumzeug.Generators
             _image.Mutate(ctx =>
             {
                 //ctx.Fill(Rgba32.Black);
-                ctx.DrawText(this.Text, font, Brushes.Solid(Color.White), Pens.Solid(Color.Beige,0), PointF.Empty);
+                ctx.DrawText(this.Text, font, Brushes.Solid(Color.White), Pens.Solid(Color.Beige,1), PointF.Empty);
             });
 
             _tpos = _image.Width/2;

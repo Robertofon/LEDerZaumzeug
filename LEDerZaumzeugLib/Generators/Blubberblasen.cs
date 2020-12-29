@@ -6,9 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using LEDerZaumzeug.Extensions;
 using NLog;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.Memory;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 using SixLabors.ImageSharp.Processing.Processors.Transforms;
@@ -68,7 +70,13 @@ namespace LEDerZaumzeug.Generators
                 foreach (Blase b in _bl)
                 {
                     var e = new EllipsePolygon(b.X, b.Y, b.R);
-                    ctx.Fill(b.Fb, e);
+                    try //HACK
+                    {
+                        ctx.Fill(b.Fb, e);
+                    }
+                    catch (Exception exception)
+                    {
+                    }
                 }
             });
             
@@ -106,7 +114,7 @@ namespace LEDerZaumzeug.Generators
             {
                 // Muss so raus und rein, weil struct!!
                 var bl = _bl[i];
-                bl.X += (float)((_rnd.NextDouble()- .5) * this.Geschwindigkeit) ;
+                bl.X += (float)((_rnd.NextDouble()- .5) * this.Geschwindigkeit);
                 bl.Y -= (float)(_rnd.NextDouble() * this.Geschwindigkeit);
                 _bl[i] = bl;
             }
