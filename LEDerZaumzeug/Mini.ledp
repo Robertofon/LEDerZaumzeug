@@ -26,6 +26,19 @@
     },
     {
       "$type": "SeqItemNode",
+      "Name": "Textanzeige",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.GenText",
+        "Geschwindigkeit": 1.5,
+        "Size": 17.5,
+        "Style": "Normal",
+        "FontFamily": "Arial",
+        "Text": "Frohes Neus 2021"
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Kamm1",
       "Start": {
         "$type": "MixerNode",
@@ -389,6 +402,19 @@
             "Farbe": "#Dc0"
           }
         ]
+      }
+    },
+    {
+      "$type": "SeqItemNode",
+      "Name": "Textanzeige",
+      "Start": {
+        "$type": "GeneratorNode",
+        "TypeName": "LEDerZaumzeug.Generators.GenText",
+        "Geschwindigkeit": 1.5,
+        "Size": 17.5,
+        "Style": "Italic",
+        "FontFamily": "Arial",
+        "Text": "Verschwinde 2020!"
       }
     },
     {
