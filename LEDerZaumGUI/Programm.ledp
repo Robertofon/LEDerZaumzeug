@@ -26,6 +26,25 @@
     },
     {
       "$type": "SeqItemNode",
+      "Name": "Kamm5",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Wanderlicht",
+        "Geschwindigkeitsfaktor": 1.5,
+        "Farbe": "#f44",
+        "Wanderweg": "Zeilenweise",
+        "Invers": true,
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+          "Winkel": 26.3,
+          "Lambda": 10,
+          "Geschwindigkeit": 6
+        }
+      }
+    },
+    {
+      "$type": "SeqItemNode",
       "Name": "Linie kreuz mit Nachleucht",
       "Start": {
         "$type": "FilterNode",

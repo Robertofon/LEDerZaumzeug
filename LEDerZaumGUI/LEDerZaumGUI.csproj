@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
     <Compile Update="**\*.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
@@ -35,6 +35,9 @@
     <ProjectReference Include="..\LEDerZaumzeugLib\LEDerZaumzeugLib.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="PropertyGrid\PropertyGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\SzeneEditorControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </EmbeddedResource>

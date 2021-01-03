@@ -103,7 +103,7 @@ namespace LEDerZaumzeug
     }
 
     /// <summary>
-    /// Generator knoten des Muster-Generierungs Baums in seiner Serialsierungsform.
+    /// Generator Knoten des Muster-Generierungs Baums in seiner Serialsierungsform.
     /// <see cref="Inst"/> wird via <see cref="MusterNode.TypeName"/> instantiiert.
     /// Generatoren sind die Blätter des Baumes und somit die eigentlichen Pixelbild-Quellen.
     /// </summary>

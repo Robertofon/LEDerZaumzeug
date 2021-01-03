@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Text;
 using ReactiveUI;
 using LEDerZaumzeug;
 using System.Threading.Tasks;
 using System.IO;
+using System.Reactive.Linq;
 using AvaLEDerWand;
+using Avalonia.Diagnostics.ViewModels;
+using LEDerZaumGUI.Util;
 
 namespace LEDerZaumGUI.ViewModels
 {
@@ -49,6 +53,27 @@ namespace LEDerZaumGUI.ViewModels
 
             Status = "Programm geladen";
             PrgVM.LadeVonString(this.Quelltext);
+            PrgVM.Seq.CollectionChanged -= UpdateQuelltext;
+            PrgVM.Seq.CollectionChanged += UpdateQuelltext;
+        }
+
+        private void UpdateQuelltext(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
+        {
+            string programmjson = PrgVM.GetAlsString();
+            if (programmjson != null)
+            {
+                this.Quelltext = programmjson;
+            }
+        }
+
+        public async Task DoProgrammSpeichern()
+        {
+            using (var fs = File.CreateText("Programm1.ledp"))
+            {
+                await fs.WriteAsync(this.Quelltext);
+            }
+
+            Status = "Programm gespeichert";
         }
 
         public async Task DoStartPixelei(object o)
@@ -87,7 +112,10 @@ namespace LEDerZaumGUI.ViewModels
             Status = "geStoppt";
         }
 
+        public void DoPausePixelei(object o)
+        {
 
+        }
 
     }
 }

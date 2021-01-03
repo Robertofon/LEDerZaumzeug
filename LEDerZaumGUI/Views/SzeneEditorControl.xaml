@@ -1,7 +1,9 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
              xmlns:local="clr-namespace:LEDerZaumGUI"
              xmlns:ledzeug="clr-namespace:LEDerZaumzeug;assembly=LEDerZaumzeugLib"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:wand="clr-namespace:AvaLEDerWand;assembly=AvaLEDerWand"
+             xmlns:propertyGrid="clr-namespace:LEDerZaumGUI.PropertyGrid">
   <UserControl.DataTemplates>
       <TreeDataTemplate DataType="ledzeug:GeneratorNode">
         <StackPanel Orientation="Horizontal">
@@ -28,30 +30,73 @@
       </TreeDataTemplate>
     </UserControl.DataTemplates>
  <!-- der Editor für eine Szene -->
-  <Border BorderBrush="Yellow" BorderThickness="2">
-    <Grid ColumnDefinitions="*,*,*" RowDefinitions="Auto,Auto" >
-      <TextBlock Grid.Row="0" Grid.Column="0" Text="Sequenzen" />
+  <Border BorderBrush="DarkGray" BorderThickness="2">
+    <Grid ColumnDefinitions="*,*,*" RowDefinitions="50*,50*" >
+     <!--Item-List: ########################### -->
+     <Border Grid.Row="0" Grid.Column="0" >
+        <Grid RowDefinitions="Auto,*,Auto">
+          <TextBlock Grid.Row="0" Text="Szenen:" />
 
-      <ListBox Grid.Row="1" Grid.Column="0" MinHeight="100" 
-             Items="{Binding Seq}" SelectedItem="{Binding SelSeqItem}">
-      </ListBox>
+          <ListBox Grid.Row="1" Grid.Column="0" MinHeight="100" 
+                 Items="{Binding Seq}" SelectedItem="{Binding SelSeqItem}">
+          </ListBox>
+          <WrapPanel Grid.Row="2">
+            <Button Content="▲" Command="{Binding SeqItemHinauf}"></Button>
+            <Button Content="▼" Command="{Binding SeqItemRunter}"></Button>
+            <Button Content="Dup" Command="{Binding SeqItemDup}"></Button>
+            <Button Content="Entf" Command="{Binding SeqItemEntf}"></Button>
+          </WrapPanel>
+        </Grid>
+      </Border>
+      
+     <!--Item-DEF: ########################### -->
+     <Border Grid.Row="0" Grid.Column="1">
+        <Grid RowDefinitions="Auto,*,Auto">
 
-      <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding SelSeqItem.Name}" />
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding SelSeqItem.Name}" />
 
-      <TreeView Grid.Row="1" Grid.Column="1"  Items="{Binding SelSeqItem.Start, Converter={x:Static local:SingularListConverter.Inst}}">
-        <!--<TreeView.ItemTemplate>
-          <TreeDataTemplate>
-            <
-            <StackPanel Orientation="Horizontal">
-              <TextBlock Text="{Binding TypeName}"/>
-              <Button>OO</Button>
-            </StackPanel>
-          </TreeDataTemplate>
-        </TreeView.ItemTemplate>-->
-      </TreeView>
+          <TreeView Grid.Row="1" Grid.Column="0" 
+                    Items="{Binding SelSeqItem.Start, Converter={x:Static local:SingularListConverter.Inst}}"
+                    SelectedItem="{Binding SelKnoten}">
+            <!--<TreeView.ItemTemplate>
+              <TreeDataTemplate>
+                <
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="{Binding TypeName}"/>
+                  <Button>OO</Button>
+                </StackPanel>
+              </TreeDataTemplate>
+            </TreeView.ItemTemplate>-->
+          </TreeView>
 
-      <Border BorderBrush="Blue" BorderThickness="2" Grid.Row="1" Grid.Column="2">
-        <TextBlock >Todo infozu programm</TextBlock>
+          <WrapPanel Grid.Row="2" Grid.Column="0">
+            <Button Content="Kopieren"></Button>
+          </WrapPanel>
+        </Grid>
+      </Border>
+
+     <!--Item-Props: ########################### -->
+      <Border Grid.Row="0" Grid.Column="2" BorderThickness="1">
+        <Grid RowDefinitions="Auto,*,Auto">
+          <TextBlock Grid.Row="0">Eigenschaften</TextBlock>
+
+          <propertyGrid:PropertyGrid Grid.Row="1" SelectedObject="{Binding SelKnoten}"></propertyGrid:PropertyGrid>
+        </Grid>
+      </Border>
+
+
+
+      <!--Seq Preview LED (UNTEN): ########################### -->
+      <Border Grid.Row="1" Grid.Column="0">
+
+        <wand:LedControl DataContext="{Binding AktSeqLedViewModel}"/>
+
+      </Border>
+      <!--Node Preview LED (UNTEN): ########################### -->
+      <Border Grid.Row="1" Grid.Column="1">
+
+        <wand:LedControl DataContext="{Binding AktNodeLedViewModel}"/>
+
       </Border>
     </Grid>
   </Border>

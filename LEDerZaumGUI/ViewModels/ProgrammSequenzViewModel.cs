@@ -3,6 +3,8 @@ using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Avalonia.Diagnostics.ViewModels;
+using LEDerZaumGUI.Util;
 
 namespace LEDerZaumGUI.ViewModels
 {
@@ -11,16 +13,8 @@ namespace LEDerZaumGUI.ViewModels
         private string _info;
         private SeqItemNode _selSeqItem;
         private List<SeqItemNode> _seq;
+        private LEDerZaumZeug _lzSeq;
 
-        //private string _quelltext = "Nix";
-        //public string Quelltext
-        //{
-        //    get => _quelltext;
-        //    set
-        //    {
-        //        this.RaiseAndSetIfChanged(ref _quelltext, value);
-        //    }
-        //}
 
         public string Info
         {

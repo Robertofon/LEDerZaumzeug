@@ -74,5 +74,29 @@ namespace LEDerZaumzeug
         }
 
 
+        public static string WriteProgramToString(PixelProgram pgrm)
+        {
+            return JsonConvert.SerializeObject(pgrm, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                Formatting = Formatting.Indented,
+                SerializationBinder = knownTypesBinder
+            });
+        }
+
+        public static T Clone<T>(T node)
+        {
+            string s = JsonConvert.SerializeObject(node, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                SerializationBinder = knownTypesBinder
+            });
+
+            return JsonConvert.DeserializeObject<T>(s, new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Auto,
+                SerializationBinder = knownTypesBinder
+            });
+        }
     }
 }
