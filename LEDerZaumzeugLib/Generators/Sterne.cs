@@ -56,7 +56,8 @@ namespace LEDerZaumzeug.Generators
 
             foreach( var st in _st)
             {
-                pbuf[st.X, st.Y] = this.Color * st.Hell;
+                if(st!=null)
+                    pbuf[st.X, st.Y] = this.Color * st.Hell;
             }
 
             return Task.FromResult(pbuf);

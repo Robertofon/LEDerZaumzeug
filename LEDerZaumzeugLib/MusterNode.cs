@@ -114,7 +114,8 @@ namespace LEDerZaumzeug
         private IGenerator inst;
 
         [DebuggerHidden]
-        internal IGenerator Inst
+        [JsonIgnore]
+        public IGenerator Inst
         {
             get
             {
@@ -135,7 +136,8 @@ namespace LEDerZaumzeug
         private IFilter inst;
 
         [DebuggerHidden]
-        internal IFilter Inst
+        [JsonIgnore]
+        public IFilter Inst
         {
             get
             {
@@ -149,6 +151,7 @@ namespace LEDerZaumzeug
         /// Nur da für TreeView, da dieser immer ein IEnumerable haben will.
         /// </summary>
         [DebuggerHidden]
+        [JsonIgnore]
         public MusterNode[]  QuelleN { get { return new[] { Quelle }; } }
     }
 
@@ -168,7 +171,8 @@ namespace LEDerZaumzeug
         private IMixer inst;
 
         [DebuggerHidden]
-        internal IMixer Inst
+        [JsonIgnore]
+        public IMixer Inst
         {
             get
             {

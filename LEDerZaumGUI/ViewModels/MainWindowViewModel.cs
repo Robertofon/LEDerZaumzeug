@@ -68,7 +68,7 @@ namespace LEDerZaumGUI.ViewModels
 
         public async Task DoProgrammSpeichern()
         {
-            using (var fs = File.CreateText("Programm1.ledp"))
+            using (var fs = File.CreateText("Programm.ledp"))
             {
                 await fs.WriteAsync(this.Quelltext);
             }

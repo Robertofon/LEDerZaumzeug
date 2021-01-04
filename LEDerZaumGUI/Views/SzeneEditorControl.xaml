@@ -44,18 +44,20 @@
             <Button Content="▲" Command="{Binding SeqItemHinauf}"></Button>
             <Button Content="▼" Command="{Binding SeqItemRunter}"></Button>
             <Button Content="Dup" Command="{Binding SeqItemDup}"></Button>
-            <Button Content="Entf" Command="{Binding SeqItemEntf}"></Button>
+            <Button Content="--" Command="{Binding SeqItemEntf}"></Button>
+            <Button Content="++" Command="{Binding SeqItemHinzu}"></Button>
           </WrapPanel>
         </Grid>
       </Border>
       
      <!--Item-DEF: ########################### -->
      <Border Grid.Row="0" Grid.Column="1">
-        <Grid RowDefinitions="Auto,*,Auto">
+        <Grid RowDefinitions="Auto,Auto,*,Auto">
 
-          <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding SelSeqItem.Name}" />
+          <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:"/>
+          <TextBox Grid.Row="1" Grid.Column="0" Text="{Binding SelSeqItem.Name}" />
 
-          <TreeView Grid.Row="1" Grid.Column="0" 
+          <TreeView Grid.Row="2" Grid.Column="0" 
                     Items="{Binding SelSeqItem.Start, Converter={x:Static local:SingularListConverter.Inst}}"
                     SelectedItem="{Binding SelKnoten}">
             <!--<TreeView.ItemTemplate>
@@ -69,8 +71,13 @@
             </TreeView.ItemTemplate>-->
           </TreeView>
 
-          <WrapPanel Grid.Row="2" Grid.Column="0">
-            <Button Content="Kopieren"></Button>
+          <WrapPanel Grid.Row="3" Grid.Column="0">
+            <Button Content="(+Filter)" Command="{Binding AddFilterCommand}"></Button>
+            <Button Content="(+Mix)" Command="{Binding AddMixerCommand}"></Button>
+            <Button Content="+Gen" Command="{Binding AddGenCommand}"></Button>
+            <Button Content="--" Command="{Binding EntfKnotenCommand}"></Button>
+            <Button Content="o=o"  Command="{Binding DupKnotenCommand}"></Button>
+            <Button Content="↔"  Command="{Binding WechsleKnotenTypCommand}"></Button>
           </WrapPanel>
         </Grid>
       </Border>
@@ -79,8 +86,8 @@
       <Border Grid.Row="0" Grid.Column="2" BorderThickness="1">
         <Grid RowDefinitions="Auto,*,Auto">
           <TextBlock Grid.Row="0">Eigenschaften</TextBlock>
-
-          <propertyGrid:PropertyGrid Grid.Row="1" SelectedObject="{Binding SelKnoten}"></propertyGrid:PropertyGrid>
+          <propertyGrid:PropertyGrid Grid.Row="1" SelectedObject="{Binding SelKnoten.Inst}"></propertyGrid:PropertyGrid>
+          <Button Grid.Row="2" Content="Anwenden" Command="{Binding ExecuteEigenschaftenAnwenden} "/>
         </Grid>
       </Border>
 
@@ -88,14 +95,18 @@
 
       <!--Seq Preview LED (UNTEN): ########################### -->
       <Border Grid.Row="1" Grid.Column="0">
-
-        <wand:LedControl DataContext="{Binding AktSeqLedViewModel}"/>
+        <Grid RowDefinitions="*,Auto">
+          <wand:LedControl DataContext="{Binding AktSeqLedViewModel}"/>
+          <CheckBox Grid.Row="1" Content="Autostart" IsChecked="{Binding IsAutoStartSeqLed}"/>
+        </Grid>
 
       </Border>
       <!--Node Preview LED (UNTEN): ########################### -->
       <Border Grid.Row="1" Grid.Column="1">
-
-        <wand:LedControl DataContext="{Binding AktNodeLedViewModel}"/>
+        <Grid RowDefinitions="*,Auto">
+          <wand:LedControl DataContext="{Binding AktNodeLedViewModel}"/>
+          <CheckBox Grid.Row="1" Content="Autostart" IsChecked="{Binding IsAutoStartKnotenLed}"/>
+        </Grid>
 
       </Border>
     </Grid>

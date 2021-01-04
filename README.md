@@ -14,6 +14,20 @@ verschiedene Outputs etc.
 
 siehe auch (mehr Beschreibung): [TPM2-pixelpanel](https://github.com/Robertofon/pixelpanel-TPM2.Net-SPI)
 
+## CUI
+Es gibt eine Kommandozeilenversion. Die kann Animationsprogramme abspielen (Player)
+* LEDerzaumZeug
+
+## GUI
+Es gibt einen GUI-Editor für Programme und zum Laufenlassen (Player)
+* LEDerzaumGUI
+
+![](Screenshot.png)
+
+## LED-Anzeige
+Es gibt ein Externes Programm als Display (Empfänger).
+Das externe Programm kann auf einem PC gestartet werden und per Netzwerk an die Player angebunden weden
+* AvaLEDerWand
 
 # What
 
@@ -26,6 +40,21 @@ Current output only: TPM2
 
 See also: [TPM2-pixelpanel](https://github.com/Robertofon/pixelpanel-TPM2.Net-SPI)
 
+## CUI
+There is a command line program to play out animations to receivers (TPM2 etc.)
+* LEDerzaumZeug
+
+## GUI
+There is a GUI-Editor to create and modify Programs and to play out to receivers (Player)
+* LEDerzaumGUI
+
+![](Screenshot.png)
+
+## LED-Anzeige
+There is an external soft display program (receiver)
+The single program can be run on a pc and receive animations via network
+* AvaLEDerWand
+
 # Wie
 
 So kann es aussehen. Anzahl der LED  XxY kann angepasst werden:
@@ -36,4 +65,4 @@ So kann es aussehen. Anzahl der LED  XxY kann angepasst werden:
 
 
 
-(c) Robert Köpferl 2018
+(c) Robert Köpferl 2021

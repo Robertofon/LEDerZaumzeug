@@ -224,6 +224,9 @@ namespace LEDerZaumzeug
 
         public void Stop()
         {
+            // idempotent machen
+            if(cts.IsCancellationRequested)
+                return;
             this.cts.Cancel();
             this.runthread.Join();
             this.runthread = null;

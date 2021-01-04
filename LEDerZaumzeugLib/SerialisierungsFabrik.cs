@@ -86,12 +86,22 @@ namespace LEDerZaumzeug
 
         public static T Clone<T>(T node)
         {
-            string s = JsonConvert.SerializeObject(node, new JsonSerializerSettings
+            string s = Serialize(node);
+
+            return DeSerialize<T>(s);
+        }
+
+        public static string Serialize<T>(T node)
+        {
+            return JsonConvert.SerializeObject(node, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto,
                 SerializationBinder = knownTypesBinder
             });
+        }
 
+        public static T DeSerialize<T>(string s)
+        {
             return JsonConvert.DeserializeObject<T>(s, new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.Auto,
