@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Threading;
+using LEDerZaumGUI.Views;
 
 namespace LEDerZaumGUI.Util
 {
@@ -25,7 +28,8 @@ namespace LEDerZaumGUI.Util
                 var errorDlg = new Window();
                 errorDlg.Content = new TextBlock() {Text = ex.Message};
                 //errorDlg.DataContext = ex.Message;
-                errorDlg.ShowDialog();
+                Window mainWindow = ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).MainWindow;
+                errorDlg.ShowDialog(mainWindow);
             }
             else
             {

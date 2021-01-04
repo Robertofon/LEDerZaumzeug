@@ -1,29 +1,30 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="**\*.xaml.cs">
       <DependentUpon>%(Filename)</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="**\*.xaml">
+    <AvaloniaResource Include="**\*.xaml">
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </AvaloniaResource>
   </ItemGroup>
   <ItemGroup>
     <None Remove="LedControl.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.6.1" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.6.1" />
+    <PackageReference Include="Avalonia" Version="0.10.0-rc1" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-rc1" />
+    <PackageReference Include="ReactiveUI" Version="13.0.27" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LEDerZaumzeugLib\LEDerZaumzeugLib.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Update="LedControl.xaml">
+    <AvaloniaResource Update="LedControl.xaml">
       <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
+    </AvaloniaResource>
   </ItemGroup>
 </Project>

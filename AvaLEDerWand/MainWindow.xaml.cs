@@ -11,12 +11,12 @@ namespace AvaLEDerWand
         {
             const double spacing_about = 50;
             InitializeComponent();
-            LedControlViewModel ledVm = new LedControlViewModel(12, 8);
-            this.DataContext = ledVm;
-            this.Width = spacing_about * ledVm.Cols;
-            this.Height = spacing_about * ledVm.Rows;
-            this.AttachDevTools();
-            //Renderer.DrawFps = true;
+            MainWindowViewModel viewModel = new MainWindowViewModel(this);
+            this.DataContext = viewModel;
+            this.Width = spacing_about * viewModel.LedVm.Cols;
+            this.Height = spacing_about * viewModel.LedVm.Rows;
+            //this.AttachDevTools();
+            Renderer.DrawFps = true;
             //Renderer.DrawDirtyRects = Renderer.DrawFps = true;
         }
 

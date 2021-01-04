@@ -11,7 +11,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using AvaLEDerWand;
-using Avalonia.Diagnostics.ViewModels;
 using LEDerZaumGUI.Models;
 using LEDerZaumGUI.Util;
 using LEDerZaumzeug.Mixer;
@@ -19,7 +18,7 @@ using Newtonsoft.Json;
 
 namespace LEDerZaumGUI.ViewModels
 {
-    public class SzeneEditorViewModel : ViewModelBase
+    public class SzeneEditorViewModel : ReactiveObject
     {
         private static NLog.ILogger log = NLog.LogManager.GetCurrentClassLogger();
         private string _info;

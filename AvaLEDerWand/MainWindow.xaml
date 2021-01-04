@@ -1,5 +1,6 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="AvaLEDerWand.MainWindow"
         xmlns:local="clr-namespace:AvaLEDerWand"
         
         
@@ -7,7 +8,8 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_Datei">
-                <MenuItem Header="_Ende" />
+                <MenuItem Header="_Ende" Command="{Binding Exit}" />
+                <MenuItem Header="_Config" Command="{Binding OpenConfig}"/>
             </MenuItem>
         </Menu>
 
@@ -15,13 +17,12 @@
         <Grid RowDefinitions="*,Auto"  DockPanel.Dock="Bottom" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
           
-          <local:LedControl  Grid.Row="0" Margin="2"/>
-        
-            
-            <StackPanel Grid.Row="1">
-                <Button Command="{Binding DoKlick}" CommandParameter="34" Content="Klick" />
-            </StackPanel>
-        </Grid>
+        <local:LedControl DataContext="{Binding LedVm}"  Grid.Row="0" Margin="2"/>
+                  
+        <StackPanel Grid.Row="1">
+            <Button Command="{Binding DoKlick}" CommandParameter="34" Content="FullScreen" />
+        </StackPanel>
+      </Grid>
 
     </DockPanel>
     

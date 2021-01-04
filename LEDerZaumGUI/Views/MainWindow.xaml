@@ -3,15 +3,19 @@
         xmlns:vm="clr-namespace:LEDerZaumGUI.ViewModels;assembly=LEDerZaumGUI"
         xmlns:wand="clr-namespace:AvaLEDerWand;assembly=AvaLEDerWand"
         xmlns:local="clr-namespace:LEDerZaumGUI.Views"
+        x:Class="LEDerZaumGUI.Views.MainWindow"
         Icon="resm:LEDerZaumGUI.Assets.avalonia-logo.ico"
         Title="LEDerZaumGUI">
 
   <Design.DataContext>
     <vm:MainWindowViewModel/>
   </Design.DataContext>
+  <Window.DataContext>
+    <vm:MainWindowViewModel/>
+  </Window.DataContext>
 
 
-  <Grid ColumnDefinitions="300,*,300" RowDefinitions="20,400,Auto,*,Auto">
+  <Grid ColumnDefinitions="300,*" RowDefinitions="20,400,Auto,*,Auto">
     <TextBlock Text="{Binding Status}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="0"/>
     <wand:LedControl Grid.Row="1" Grid.Column="0" DataContext="{Binding LedViewModel}"/>
     <Border Grid.Row="2" Grid.Column="0" BorderBrush="DarkGray" Background="White" BorderThickness="2" CornerRadius="4" >
@@ -27,7 +31,7 @@
     <TextBox Text="{Binding Quelltext}" TextWrapping="NoWrap"  Grid.Row="3" Grid.Column="0"/>
 
     <local:SzeneEditorControl Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" DataContext="{Binding PrgVM}" 
-                              IsVisible="{Binding AktiveDatei, Converter={x:Static StringConverters.NotNullOrEmpty}}"
+                              IsVisible="{Binding AktiveDatei, Converter={x:Static StringConverters.IsNotNullOrEmpty}}"
                               VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
     <StackPanel Grid.Row="4" Orientation="Horizontal" >

@@ -1,6 +1,6 @@
-﻿using Avalonia.Diagnostics.ViewModels;
-using Avalonia.Media;
+﻿using Avalonia.Media;
 using Avalonia.Media.Immutable;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,7 +8,7 @@ using System.Text;
 
 namespace AvaLEDerWand
 {
-    public class LedControlViewModel : ViewModelBase
+    public class LedControlViewModel : ReactiveObject
     {
         private string _name;
 
@@ -76,7 +76,7 @@ namespace AvaLEDerWand
         public IList<LedVm> Leds { get; } = new ObservableCollection<LedVm>();
     }
 
-    public class LedVm : ViewModelBase
+    public class LedVm : ReactiveObject
     {
         private ISolidColorBrush _ledBrush;
 

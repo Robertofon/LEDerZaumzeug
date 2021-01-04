@@ -1,22 +1,28 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <TargetFrameworks>netcoreapp3.1</TargetFrameworks>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Update="**\*.xaml.cs">
-      <DependentUpon>%(Filename)</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="**\*.xaml">
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Assets\*" />
+    <None Remove="Assets\avalonia-logo.ico" />
+    <None Remove="Programm.ledp" />
+    <None Remove="PropertyGrid\PropertyGrid.xaml" />
+    <None Remove="Views\MainWindow.xaml" />
+    <None Remove="Views\SzeneEditorControl.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Programm.ledp" />
-    <None Remove="Views\SzeneEditorControl.xaml" />
+    <AvaloniaResource Include="Assets\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Remove="Assets\avalonia-logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Include="App.xaml" />
+    <AvaloniaResource Include="PropertyGrid\PropertyGrid.xaml" />
+    <AvaloniaResource Include="Views\MainWindow.xaml" />
+    <AvaloniaResource Include="Views\SzeneEditorControl.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Programm.ledp">
@@ -24,22 +30,18 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="0.6.1" />
-    <PackageReference Include="Avalonia.Desktop" Version="0.6.1" />
-    <PackageReference Include="Avalonia.ReactiveUI" Version="0.6.1" />
+    <EmbeddedResource Include="Assets\avalonia-logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="0.10.0-rc1" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0-rc1" />
+    <PackageReference Include="Avalonia.Diagnostics" Version="0.10.0-rc1" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0-rc1" />
     <PackageReference Include="SixLabors.ImageSharp" Version="1.0.2" />
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AvaLEDerWand\AvaLEDerWand.csproj" />
     <ProjectReference Include="..\LEDerZaumzeugLib\LEDerZaumzeugLib.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="PropertyGrid\PropertyGrid.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Views\SzeneEditorControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

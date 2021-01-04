@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
-using Avalonia.Diagnostics.ViewModels;
 using ReactiveUI;
 
 namespace LEDerZaumGUI.ViewModels
 {
-    public class ValidatableViewModelBase : ViewModelBase, INotifyDataErrorInfo
+    public class ValidatableViewModelBase : ReactiveObject, INotifyDataErrorInfo
     {
         private static readonly string[] NO_ERRORS = new string[0];
 

@@ -2,10 +2,10 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
-using Avalonia.Diagnostics.ViewModels;
 using LEDerZaumGUI.PropertyGrid._Attributes;
 using LEDerZaumGUI.ViewModels;
 using LEDerZaumzeug;
+using ReactiveUI;
 
 namespace LEDerZaumGUI.PropertyGrid {
     public class ConfigurablePropertyMetadata : ValidatableViewModelBase

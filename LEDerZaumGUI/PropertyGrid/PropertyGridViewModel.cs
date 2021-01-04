@@ -25,12 +25,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
-using Avalonia.Diagnostics.ViewModels;
 using ReactiveUI;
 
 namespace LEDerZaumGUI.PropertyGrid
 {
-    public class PropertyGridViewModel : ViewModelBase
+    public class PropertyGridViewModel : ReactiveObject
     {
         private List<ConfigurablePropertyMetadata> _propertyMetadata;
         private object? _selectedObject;

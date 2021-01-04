@@ -8,12 +8,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Reactive.Linq;
 using AvaLEDerWand;
-using Avalonia.Diagnostics.ViewModels;
 using LEDerZaumGUI.Util;
 
 namespace LEDerZaumGUI.ViewModels
 {
-    public class MainWindowViewModel : ViewModelBase
+    public class MainWindowViewModel : ReactiveObject
     {
         private InternalAvaOutput _avaOutput;
         private LEDerZaumZeug _lz;

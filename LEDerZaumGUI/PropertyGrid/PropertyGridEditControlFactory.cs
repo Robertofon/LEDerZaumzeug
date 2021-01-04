@@ -10,7 +10,6 @@ using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Layout;
-using Avalonia.Markup.Xaml.Data;
 using LEDerZaumGUI.PropertyGrid._Attributes;
 using ReactiveUI;
 
@@ -101,7 +100,7 @@ namespace LEDerZaumGUI.PropertyGrid
             ConfigurablePropertyMetadata property,
             IEnumerable<ConfigurablePropertyMetadata> allProperties)
         {
-            var ctrlComboBox = new DropDown();
+            var ctrlComboBox = new ComboBox();
             ctrlComboBox.Items = property.GetEnumMembers();
             ctrlComboBox[!SelectingItemsControl.SelectedItemProperty] = new Binding(
                 nameof(property.ValueAccessor),
@@ -115,7 +114,7 @@ namespace LEDerZaumGUI.PropertyGrid
             ConfigurablePropertyMetadata property,
             IEnumerable<ConfigurablePropertyMetadata> allProperties)
         {
-            var ctrlComboBox = new DropDown();
+            var ctrlComboBox = new ComboBox();
 
             var possibleValueAttrib = property.GetCustomAttribute<FixedPossibleValuesAttribute>();
             if (possibleValueAttrib != null)
@@ -176,7 +175,7 @@ namespace LEDerZaumGUI.PropertyGrid
 
             var ctrlTextBox2Container = new Grid();
             ctrlTextBox2Container.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Auto));
-            ctrlTextBox2Container.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Parse("*", CultureInfo.InvariantCulture)));
+            ctrlTextBox2Container.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Parse("*")));
 
             var ctrlTextBox2Header = new TextBlock();
             ctrlTextBox2Header.Text = "HEX";
