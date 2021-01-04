@@ -108,7 +108,7 @@ namespace LEDerZaumzeug
         /// </summary>
         public override string ToString()
         {
-            return $"[{R}/{G}/{B}]";
+            return string.Format(CultureInfo.InvariantCulture, "[{0}/{1}/{2}]", R, G, B);
         }
 
         /// <summary>
@@ -237,6 +237,14 @@ namespace LEDerZaumzeug
         public static bool operator!=(RGBPixel a, RGBPixel b)
         {
             return !a.Equals(b);
+        }
+
+        public static implicit operator RGBPixel(string str)
+        {
+            RGBPixel o;
+            if (!TryParse(str, CultureInfo.InvariantCulture, out o))
+                throw new FormatException("{str} kann nicht geparst werden");
+            return o;
         }
 
         public static implicit operator HSVPixel(RGBPixel rgb)

@@ -45,6 +45,10 @@ namespace LEDerZaumGUI.PropertyGrid
                     ctrlValueEdit = this.CreateFixedPossibleValuesControl(property, allProperties);
                     break;
 
+                case PropertyValueType.RGBPixel:
+                    ctrlValueEdit = this.CreateTextBoxControl(property, allProperties);
+                    break;
+
                 case PropertyValueType.DetailSettings:
                     break;
 

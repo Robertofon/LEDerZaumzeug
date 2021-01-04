@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using AvaLEDerWand;
 using Avalonia.Diagnostics.ViewModels;
 using LEDerZaumGUI.Models;
@@ -23,7 +24,6 @@ namespace LEDerZaumGUI.ViewModels
         private static NLog.ILogger log = NLog.LogManager.GetCurrentClassLogger();
         private string _info;
         private SeqItemNode _selSeqItem;
-        private ObservableCollection<SeqItemNode> _seq;
         private BaseNode? _selKnoten;
         private LEDerZaumZeug? _lzSeq = null;
         private LEDerZaumZeug? _lzNode = null;
@@ -39,6 +39,9 @@ namespace LEDerZaumGUI.ViewModels
             this.AddGenCommand = ReactiveCommand.Create(ExecuteAddGenerator, whenMixerSelected);
             this.DupKnotenCommand = ReactiveCommand.Create(ExecuteDupKnoten, whenKnotenSelected);
             this.WechsleKnotenTypCommand = ReactiveCommand.Create(ExecuteWechsleKnotenTyp, whenKnotenSelected);
+            this.EigenschaftenAnwenden = ReactiveCommand.CreateFromTask(ExecuteEigenschaftenAnwenden, whenKnotenSelected);
+            this.WhenQuelltextChanged = EigenschaftenAnwenden.AsObservable()
+                .CombineLatest(this.Seq.ToObservable().Throttle(TimeSpan.FromMilliseconds(50)), (unit, node) => this.GetAlsString());
             this.ObservableForProperty(o => o.SelSeqItem).Subscribe(async o =>
             {
                 _lzSeq?.Stop();
@@ -61,6 +64,10 @@ namespace LEDerZaumGUI.ViewModels
             });
         }
 
+        public ReactiveCommand<Unit, Unit> EigenschaftenAnwenden { get; set; }
+
+        public IObservable<string> WhenQuelltextChanged { get; }
+
         public ReactiveCommand<Unit, Unit> WechsleKnotenTypCommand { get; set; }
 
         public ReactiveCommand<Unit, Unit> AddGenCommand { get; set; }
@@ -82,17 +89,7 @@ namespace LEDerZaumGUI.ViewModels
             }
         }
 
-        public ObservableCollection<SeqItemNode> Seq
-        {
-            get
-            {
-                return _seq;
-            }
-            private set
-            {
-                this.RaiseAndSetIfChanged(ref _seq, value);
-            }
-        }
+        public ObservableCollection<SeqItemNode> Seq { get; private set; } = new ObservableCollection<SeqItemNode>();
 
         public SeqItemNode SelSeqItem
         {
@@ -136,6 +133,12 @@ namespace LEDerZaumGUI.ViewModels
         /// </summary>
         public LedControlViewModel AktSeqLedViewModel { get; } = new LedControlViewModel(Config.LedDimensionRows, Config.LedDimensionCols);
 
+        private void StopLedPreview()
+        {
+            _lzSeq?.Stop();
+            _lzNode?.Stop();
+        }
+
         private async Task StartKnotenLedPreview(BaseNode node)
         {
             var lcfg = new LEDerConfig() {Outputs = { }, SeqShowTime = TimeSpan.MaxValue};
@@ -169,7 +172,11 @@ namespace LEDerZaumGUI.ViewModels
                 PixelProgram pgm = SerialisierungsFabrik.ReadProgramFromString(quelltext);
                 this.AktivesProgramm = pgm;
                 this.Info = pgm.MetaInfo["Info"]?.ToString();
-                this.Seq = new ObservableCollection<SeqItemNode>(pgm.Seq);
+                this.Seq.Clear();
+                foreach (SeqItemNode node in pgm.Seq)
+                {
+                    this.Seq.Add(node);
+                }
             }
             catch (Exception task)
             {
@@ -200,7 +207,7 @@ namespace LEDerZaumGUI.ViewModels
         {
             if (this.SelSeqItem != null && this.Seq.Any())
             {
-                _lzSeq?.Stop();
+                StopLedPreview();
                 var tmpItem = this.SelSeqItem;
                 int oldidx = this.Seq.IndexOf(tmpItem);
                 if (oldidx >= 1)
@@ -217,7 +224,7 @@ namespace LEDerZaumGUI.ViewModels
         {
             if (this.SelSeqItem != null && this.Seq.Any())
             {
-                _lzSeq?.Stop();
+                StopLedPreview();
                 var tmpItem = this.SelSeqItem;
                 int oldidx = this.Seq.IndexOf(tmpItem);
                 if (oldidx >= 0 && oldidx+1 != this.Seq.Count)
@@ -233,7 +240,7 @@ namespace LEDerZaumGUI.ViewModels
         {
             if (this.SelSeqItem != null && this.Seq.Any())
             {
-                _lzSeq?.Stop();
+                StopLedPreview();
                 SeqItemNode tmpItem = this.SelSeqItem;
                 int idx = this.Seq.IndexOf(tmpItem);
                 SeqItemNode dupItem = SerialisierungsFabrik.Clone(tmpItem);
@@ -246,7 +253,7 @@ namespace LEDerZaumGUI.ViewModels
         {
             if (this.SelSeqItem != null && this.Seq.Any())
             {
-                _lzSeq?.Stop();
+                StopLedPreview();
                 var tmpItem = this.SelSeqItem;
                 this.Seq.Remove(tmpItem);
             }
@@ -256,8 +263,8 @@ namespace LEDerZaumGUI.ViewModels
         {
             if (this.Seq != null)
             {
-                _lzSeq?.Stop();
-                
+                StopLedPreview();
+
                 var neuer = new SeqItemNode() {Name ="Seq0", Start = new GeneratorNode(){ TypeName = "LEDerZaumzeug.Generators.SolidColor" } };
                 int idx = this.Seq.IndexOf(this.SelSeqItem);
                 if (idx == -1)
@@ -302,32 +309,20 @@ namespace LEDerZaumGUI.ViewModels
         {
         }
 
-        public Task ExecuteEigenschaftenAnwenden()
+        private Task ExecuteEigenschaftenAnwenden()
         {
-            if(this.SelKnoten!= null)
+            if(this.SelKnoten== null)
                 return Task.CompletedTask;
 
-            if (this.SelKnoten is MixerNode mn)
+            StopLedPreview();
+
+            if (this.SelKnoten is MusterNode gn)
             {
-
-            }
-
-            if (this.SelKnoten is FilterNode fn)
-            {
-
-            }
-
-            if (this.SelKnoten is GeneratorNode gn)
-            {
-                string s = SerialisierungsFabrik.Serialize(gn.Inst);
-                //SerialisierungsFabrik.DeSerialize<>()
-
+                gn.SyncFromInst();
             }
 
             var alsString = this.GetAlsString();
 
-            _lzSeq.Stop();
-            _lzNode.Stop();
             return Task.WhenAll( StartSeqLedPreview(this.SelSeqItem), StartKnotenLedPreview(this.SelKnoten));
         }
 

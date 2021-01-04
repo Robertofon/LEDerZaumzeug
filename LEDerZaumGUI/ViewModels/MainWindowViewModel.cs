@@ -20,7 +20,8 @@ namespace LEDerZaumGUI.ViewModels
         private LEDerConfig _lcfg = new LEDerConfig() { Outputs = { }, SeqShowTime = TimeSpan.FromSeconds(14) };
 
         private string _status = "Nix";
-        private string _quelltext = "Nix";
+        private string _quelltext = null;
+        private string? _aktiveDatei = null;
 
         public SzeneEditorViewModel PrgVM { get; } = new SzeneEditorViewModel();
  
@@ -44,17 +45,45 @@ namespace LEDerZaumGUI.ViewModels
             }
         }
 
+        /// <summary>
+        /// Aktuell geladenen Datei.
+        /// </summary>
+        public string? AktiveDatei
+        {
+            get => _aktiveDatei;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _aktiveDatei, value);
+            }
+        }
+
         public async Task DoProgrammLaden()
         {
-            using (var fs = File.OpenText("Programm.ledp"))
+            await LadeVonDatei("Programm.ledp");
+        }
+
+        IDisposable _quelltextUpdater;
+        private async Task LadeVonDatei(string dateiname)
+        {
+            dateiname = Path.GetFullPath(dateiname);
+            using (var fs = File.OpenText(dateiname))
             {
                 Quelltext = await fs.ReadToEndAsync();
             }
 
-            Status = "Programm geladen";
+            this.AktiveDatei = dateiname;
+            Status = $"Programm geladen : '{dateiname}'";
             PrgVM.LadeVonString(this.Quelltext);
-            PrgVM.Seq.CollectionChanged -= UpdateQuelltext;
-            PrgVM.Seq.CollectionChanged += UpdateQuelltext;
+            _quelltextUpdater = PrgVM.WhenQuelltextChanged.Subscribe(qtext => this.Quelltext = qtext);
+            //PrgVM.Seq.CollectionChanged -= UpdateQuelltext;
+            //PrgVM.Seq.CollectionChanged += UpdateQuelltext;
+        }
+
+        public void DoProgrammEntladen()
+        {
+            this.AktiveDatei = null;
+            this.Quelltext = "";
+            _quelltextUpdater?.Dispose();
         }
 
         private void UpdateQuelltext(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)

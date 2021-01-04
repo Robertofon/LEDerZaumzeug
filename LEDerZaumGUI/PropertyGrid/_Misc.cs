@@ -17,7 +17,9 @@ namespace LEDerZaumGUI.PropertyGrid
          
         DetailSettings,
 
-        FixedPossibleValues
+        FixedPossibleValues,
+
+        RGBPixel,
     }
 
     public interface IPropertyContractResolver

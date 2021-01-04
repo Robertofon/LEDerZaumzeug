@@ -34,6 +34,11 @@ namespace LEDerZaumzeug
                 return this.inst ?? (inst = this.CreateObjectInstance<IOutput>());
             }
         }
+
+        public override void SyncFromInst()
+        {
+        }
+
     }
 
 }

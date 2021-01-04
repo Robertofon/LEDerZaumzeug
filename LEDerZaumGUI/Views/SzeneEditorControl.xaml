@@ -87,7 +87,7 @@
         <Grid RowDefinitions="Auto,*,Auto">
           <TextBlock Grid.Row="0">Eigenschaften</TextBlock>
           <propertyGrid:PropertyGrid Grid.Row="1" SelectedObject="{Binding SelKnoten.Inst}"></propertyGrid:PropertyGrid>
-          <Button Grid.Row="2" Content="Anwenden" Command="{Binding ExecuteEigenschaftenAnwenden} "/>
+          <Button Grid.Row="2" Content="Anwenden" Command="{Binding EigenschaftenAnwenden} "/>
         </Grid>
       </Border>
 

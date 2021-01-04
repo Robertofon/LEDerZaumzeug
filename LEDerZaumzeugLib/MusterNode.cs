@@ -4,6 +4,7 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace LEDerZaumzeug
@@ -59,7 +60,7 @@ namespace LEDerZaumzeug
         /// https://www.newtonsoft.com/json/help/html/DeserializeExtensionData.htm
         /// </summary>
         [JsonExtensionData]
-        private JObject _extparams;
+        protected JObject _extparams;
 #pragma warning restore
 
         /// <summary>
@@ -82,6 +83,7 @@ namespace LEDerZaumzeug
                     log.Info($"Populiere Objekt '{obj.GetType().Name} mit Parametern");
                     new JsonSerializer()
                     {
+                        Culture = CultureInfo.InvariantCulture,
                         Converters = { new RGBPixelConverter() },
                         MissingMemberHandling = MissingMemberHandling.Error,
                     }.Populate(_extparams.CreateReader(), obj);
@@ -100,6 +102,8 @@ namespace LEDerZaumzeug
         {
             return "MN: " + this.TypeName;
         }
+
+        public abstract void SyncFromInst();
     }
 
     /// <summary>
@@ -115,12 +119,24 @@ namespace LEDerZaumzeug
 
         [DebuggerHidden]
         [JsonIgnore]
-        public IGenerator Inst
+        internal IGenerator Inst
         {
             get
             {
                 return this.inst ?? (inst = this.CreateObjectInstance<IGenerator>());
             }
+        }
+
+        public override void SyncFromInst()
+        {
+            JTokenWriter tw = new JTokenWriter();
+            var jsonSerializer = new JsonSerializer()
+            {
+                Culture = CultureInfo.InvariantCulture,
+                Converters = { new RGBPixelConverter() },
+                MissingMemberHandling = MissingMemberHandling.Error,
+            };
+            _extparams = JObject.FromObject(this.Inst, jsonSerializer);
         }
     }
 
@@ -137,7 +153,7 @@ namespace LEDerZaumzeug
 
         [DebuggerHidden]
         [JsonIgnore]
-        public IFilter Inst
+        internal IFilter Inst
         {
             get
             {
@@ -146,6 +162,18 @@ namespace LEDerZaumzeug
         }
 
         public MusterNode Quelle { get; set; }
+
+        public override void SyncFromInst()
+        {
+            JTokenWriter tw = new JTokenWriter();
+            var jsonSerializer = new JsonSerializer()
+            {
+                Culture = CultureInfo.InvariantCulture,
+                Converters = { new RGBPixelConverter() },
+                MissingMemberHandling = MissingMemberHandling.Error,
+            };
+            _extparams = JObject.FromObject(this.Inst, jsonSerializer);
+        }
 
         /// <summary>
         /// Nur da für TreeView, da dieser immer ein IEnumerable haben will.
@@ -172,7 +200,7 @@ namespace LEDerZaumzeug
 
         [DebuggerHidden]
         [JsonIgnore]
-        public IMixer Inst
+        internal IMixer Inst
         {
             get
             {
@@ -181,6 +209,18 @@ namespace LEDerZaumzeug
         }
 
         public IList<MusterNode> Quelle { get; set; } = new List<MusterNode>();
+
+        public override void SyncFromInst()
+        {
+            JTokenWriter tw = new JTokenWriter();
+            var jsonSerializer = new JsonSerializer()
+            {
+                Culture = CultureInfo.InvariantCulture,
+                Converters = { new RGBPixelConverter() },
+                MissingMemberHandling = MissingMemberHandling.Error,
+            };
+            _extparams = JObject.FromObject(this.Inst, jsonSerializer);
+        }
     }
 
 

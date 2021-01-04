@@ -16,6 +16,7 @@
     <wand:LedControl Grid.Row="1" Grid.Column="0" DataContext="{Binding LedViewModel}"/>
     <Border Grid.Row="2" Grid.Column="0" BorderBrush="DarkGray" Background="White" BorderThickness="2" CornerRadius="4" >
       <WrapPanel Margin="2">
+        <Button Content="Schl" Command="{Binding DoProgrammEntladen}"  Margin="2"/>
         <Button Content="Lade(std)" Command="{Binding DoProgrammLaden}"  Margin="2"/>
         <Button Content="Speichern" Command="{Binding DoProgrammSpeichern}"  Margin="2"/>
         <Button Content="Start" Command="{Binding DoStartPixelei}" Margin="2"/>
@@ -26,6 +27,7 @@
     <TextBox Text="{Binding Quelltext}" TextWrapping="NoWrap"  Grid.Row="3" Grid.Column="0"/>
 
     <local:SzeneEditorControl Grid.Row="1" Grid.Column="1" Grid.RowSpan="3" DataContext="{Binding PrgVM}" 
+                              IsVisible="{Binding AktiveDatei, Converter={x:Static StringConverters.NotNullOrEmpty}}"
                               VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
 
     <StackPanel Grid.Row="4" Orientation="Horizontal" >

@@ -5,9 +5,9 @@ using System.Diagnostics.CodeAnalysis;
 using Avalonia.Diagnostics.ViewModels;
 using LEDerZaumGUI.PropertyGrid._Attributes;
 using LEDerZaumGUI.ViewModels;
+using LEDerZaumzeug;
 
-namespace LEDerZaumGUI.PropertyGrid 
-{
+namespace LEDerZaumGUI.PropertyGrid {
     public class ConfigurablePropertyMetadata : ValidatableViewModelBase
     {
         private object _hostObject;
@@ -108,6 +108,10 @@ namespace LEDerZaumGUI.PropertyGrid
             else if (propertyType == typeof(bool))
             {
                 this.ValueType = PropertyValueType.Bool;
+            }
+            else if (propertyType == typeof(RGBPixel))
+            {
+                this.ValueType = PropertyValueType.RGBPixel;
             }
             else if (this.GetCustomAttribute<FixedPossibleValuesAttribute>() != null)
             {
