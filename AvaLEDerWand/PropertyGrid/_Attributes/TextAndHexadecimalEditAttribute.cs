@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace LEDerZaumGUI.PropertyGrid._Attributes
+namespace LEDerWand.PropertyGrid._Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class TextAndHexadecimalEditAttribute : Attribute

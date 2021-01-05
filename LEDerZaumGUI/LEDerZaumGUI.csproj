@@ -8,7 +8,6 @@
   <ItemGroup>
     <None Remove="Assets\avalonia-logo.ico" />
     <None Remove="Programm.ledp" />
-    <None Remove="PropertyGrid\PropertyGrid.xaml" />
     <None Remove="Views\MainWindow.xaml" />
     <None Remove="Views\SzeneEditorControl.xaml" />
   </ItemGroup>
@@ -20,7 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Include="App.xaml" />
-    <AvaloniaResource Include="PropertyGrid\PropertyGrid.xaml" />
     <AvaloniaResource Include="Views\MainWindow.xaml" />
     <AvaloniaResource Include="Views\SzeneEditorControl.xaml" />
   </ItemGroup>

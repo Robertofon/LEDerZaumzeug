@@ -4,7 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="LEDerZaumGUI.Views.SzeneEditorControl"
              xmlns:wand="clr-namespace:LEDerWand;assembly=LEDerWand"
-             xmlns:propertyGrid="clr-namespace:LEDerZaumGUI.PropertyGrid">
+             xmlns:propertyGrid="clr-namespace:LEDerWand.PropertyGrid;assembly=LEDerWand">
   <UserControl.DataTemplates>
       <TreeDataTemplate DataType="ledzeug:GeneratorNode">
         <StackPanel Orientation="Horizontal">

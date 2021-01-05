@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
 using Avalonia.Input;
 using Avalonia.Layout;
-using LEDerZaumGUI.PropertyGrid._Attributes;
+using LEDerWand.PropertyGrid._Attributes;
 using ReactiveUI;
 
-namespace LEDerZaumGUI.PropertyGrid
+namespace LEDerWand.PropertyGrid
 {
     public class PropertyGridEditControlFactory
     {

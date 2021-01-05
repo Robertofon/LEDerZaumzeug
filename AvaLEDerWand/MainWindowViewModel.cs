@@ -5,7 +5,9 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Layout;
 using Avalonia.Media;
 using Avalonia.Threading;
 using LEDerZaumzeug;
@@ -21,10 +23,15 @@ namespace LEDerWand
         private Color[] _leds;
         private Task _task;
         private string _infoTxt;
+        private LedControlViewModel _ledVm;
 
         public WandConfig Cfg { get; set; }
 
-        public LedControlViewModel LedVm { get; }
+        public LedControlViewModel LedVm
+        {
+            get => _ledVm;
+            set => this.RaiseAndSetIfChanged(ref _ledVm, value);
+        }
 
         public MainWindowViewModel(MainWindow w, WandConfig cfg)
         {
@@ -35,11 +42,17 @@ namespace LEDerWand
                 _cts.Cancel();
             };
 
+            UpdateConfig();
+            StartListening();
+        }
+
+        private void UpdateConfig()
+        {
+            WandConfig cfg = this.Cfg;
             LedVm = new LedControlViewModel(cfg.LedRows, cfg.LedCols);
             _leds = new Color[cfg.LedCols * (cfg.LedRows + 1)];
-            this.InfoTxt = $"Dim:{cfg.LedRows}∙{cfg.LedCols}, PxO:{PixelArrangement.LNH_TL}";
-
-            StartListening();
+            this.InfoTxt = $"Dim:{cfg.LedRows}∙{cfg.LedCols}, PxO:{PixelArrangement.LNH_TL}".Replace("_", "__");
+            _w.SetFullScreen(cfg.StartFullScreen);
         }
 
         public string InfoTxt
@@ -77,12 +90,32 @@ namespace LEDerWand
 
         public async Task OpenConfig()
         {
+            Button ok = new Button(){ Content = "OK", IsDefault = true};
+            var cfgWin = new Window()
+            {
+                SizeToContent = SizeToContent.WidthAndHeight,
+                Title = "Config Window LEDerWand",
+                Content = new WrapPanel()
+                {
+                    Margin = new Thickness(8),
+                    Orientation = Orientation.Vertical,
+                    Children =
+                    {
+                        new TextBlock() {Text = "Config:", FontSize = 16 },
+                        new PropertyGrid.PropertyGrid() {SelectedObject = this.Cfg},
+                        ok,
+                    }
+                },
+            };
+            ok.Click += (sender, args) => cfgWin.Close();
+            await cfgWin.ShowDialog(_w);
             using (var f = File.CreateText(WandConfig.CFG_NAME))
             {
                 string s = JsonConvert.SerializeObject(this.Cfg);
                 await f.WriteAsync(s);
             }
-            //_w.Close();
+
+            UpdateConfig();
         }
 
         private async Task DoTpm2Net()
@@ -92,14 +125,14 @@ namespace LEDerWand
             //IPEndPoint RemoteIpEndPoint = new IPEndPoint(IPAddress.Any, 0);
             try
             {
-                int NUM_LEDS = Cfg.LedCols*Cfg.LedRows;
                 while (true)
                 {
+                    int NUM_LEDS = Cfg.LedCols*Cfg.LedRows;
+                    int led_index = 0;
                     _cts.Token.ThrowIfCancellationRequested();
 
                     UdpReceiveResult udpReceiveResult = await receivingUdpClient.ReceiveAsync();
 
-                    int led_index = 0;
                     byte[] buf = udpReceiveResult.Buffer;
                     if (buf.Length >= 6 && buf[0] == 0x9C)
                     {

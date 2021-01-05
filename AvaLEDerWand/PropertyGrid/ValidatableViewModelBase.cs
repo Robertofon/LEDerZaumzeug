@@ -2,10 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using ReactiveUI;
 
-namespace LEDerZaumGUI.ViewModels
+namespace LEDerWand.PropertyGrid
 {
     public class ValidatableViewModelBase : ReactiveObject, INotifyDataErrorInfo
     {

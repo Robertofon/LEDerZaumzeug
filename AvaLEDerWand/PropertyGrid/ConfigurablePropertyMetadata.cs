@@ -1,13 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-using LEDerZaumGUI.PropertyGrid._Attributes;
-using LEDerZaumGUI.ViewModels;
+using LEDerWand.PropertyGrid._Attributes;
 using LEDerZaumzeug;
 using ReactiveUI;
 
-namespace LEDerZaumGUI.PropertyGrid {
+namespace LEDerWand.PropertyGrid {
     public class ConfigurablePropertyMetadata : ValidatableViewModelBase
     {
         private object _hostObject;

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace LEDerZaumGUI.PropertyGrid._Attributes
+namespace LEDerWand.PropertyGrid._Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class FixedPossibleValuesAttribute : Attribute

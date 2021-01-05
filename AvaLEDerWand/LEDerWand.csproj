@@ -2,6 +2,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="**\*.xaml.cs">
@@ -13,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="LedControl.xaml" />
+    <None Remove="PropertyGrid\PropertyGrid.xaml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="0.10.0-rc1" />
@@ -24,6 +26,9 @@
   </ItemGroup>
   <ItemGroup>
     <AvaloniaResource Update="LedControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </AvaloniaResource>
+    <AvaloniaResource Update="PropertyGrid\PropertyGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
     </AvaloniaResource>
   </ItemGroup>

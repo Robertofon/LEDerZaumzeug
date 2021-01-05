@@ -60,6 +60,19 @@ namespace LEDerWand
         {
             if (this.WindowState != WindowState.FullScreen)
             {
+                SetFullScreen(true);
+            }
+            else
+            {
+                SetFullScreen(false);
+            }
+        }
+
+
+        public void SetFullScreen(in bool fs)
+        {
+            if (fs)
+            {
                 this.WindowState = WindowState.FullScreen;
                 this.menu.SetValue(Menu.MaxHeightProperty, 0);
             }
@@ -69,7 +82,6 @@ namespace LEDerWand
                 this.menu.ClearValue(Menu.MaxHeightProperty);
             }
         }
-
 
         private void InitializeComponent()
         {

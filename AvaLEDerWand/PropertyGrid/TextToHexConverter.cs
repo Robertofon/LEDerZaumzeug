@@ -2,9 +2,8 @@
 using System.Globalization;
 using System.Text;
 using Avalonia.Data.Converters;
-using Avalonia.Markup;
 
-namespace LEDerZaumGUI.PropertyGrid
+namespace LEDerWand.PropertyGrid
 {
     public class TextToHexConverter : IValueConverter
     {

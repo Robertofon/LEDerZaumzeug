@@ -31,7 +31,7 @@
 
         public int ListenPort { get; set; }
 
-        public string ListenInterface { get; set; }
+        public string? ListenInterface { get; set; }
 
         public LedProto Protocol { get; set; }
     }

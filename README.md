@@ -24,10 +24,15 @@ Es gibt einen GUI-Editor für Programme und zum Laufenlassen (Player)
 
 ![](Screenshot.png)
 
-## LED-Anzeige
+## LED-Anzeige (LEDerWand)
 Es gibt ein Externes Programm als Display (Empfänger).
-Das externe Programm kann auf einem PC gestartet werden und per Netzwerk an die Player angebunden weden
+Das externe Programm kann auf einem PC gestartet werden und per Netzwerk an die Player angebunden weden. Protokoll TPM2.Net - Server startet automatisch.
+F11 wechselt zwischen Normal+Vollbild
 * AvaLEDerWand
+
+![](LEDerWand.png)
+
+
 
 # What
 
@@ -52,8 +57,13 @@ There is a GUI-Editor to create and modify Programs and to play out to receivers
 
 ## LED-Anzeige
 There is an external soft display program (receiver)
-The single program can be run on a pc and receive animations via network
+The single program can be run on a pc and receive animations via network.
+Auotmatically starts a local UDP server understanding TPM2.Net
 * AvaLEDerWand
+
+
+![](LEDerWand.png)
+
 
 # Wie
 

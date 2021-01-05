@@ -7,9 +7,8 @@ using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using LEDerZaumGUI.Util;
 
-namespace LEDerZaumGUI.PropertyGrid
+namespace LEDerWand.PropertyGrid
 {
     public class PropertyGrid : UserControl
     {
@@ -168,7 +167,7 @@ namespace LEDerZaumGUI.PropertyGrid
                 }
                 catch (Exception e)
                 {
-                    CommonErrorHandling.Current.ShowErrorDialog(e);
+                    //CommonErrorHandling.Current.ShowErrorDialog(e);
                     break;
                 }
             }

@@ -20,14 +20,13 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using ReactiveUI;
 
-namespace LEDerZaumGUI.PropertyGrid
+namespace LEDerWand.PropertyGrid
 {
     public class PropertyGridViewModel : ReactiveObject
     {
