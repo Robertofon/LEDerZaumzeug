@@ -10,7 +10,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
-using AvaLEDerWand;
+using LEDerWand;
 using LEDerZaumGUI.Models;
 using LEDerZaumGUI.Util;
 using LEDerZaumzeug.Mixer;

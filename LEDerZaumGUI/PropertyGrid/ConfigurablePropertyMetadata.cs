@@ -176,7 +176,17 @@ namespace LEDerZaumGUI.PropertyGrid {
                 }
                 else
                 {
-                    _descriptor.SetValue(_hostObject, Convert.ChangeType(value, targetType));
+                    if (targetType == typeof(RGBPixel))
+                    {
+                        RGBPixel pixel = (RGBPixel) $"{value}";
+                        _descriptor.SetValue(_hostObject, pixel);
+                    }
+                    else
+                    {
+                        _descriptor.SetValue(_hostObject, Convert.ChangeType(value, targetType));
+                        
+                    }
+
                 }
             }
         }

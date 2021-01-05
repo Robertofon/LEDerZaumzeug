@@ -1,11 +1,9 @@
-﻿using LEDerZaumzeug;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel;
-using System.Text;
 using System.Threading.Tasks;
+using LEDerZaumzeug;
 
-namespace AvaLEDerWand
+namespace LEDerWand
 {
     [Description("Öffnet lokal ein Avalon-Fenster mit LEDs darin in der gewünschten Größe (x*y).")]
     public class AvaWindowOutput : IOutput

@@ -1,12 +1,11 @@
-﻿using Avalonia.Media;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Avalonia.Media;
 using Avalonia.Media.Immutable;
 using ReactiveUI;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
 
-namespace AvaLEDerWand
+namespace LEDerWand
 {
     public class LedControlViewModel : ReactiveObject
     {
@@ -34,7 +33,7 @@ namespace AvaLEDerWand
         public void FeedData(Color[] data)
         {
             int i = 0;
-            foreach( var d in data)
+            foreach( var d in data.Take(this.Leds.Count))
             {
                 this.Leds[i++].LedBrush = new ImmutableSolidColorBrush(d);
             }

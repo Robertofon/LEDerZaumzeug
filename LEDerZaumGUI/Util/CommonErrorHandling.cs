@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -15,7 +18,36 @@ namespace LEDerZaumGUI.Util
 
         private CommonErrorHandling()
         {
+            this.MainWindow = ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).MainWindow;
 
+        }
+
+        public Window MainWindow { get; set; }
+
+        public async Task<string> OpenFileDialog()
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Title = "Datei Öffnen";
+            openFileDialog.Filters.Add(new FileDialogFilter() { Extensions = { "ledp" }, Name = "LEDerZaumZeug-Programme" });
+            var strs = await openFileDialog.ShowAsync(MainWindow);
+            return strs.FirstOrDefault();
+            //Avalonia.Dialogs.ManagedFileDialogExtensions.ShowManagedAsync()
+
+        }
+
+        public async Task<string> SaveFileDialog(string? aktiveDatei)
+        {
+            var dialog = new SaveFileDialog()
+            {
+                Directory = Path.GetDirectoryName(aktiveDatei),
+                DefaultExtension = "ledp",
+                InitialFileName = Path.GetFileName(aktiveDatei)
+            };
+            dialog.Title = "Datei Speichern";
+            dialog.Filters.Add(new FileDialogFilter() { Extensions = { "ledp" }, Name = "LEDerZaumZeug-Programme" });
+            string strs = await dialog.ShowAsync(MainWindow);
+            return strs;
+            //Avalonia.Dialogs.ManagedFileDialogExtensions.UseManagedSystemDialogs()
         }
 
         /// <summary>
@@ -28,8 +60,7 @@ namespace LEDerZaumGUI.Util
                 var errorDlg = new Window();
                 errorDlg.Content = new TextBlock() {Text = ex.Message};
                 //errorDlg.DataContext = ex.Message;
-                Window mainWindow = ((IClassicDesktopStyleApplicationLifetime)Application.Current.ApplicationLifetime).MainWindow;
-                errorDlg.ShowDialog(mainWindow);
+                errorDlg.ShowDialog(MainWindow);
             }
             else
             {

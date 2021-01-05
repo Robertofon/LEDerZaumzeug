@@ -1,8 +1,8 @@
-﻿using Avalonia;
+﻿using System;
+using Avalonia;
 using Avalonia.Controls;
-using System;
 
-namespace AvaLEDerWand
+namespace LEDerWand
 {
     /// <summary>
     /// A <see cref="Panel"/> with uniform column and row sizes.

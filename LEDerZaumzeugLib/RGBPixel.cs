@@ -242,7 +242,7 @@ namespace LEDerZaumzeug
         public static implicit operator RGBPixel(string str)
         {
             RGBPixel o;
-            if (!TryParse(str, CultureInfo.InvariantCulture, out o))
+            if (!TryParse(str.ToString(), CultureInfo.InvariantCulture, out o))
                 throw new FormatException("{str} kann nicht geparst werden");
             return o;
         }

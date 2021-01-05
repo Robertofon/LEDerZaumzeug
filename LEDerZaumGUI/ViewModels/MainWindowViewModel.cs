@@ -7,7 +7,10 @@ using LEDerZaumzeug;
 using System.Threading.Tasks;
 using System.IO;
 using System.Reactive.Linq;
-using AvaLEDerWand;
+using Avalonia.Controls;
+using Avalonia.Controls.ApplicationLifetimes;
+using LEDerWand;
+using LEDerZaumGUI.Models;
 using LEDerZaumGUI.Util;
 
 namespace LEDerZaumGUI.ViewModels
@@ -24,8 +27,8 @@ namespace LEDerZaumGUI.ViewModels
 
         public SzeneEditorViewModel PrgVM { get; } = new SzeneEditorViewModel();
  
-        public LedControlViewModel LedViewModel { get; } = new LedControlViewModel(24,16);
-
+        public LedControlViewModel LedViewModel { get; } = new LedControlViewModel(Config.LedDimensionRows, Config.LedDimensionRows);
+        
         public string Status
         {
             get => _status;
@@ -57,6 +60,12 @@ namespace LEDerZaumGUI.ViewModels
         }
 
         public async Task DoProgrammLaden()
+        {
+            string str = await CommonErrorHandling.Current.OpenFileDialog();
+            await LadeVonDatei(str);
+        }
+
+        public async Task DoProgrammLadenStd()
         {
             await LadeVonDatei("Programm.ledp");
         }
@@ -96,12 +105,14 @@ namespace LEDerZaumGUI.ViewModels
 
         public async Task DoProgrammSpeichern()
         {
-            using (var fs = File.CreateText("Programm.ledp"))
+            string path = await CommonErrorHandling.Current.SaveFileDialog(this.AktiveDatei);
+            using (var fs = File.CreateText(path))
             {
                 await fs.WriteAsync(this.Quelltext);
             }
 
             Status = "Programm gespeichert";
+            this.AktiveDatei = path;
         }
 
         public async Task DoStartPixelei(object o)

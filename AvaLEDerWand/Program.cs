@@ -1,7 +1,6 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 
-namespace AvaLEDerWand
+namespace LEDerWand
 {
     class Program
     {

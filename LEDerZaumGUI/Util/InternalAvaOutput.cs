@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AvaLEDerWand;
 using Avalonia.Media;
+using LEDerWand;
 using LEDerZaumzeug;
 using LEDerZaumzeug.Outputs;
 

@@ -41,7 +41,7 @@
     <PackageReference Include="SixLabors.ImageSharp.Drawing" Version="1.0.0-beta11" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AvaLEDerWand\AvaLEDerWand.csproj" />
+    <ProjectReference Include="..\AvaLEDerWand\LEDerWand.csproj" />
     <ProjectReference Include="..\LEDerZaumzeugLib\LEDerZaumzeugLib.csproj" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 ﻿<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:local="clr-namespace:AvaLEDerWand"
+             xmlns:local="clr-namespace:LEDerWand"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="AvaLEDerWand.LedControl" >
+             x:Class="LEDerWand.LedControl" >
   
   <Border Background="DarkGray" CornerRadius="6" BorderThickness="4" >
     <ItemsControl Items="{Binding Leds}">

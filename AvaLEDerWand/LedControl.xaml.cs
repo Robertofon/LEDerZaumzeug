@@ -1,8 +1,7 @@
-﻿using Avalonia;
-using Avalonia.Controls;
+﻿using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace AvaLEDerWand
+namespace LEDerWand
 {
     public class LedControl : UserControl
     {

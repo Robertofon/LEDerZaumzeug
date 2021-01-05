@@ -1,7 +1,7 @@
 ﻿<Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="clr-namespace:LEDerZaumGUI.ViewModels;assembly=LEDerZaumGUI"
-        xmlns:wand="clr-namespace:AvaLEDerWand;assembly=AvaLEDerWand"
+        xmlns:wand="clr-namespace:LEDerWand;assembly=LEDerWand"
         xmlns:local="clr-namespace:LEDerZaumGUI.Views"
         x:Class="LEDerZaumGUI.Views.MainWindow"
         Icon="resm:LEDerZaumGUI.Assets.avalonia-logo.ico"
@@ -21,7 +21,8 @@
     <Border Grid.Row="2" Grid.Column="0" BorderBrush="DarkGray" Background="White" BorderThickness="2" CornerRadius="4" >
       <WrapPanel Margin="2">
         <Button Content="Schl" Command="{Binding DoProgrammEntladen}"  Margin="2"/>
-        <Button Content="Lade(std)" Command="{Binding DoProgrammLaden}"  Margin="2"/>
+        <Button Content="Lade" Command="{Binding DoProgrammLaden}"  Margin="2"/>
+        <Button Content="L(std)" Command="{Binding DoProgrammLadenStd}"  Margin="2"/>
         <Button Content="Speichern" Command="{Binding DoProgrammSpeichern}"  Margin="2"/>
         <Button Content="Start" Command="{Binding DoStartPixelei}" Margin="2"/>
         <Button Content="Pause" Command="{Binding DoPausePixelei}" Margin="2"/>
