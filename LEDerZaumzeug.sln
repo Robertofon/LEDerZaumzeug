@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDerZaumzeug", "LEDerZaumz
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDerZaumzeug.Test", "LEDerZaumzeug.Test\LEDerZaumzeug.Test.csproj", "{0274B980-A3C1-4861-B3AA-E024972474AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDerWand", "AvaLEDerWand\LEDerWand.csproj", "{15F1473F-509D-4E80-B4FA-9EDB10F76E10}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDerWand", "LEDerWand\LEDerWand.csproj", "{15F1473F-509D-4E80-B4FA-9EDB10F76E10}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LEDerZaumzeugLib", "LEDerZaumzeugLib\LEDerZaumzeugLib.csproj", "{4F84FAA8-0A24-4647-B8B9-77846D19E570}"
 EndProject

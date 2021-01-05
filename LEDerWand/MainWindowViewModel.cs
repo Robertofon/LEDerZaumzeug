@@ -51,7 +51,7 @@ namespace LEDerWand
             WandConfig cfg = this.Cfg;
             LedVm = new LedControlViewModel(cfg.LedRows, cfg.LedCols);
             _leds = new Color[cfg.LedCols * (cfg.LedRows + 1)];
-            this.InfoTxt = $"Dim:{cfg.LedRows}∙{cfg.LedCols}, PxO:{PixelArrangement.LNH_TL}".Replace("_", "__");
+            this.InfoTxt = $"Dim:{cfg.LedRows}x{cfg.LedCols}, PixelArrangement: {PixelArrangement.LNH_TL}".Replace("_", "__");
             _w.SetFullScreen(cfg.StartFullScreen);
         }
 
