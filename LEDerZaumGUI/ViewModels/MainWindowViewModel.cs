@@ -12,6 +12,7 @@ using Avalonia.Controls.ApplicationLifetimes;
 using LEDerWand;
 using LEDerZaumGUI.Models;
 using LEDerZaumGUI.Util;
+using LEDerZaumzeugLib;
 
 namespace LEDerZaumGUI.ViewModels
 {
@@ -25,10 +26,18 @@ namespace LEDerZaumGUI.ViewModels
         private string _quelltext = null;
         private string? _aktiveDatei = null;
 
+        public LEDerZaumReflector Reflector = new LEDerZaumReflector();
+
         public SzeneEditorViewModel PrgVM { get; } = new SzeneEditorViewModel();
  
         public LedControlViewModel LedViewModel { get; } = new LedControlViewModel(Config.LedDimensionRows, Config.LedDimensionRows);
-        
+
+        public MainWindowViewModel()
+        {
+            // Create reflection
+            Reflector.Init();
+        }
+
         public string Status
         {
             get => _status;

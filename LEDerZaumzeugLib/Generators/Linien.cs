@@ -19,6 +19,8 @@ namespace LEDerZaumzeug.Generators
     /// <summary>
     /// Generator, der Linien erzeugt.
     /// </summary>
+    [DisplayNameAttribute("Linienarten")]
+    [Description("Linien verschiedener Arten")]
     public class Linien : IGenerator
     {
         private static ILogger _log = NLog.LogManager.GetCurrentClassLogger();

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Runtime.CompilerServices;
 using LEDerWand;
 using LEDerZaumGUI.Models;
 using LEDerZaumGUI.Util;
@@ -281,19 +282,27 @@ namespace LEDerZaumGUI.ViewModels
 
         private void ExecuteAddFilter()
         {
-            if (this.SelKnoten != null)
+            BaseNode sel = this.SelKnoten;
+            if (sel != null)
             {
+                BaseNode vorfahr = FindeVorfahr(sel);
+                if (vorfahr is MixerNode)
+                {
 
+                }
             }
         }
 
         private void ExecuteDupKnoten()
         {
-            if (this.SelKnoten != null)
+            BaseNode sel = this.SelKnoten;
+            if (sel != null)
             {
+                if (sel is MixerNode)
+                {
 
+                }
             }
-
         }
 
         private void ExecuteWechsleKnotenTyp()
@@ -308,10 +317,10 @@ namespace LEDerZaumGUI.ViewModels
         {
         }
 
-        private Task ExecuteEigenschaftenAnwenden()
+        private async Task ExecuteEigenschaftenAnwenden()
         {
             if(this.SelKnoten== null)
-                return Task.CompletedTask;
+                return;
 
             StopLedPreview();
 
@@ -320,9 +329,8 @@ namespace LEDerZaumGUI.ViewModels
                 gn.SyncFromInst();
             }
 
-            var alsString = this.GetAlsString();
-
-            return Task.WhenAll( StartSeqLedPreview(this.SelSeqItem), StartKnotenLedPreview(this.SelKnoten));
+            await Task.WhenAll( StartSeqLedPreview(this.SelSeqItem), StartKnotenLedPreview(this.SelKnoten)).ConfigureAwait(true);
+            Console.Write("bla");
         }
 
         private BaseNode? FindeVorfahr(BaseNode knoten, BaseNode? start = null)
