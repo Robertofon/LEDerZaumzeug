@@ -6,6 +6,23 @@
   },
   "Seq": [
     {
+      "Name": "regenbogen-roll",
+      "Start": {
+        "$type": "FilterNode",
+        "TypeName": "LEDerZaumzeug.Filters.Durchrollen",
+        "Quelle": {
+          "$type": "GeneratorNode",
+          "TypeName": "LEDerZaumzeug.Generators.Regenbogen",
+          "Winkel": 56.3,
+          "Lambda": 8,
+          "Geschwindigkeit": 6
+        },
+        "Abstand": 3,
+        "Geschwindigkeit": 1.5,
+        "Richtung": "GenOst"
+      }
+    },
+    {
       "Name": "Kamm5",
       "Start": {
         "$type": "FilterNode",
